@@ -1,0 +1,31 @@
+schema: spec-driven
+
+# Project context — shown to AI when creating artifacts.
+context: |
+  OKR-Ninja: an Agent Skill for Claude Code that audits OKRs on their "goodness"
+  (quality of objectives and key results) and detects cross-project / cross-team
+  alignment issues across a portfolio of teams.
+
+  This is a markdown-only repo — no build, no app code. The deliverable is the
+  skill itself: SKILL.md (entry point), references/ (goodness-rubric.md,
+  alignment-taxonomy.md, report-format.md), and examples/sample-portfolio.md
+  (a test fixture with planted defects and an answer key).
+
+  Conventions:
+  - Each topic has exactly one owning file (see CLAUDE.md); no duplication.
+  - SKILL.md stays under ~150 lines; deep material goes in references/.
+  - Every finding the skill produces must trace to verbatim quoted evidence.
+  - The skill complements the sibling okr-deepdive skill: OKR-Ninja owns
+    multi-team/portfolio sweeps and alignment; okr-deepdive owns single-team
+    deep dives. Keep that boundary crisp in any description change.
+  - Quality gate for changes: structural checks + fixture eval (see
+    .claude/skills/openspec-loop/phases/verify-gate.md).
+
+rules:
+  proposal:
+    - Always include a "Non-goals" section
+    - State which planted defects in examples/sample-portfolio.md the change
+      should newly catch, if the change touches detection behavior
+  tasks:
+    - Any rubric/taxonomy change must include a matching before-and-after
+      rewrite example and, when detection behavior changes, a fixture update
