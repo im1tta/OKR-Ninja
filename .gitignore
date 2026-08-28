@@ -1,0 +1,10 @@
+# Local Claude Code session artifacts
+.claude/bash-audit.log
+.claude/settings.local.json
+
+# OS noise
+.DS_Store
+
+# Scratch / working files
+*.tmp
+scratch/
