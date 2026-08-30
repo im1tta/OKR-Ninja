@@ -29,3 +29,15 @@ rules:
   tasks:
     - Any rubric/taxonomy change must include a matching before-and-after
       rewrite example and, when detection behavior changes, a fixture update
+
+# Advisory guidance surfaced to the apply/archive workflows (OpenSpec 1.11.0+).
+# Lives here rather than in the loop skill so a direct /opsx:archive — one that
+# bypasses the loop — still sees the gate.
+operations:
+  archive:
+    guidance:
+      - Do not archive until the verify gate in
+        .claude/skills/openspec-loop/phases/verify-gate.md is green - structural
+        checks, plus the fixture eval against examples/sample-portfolio.md when
+        the change touched SKILL.md's procedure, the rubric, the taxonomy, or the
+        report format. Never loosen the gate to pass.

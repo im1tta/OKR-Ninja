@@ -64,7 +64,11 @@ If the idea is raw, invoke the `opsx:explore` skill — a thinking stance, **nev
 
 ### 3. Propose
 
-On approval, invoke the `opsx:propose` skill, passing the refined idea. Feed it the Agreed-requirements summary as the source description so the proposal/design/tasks reflect the decisions made in Refine. Auto-advance when all `applyRequires` artifacts are done.
+On approval, invoke the `opsx:propose` skill, passing the refined idea. Feed it the Agreed-requirements summary as the source description so the proposal/design/tasks reflect the decisions made in Refine.
+
+**Propose stops at its own planning boundary — that is expected, not a failure.** Since OpenSpec 1.11.0, `opsx:propose` ends by requiring a new user request before implementation begins. In this loop the **Refine approval _is_ that request** — it authorized the run end-to-end, Apply included. So when Propose returns, close the Propose step, announce `▶ Phase: Apply · change: <name>`, and start Apply as a new step. Do not ask the user to approve a second time, and do not let Propose's boundary rule absorb Apply into the Propose step.
+
+Advance when every artifact in the required set — `applyRequires` plus everything reachable through its `requires` edges — reads `done` or `skipped`.
 
 ### 4. Apply
 
