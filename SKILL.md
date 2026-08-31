@@ -69,6 +69,10 @@ Silently dropping weak findings is correct behavior, not lost work.
 
 Load `references/report-format.md` (at this step) and produce the six sections it defines, exactly as it defines them. Section structure, finding templates, the severity scale, the source-ref format, and the deep-dive handoff criteria all live in that file — do not improvise alternatives here.
 
+## Step 7 — Publish
+
+Skip this step entirely for runs against `examples/sample-portfolio.md` or any eval — those never publish artifacts or write a registry. Otherwise, publish the report deliverables by following the **"Artifact lifecycle"** section of `references/report-format.md` exactly: the per-portfolio `artifacts.json` registry decides update-vs-create; never create a duplicate artifact for a registered deliverable.
+
 ## Execution model: fan-out vs sequential
 
 **When the harness supports subagents/parallel workflows:** fan out — one extractor subagent per team (Step 2); one alignment-checker subagent per blocked candidate set from Step 4 (never one per team pair); and a verifier subagent per finding batch (Step 5) that receives only the finding plus raw source text, so verification is independent of the reasoning that produced the finding. Cap concurrency sensibly (~5 parallel agents) and merge extractor output into the normalized structure before Step 4's blocking runs.

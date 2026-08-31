@@ -151,3 +151,47 @@ Rules:
 > **Example (fictional):**
 >
 > - **Platform** (roll-up D (1.9), at/below the needs-rework threshold; AP-06 Sandbagged Target + inbound AL-01 Unacknowledged dependency): run `okr-deepdive` — "Deep dive the Platform team's Q3 OKRs from Confluence space PLAT."
+
+---
+
+## Artifact lifecycle
+
+This section is the only source of truth for how report deliverables are published as artifacts. `SKILL.md`'s publish step points here instead of restating the rules.
+
+**Registry as source of truth.** Each portfolio's review working folder holds one `artifacts.json` at its root. Every update-vs-create decision is a registry lookup — never artifact listing, title matching, or judgment. One **living artifact per deliverable key**, updated in place every run: `portfolio-dashboard` for the portfolio report, `team-report/<team>` for any per-team output. Example:
+
+```json
+{
+  "portfolio-dashboard": {
+    "url": "https://claude.ai/artifacts/abc123",
+    "title": "OKR Portfolio Review",
+    "favicon": "📊",
+    "last_published": "2026-08-30T14:05:00Z",
+    "cycle_date": "2026-08-30"
+  },
+  "team-report/payments": {
+    "url": "https://claude.ai/artifacts/def456",
+    "title": "Payments OKR Report",
+    "favicon": "💳",
+    "last_published": "2026-08-30T14:07:00Z",
+    "cycle_date": "2026-08-30"
+  }
+}
+```
+
+**Publish decision procedure** (run in order, per deliverable):
+
+1. **Adopt** — if the user supplied an artifact URL for this deliverable, record it under the key (overwriting any prior entry) and treat it as the registered URL.
+2. **Read** — look up the key in `artifacts.json` (a missing file means no entries).
+3. **Verify** — if an entry exists, confirm the URL still points to a reachable artifact the user owns.
+4. **Act:**
+   - Entry valid → **update in place** at the registered URL. Title and favicon stay exactly as registered.
+   - Entry dead or un-updatable → **re-create**: publish a replacement, overwrite the entry with the new URL, and state in the run summary that a re-create happened and why.
+   - No entry → **create + register**: publish, then immediately write the key with `url`, `title`, `favicon`, `last_published`, `cycle_date` before the run ends.
+5. **Refresh** — on every publish, update the entry's `last_published` and `cycle_date`.
+
+**Never silently fork.** A run must not create a second artifact for a key that has a registry entry except via the re-create path above, and any create performed while an entry existed must be reported in the run summary. The contract assumes one run at a time per working folder.
+
+**History stays local.** Run outputs in the working folder are dated and append-only — a run never overwrites a prior cycle's files. The living artifact is only the current view; cross-cycle comparisons derive from the local cycle files.
+
+**Fixture/eval exemption.** Runs against `examples/sample-portfolio.md` or any eval never publish or update artifacts and never create or modify a registry file.
