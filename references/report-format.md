@@ -1,4 +1,4 @@
-# Report format — output contract for a portfolio review
+# Report format — output contracts for portfolio and single-team reviews
 
 This file is the only source of truth for how the final report is structured, for the **severity scale**, and for the **source-ref format**. Rubric dimensions and anti-patterns (AP-XX) are defined in `references/goodness-rubric.md`; alignment failure modes (AL-XX) in `references/alignment-taxonomy.md` — refer to them by ID and canonical name, never redefine them here.
 
@@ -32,7 +32,7 @@ This subsection is the only definition of the source-ref format; `SKILL.md`, `re
 
 Every finding — goodness or alignment — must include at least one **verbatim quote** with its **source ref**. Alignment findings quote **both** sides. A claim that cannot be quoted is not reported.
 
-The report has six sections, in this order.
+The **portfolio report** has six sections, in this order. (Single-team mode instead produces the **Single-team report** defined after them.)
 
 ---
 
@@ -140,17 +140,31 @@ Rules:
 > 1. Convene Payments + Growth to set a joint fraud/conversion guardrail pair — owner: VP Product (resolves §4 AL-02 Conflicting metrics / adversarial incentives).
 > 2. Rewrite Platform's uptime KR against the quoted 99.95% trailing baseline — owner: Platform lead (resolves §3 AP-06 Sandbagged Target).
 
-## 6. Suggested deep dives
+## 6. Suggested single-team re-runs
 
 Rules:
-- Recommend an `okr-deepdive` run for a team when **either**: (a) the team's **roll-up grade** — the letter produced by `references/goodness-rubric.md`'s Roll-Up section — is at or below the rubric's stated "needs rework" threshold, or (b) the team has **any Critical finding** (goodness or alignment).
-- **The rubric roll-up is the governing computation for deep-dive routing.** The heatmap's per-dimension integers (§2) are display aggregates and never gate a recommendation.
-- One line per team: the team name, the reason (grade and/or finding IDs), and a ready-to-paste prompt.
+- Recommend a **single-team-mode re-run of this skill** for a team when **either**: (a) the team's **roll-up grade** — the letter produced by `references/goodness-rubric.md`'s Roll-Up section — is at or below the rubric's stated "needs rework" threshold, or (b) the team has **any Critical finding** (goodness or alignment).
+- **The rubric roll-up is the governing computation for re-run routing.** The heatmap's per-dimension integers (§2) are display aggregates and never gate a recommendation.
+- One line per team: the team name, the reason (grade and/or finding IDs), and a ready-to-paste prompt. The prompt must carry the scope context already established at intake — the team, the period, the team's source location(s) (Confluence space/page, Jira project key(s), or file paths), and the strategy doc if one was in scope — so the re-run asks the user nothing already known.
 - If no team qualifies, say so explicitly in one line.
 
 > **Example (fictional):**
 >
-> - **Platform** (roll-up D (1.9), at/below the needs-rework threshold; AP-06 Sandbagged Target + inbound AL-01 Unacknowledged dependency): run `okr-deepdive` — "Deep dive the Platform team's Q3 OKRs from Confluence space PLAT."
+> - **Platform** (roll-up D (1.9), at/below the needs-rework threshold; AP-06 Sandbagged Target + inbound AL-01 Unacknowledged dependency): re-run single-team mode — "Review the Platform team's Q3 OKRs alone, in depth. Sources: Confluence space PLAT (page 'Platform Q3 OKRs'), Jira project PLAT; strategy doc: 'Company Q3 priorities' (page 74210)."
+
+---
+
+## Single-team report
+
+Produced by single-team mode (mode selection is defined in `SKILL.md` Step 1). The severity scale, source-ref format, evidence invariant, and proposed-number convention above apply unchanged — this section defines only what differs from the portfolio report. Sections, in order:
+
+1. **Verdict summary** — §1's rules, scoped to the one team: verdict first, ~10 lines max, stating the roll-up grade (letter + numeric), finding counts by severity, the worst finding by AP-ID + canonical name, and the recommended first action. When no strategy doc was provided, this section states that company-level strategy tracing was out of scope.
+2. **Score table** — §2's conventions for one team: a single-row table with the same 11 dimension columns and legend, plus the roll-up grade line. Because single-team mode scores exhaustively, the table may be followed by a short per-instance breakdown (objective/KR id → score) for any dimension whose scores vary — the only depth addition to §2's format. A dimension the rubric scores N/A (e.g. O4 with no strategy source in the corpus) shows N/A here with the rubric's mandated gap note beside it — recorded in this score section, never as a §3 finding block.
+3. **Findings** — §3's finding template, verbatim, one block per finding, ordered by severity. Exhaustive: every AP-XX instance found is reported (no screening cap), and **every Critical and Major finding includes its concrete rewrite**.
+4. **Outbound dependency notes** — every cross-team dependency mention in the team's material, each as a verbatim quote + source ref, labeled **"unverified — counterparty not in scope"**. Notes carry no severity and are not findings — single-team mode never produces AL-XX findings, because the taxonomy's both-sides quote rule cannot be met with one team in scope. If there are none, write exactly: "No outbound dependency mentions found."
+5. **Prioritized action list** — §5's rules, scoped to the team (owners default to roles within the team; the alignment-outranks rule is vacuous here).
+
+A single-team report contains **no portfolio heatmap, no AL-XX blocks, and no §6** (there is no narrower scope to recommend). Strategy-trace evidence, when a strategy doc was provided, appears through O4 Strategic Anchoring scores and findings — never as alignment findings.
 
 ---
 

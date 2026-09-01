@@ -4,7 +4,8 @@ schema: spec-driven
 context: |
   OKR-Ninja: an Agent Skill for Claude Code that audits OKRs on their "goodness"
   (quality of objectives and key results) and detects cross-project / cross-team
-  alignment issues across a portfolio of teams.
+  alignment issues, in two modes selected by team count: portfolio mode
+  (2+ teams) and single-team mode (one team, full-depth goodness review).
 
   This is a markdown-only repo — no build, no app code. The deliverable is the
   skill itself: SKILL.md (entry point), references/ (goodness-rubric.md,
@@ -15,9 +16,9 @@ context: |
   - Each topic has exactly one owning file (see CLAUDE.md); no duplication.
   - SKILL.md stays under ~150 lines; deep material goes in references/.
   - Every finding the skill produces must trace to verbatim quoted evidence.
-  - The skill complements the sibling okr-deepdive skill: OKR-Ninja owns
-    multi-team/portfolio sweeps and alignment; okr-deepdive owns single-team
-    deep dives. Keep that boundary crisp in any description change.
+  - The skill is closed and self-contained — two modes, one skill, no external
+    OKR-skill handoffs. Any description change must keep claiming both modes,
+    keep the writing-new-OKRs-from-scratch exclusion, and name no other skill.
   - Quality gate for changes: structural checks + fixture eval (see
     .claude/skills/openspec-loop/phases/verify-gate.md).
 

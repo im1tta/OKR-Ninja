@@ -18,7 +18,7 @@ Restate, in one or two lines: the idea, the problem it solves, and who it's for.
 - **Problem & intent** — what's actually being solved, and the underlying goal behind the request.
 - **Scope** — what's explicitly **in** vs **out**, and what to **defer** (this repo favors thin, minimal scope — push non-essential work to "later").
 - **Affected surfaces** — SKILL.md triggering/description, the operating procedure steps, `references/` (goodness rubric, alignment taxonomy, report format), the `examples/` fixture and its answer key.
-- **Skill routing** (project-specific, easy to miss) — does the change keep the boundary with the sibling `okr-deepdive` skill crisp (OKR-Ninja = multi-team/portfolio + alignment; okr-deepdive = single-team deep dive)? Surface this whenever the description or scope-intake step is touched.
+- **Mode routing** (project-specific, easy to miss) — does the change keep the two-mode contract crisp (team count at scope intake selects the mode: 1 team → single-team full-depth goodness with no cross-team findings; 2+ → portfolio + alignment; the description claims both modes and names no external skill)? Surface this whenever the description, scope-intake step, or report templates are touched.
 - **Evidence discipline** — does the change preserve the verbatim-quote-with-source requirement everywhere findings are produced? No paraphrase presented as quote.
 - **Success criteria** — how we'll know it worked; which planted defects in `examples/sample-portfolio.md` the change should newly catch (or stop false-positive-ing on).
 - **Data sources** — impact on Jira/Confluence MCP extraction vs the local-file fallback; changes to the normalized OKR structure (team, objective, KRs, owners, parent link, dependencies).

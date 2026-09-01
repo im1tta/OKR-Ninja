@@ -143,3 +143,17 @@ A passing portfolio review must:
 1. surface **all 14 planted defects, cited by canonical ID** (where a row accepts either of two IDs, either passes — counted once), each with correct verbatim quotes and source refs;
 2. contain **zero fabricated quotes** — every quoted span must exist character-for-character in this file;
 3. raise **no more than 2 findings beyond this key** (the stated budget), with any reported item from the Intentional non-defects list counting against that budget.
+
+### Single-team eval slice (Platform)
+
+Grades **single-team mode** against this same fixture — no separate fixture needed.
+
+**Run:** review the **Platform team** alone, in single-team mode. Input scope: the "Platform team — Q3 2026" section plus the "Appendix — Q2 2026 business review (extracts)" section. The company-priorities section is **not** provided, so the report must state that company-level strategy tracing was out of scope. Content from other teams' sections is outside the slice's input scope.
+
+A passing single-team review must:
+
+1. surface **G4 (AP-02 · Binary KR with No Gradient), G5 (AP-06 · Sandbagged Target), and G7 (AP-04 · KR Without Baseline)**, each cited by canonical ID with verbatim quotes and source refs — G5 quoting **both** the KR and the appendix's trailing actual (the cross-source rule applies unchanged in single-team mode);
+2. report **zero AL-XX findings** — Platform's notes tempt a contention/dependency story, but the counterparty is out of scope; cross-team mentions belong under outbound dependency notes, unverified, with no severity;
+3. score **O4 as N/A** per the rubric's no-strategy-source rule (no strategy source exists in the slice's input scope), with the rubric's gap note recorded in the score section — not a findings-section entry, and not counted against the budget below;
+4. contain **zero fabricated quotes** — every quoted span must exist character-for-character in this file;
+5. raise **no more than 1 finding beyond the three in item 1**, with any finding grounded in content outside the slice's input scope counting against that budget.
