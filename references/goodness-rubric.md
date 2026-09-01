@@ -141,13 +141,13 @@ All arithmetic on 0–4 numeric scores; convert to letters last. Exclude N/A dim
 
 Report the numeric score alongside the letter (e.g., "B (3.1)") so portfolio comparisons stay ordinal.
 
-**Needs-rework threshold:** a per-team roll-up grade of **D or below** means the team's OKR set needs rework before its quarter can be trusted. `references/report-format.md` §6 uses this threshold (together with any Critical finding) to route teams to the okr-deepdive skill; the roll-up grade computed here — not the heatmap integers below — governs that routing.
+**Needs-rework threshold:** a per-team roll-up grade of **D or below** means the team's OKR set needs rework before its quarter can be trusted. `references/report-format.md` §6 uses this threshold (together with any Critical finding) to route teams to a single-team-mode re-run of this skill; the roll-up grade computed here — not the heatmap integers below — governs that routing.
 
 ### Team dimension scores (for the portfolio heatmap)
 
 Team dimension score = arithmetic mean of all scored instances of that dimension across the team's OKRs (objectives for O1–O4; KRs for K1–K5; KR-sets for K6–K7), rounded DOWN to an integer; N/A instances excluded; a dimension with zero scored instances shows N/A.
 
-These eleven integers (O1 O2 O3 O4 K1 K2 K3 K4 K5 K6 K7) populate the portfolio heatmap defined in `references/report-format.md`. They are display aggregates only — deep-dive routing is governed by the per-team roll-up grade above, never by heatmap cells.
+These eleven integers (O1 O2 O3 O4 K1 K2 K3 K4 K5 K6 K7) populate the portfolio heatmap defined in `references/report-format.md`. They are display aggregates only — re-run routing is governed by the per-team roll-up grade above, never by heatmap cells.
 
 ---
 
