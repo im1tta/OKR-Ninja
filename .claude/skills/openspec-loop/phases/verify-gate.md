@@ -8,10 +8,12 @@ Green requires **both**:
 
 1. **Spec coherence — independent and refute-mode.** Run `opsx:verify` as a *non-author* check (the agent that implemented the change does not sign off its own work): hunt for one requirement the docs violate, not confirmation that it "looks done." Brief it with the design **rationale** — the `design.md` decisions and any deliberate-divergence notes in the skill docs — so an intentional divergence is reported as intentional, not a manufactured bug.
 2. **Quality gate** — this is a markdown skill repo (no build), so the gate is:
-   - **Structural checks** — SKILL.md frontmatter parses and stays under ~150 lines; every `references/` and `phases/` path mentioned in any doc resolves to a real file; no rubric/taxonomy/report-format detail duplicated across files (each topic has exactly one owning file per CLAUDE.md).
+   - **Structural checks** — SKILL.md frontmatter parses and stays under ~150 lines; every `references/` and `phases/` path mentioned in any doc resolves to a real file; no rubric/taxonomy/report-format detail duplicated across files (each topic has exactly one owning file per CLAUDE.md); `references/report-format.md` contains the "Artifact lifecycle" contract section (registry schema + publish decision procedure); SKILL.md's publish step references that "Artifact lifecycle" section rather than restating it.
    - **Fixture eval** — **only** when the change touches SKILL.md's procedure, the rubric, the taxonomy, the report format, or a fixture's planted content: have a *fresh* subagent (not the author) run the okr-ninja skill against the fixture(s) under `examples/` whose answer keys cover the touched category (each key's "Modes deliberately not covered" section says which modes are the other fixture's territory; when in doubt, or for procedure-wide changes, run both) and compare its findings to that fixture's `## Answer key` — planted defects in the touched category must be found, every reported quote must appear verbatim in the fixture, and no finding may cite text that isn't there. Skip it for docs-only changes (README, CLAUDE.md) for speed (say which you chose and why).
 
 Green = `opsx:verify` reports complete & coherent **AND** the structural checks (and fixture eval when run) all pass.
+
+> **Future work (deferred):** a behavioral eval for the artifact-lifecycle contract — run the skill twice against a scratch portfolio with a pre-seeded `artifacts.json` and grade that the second run updates the registered artifact rather than creating a new one. Not implemented; the structural checks above are the current enforcement.
 
 ## Red → bounded repair loop
 
