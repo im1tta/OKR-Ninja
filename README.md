@@ -31,7 +31,8 @@ OKR-Ninja/
 │   ├── alignment-taxonomy.md       # AL-XX cross-team failure modes and how to detect them
 │   └── report-format.md            # Output contract: severity scale, source-ref format, report templates
 ├── examples/
-│   └── sample-portfolio.md         # Fictional company priorities + 4-team fixture with planted defects + answer key
+│   ├── sample-portfolio.md         # Fixture 1: fictional 4-team portfolio with planted defects + answer key
+│   └── sample-portfolio-2.md       # Fixture 2: fictional 5-team portfolio covering the catalog modes fixture 1 leaves uncovered
 ├── openspec/                       # OpenSpec (OPSX) change-of-record scaffold
 ├── .claude/                        # OPSX commands (commands/opsx/*) and skills (skills/openspec-*)
 ├── README.md                       # This file
@@ -72,11 +73,11 @@ Prompts about a single team ("review the Payments team's OKRs") should route to 
 
 **Atlassian MCP (preferred).** If an Atlassian MCP server is connected, the skill searches Jira via JQL and Confluence via CQL to locate each team's OKR pages/issues, and cites Confluence page titles and Jira issue keys in every finding.
 
-**Local files (fallback).** With no MCP connected, point the skill at local exports — markdown, CSV, or spreadsheet files containing the OKRs. Findings then cite file paths with headings and line numbers. `examples/sample-portfolio.md` shows the expected shape of a markdown export.
+**Local files (fallback).** With no MCP connected, point the skill at local exports — markdown, CSV, or spreadsheet files containing the OKRs. Findings then cite file paths with headings and line numbers. `examples/sample-portfolio.md` and `examples/sample-portfolio-2.md` show the expected shape of a markdown export (and double as the eval set — each carries an answer key of planted defects).
 
 ## Roadmap
 
 - **Historical drift tracking** — compare a team's OKRs quarter-over-quarter to surface silently dropped KRs, moving goalposts, and recycled objectives.
 - **Scoring calibration set** — a labelled corpus of real-world (anonymized) OKRs with agreed rubric scores, to keep 0–4 scoring consistent across model versions.
-- **CI eval harness** — automated evals (via skill-creator's eval tooling) that run the skill against `examples/sample-portfolio.md` and assert its eval criterion — all planted defects found by ID, zero fabricated quotes, no more findings beyond the answer key than its stated budget — so regressions fail CI. (The OPSX verify gate already runs a scoped version of this fixture eval on every skill-content change; docs-only changes skip it.)
-- **More fixtures** — larger portfolios (8–12 teams) and adversarial fixtures with near-miss non-defects to measure false-positive rate.
+- **CI eval harness** — automated evals (via skill-creator's eval tooling) that run the skill against each fixture under `examples/` and assert its eval criterion — all planted defects found by ID, zero fabricated quotes, no more findings beyond the answer key than its stated budget — so regressions fail CI. (The OPSX verify gate already runs a scoped version of this fixture eval on every skill-content change; docs-only changes skip it.)
+- **More fixtures** — larger portfolios (8–12 teams). (Full-catalog defect coverage landed with `examples/sample-portfolio-2.md`, which plants the 13 modes fixture 1 leaves uncovered; both fixtures carry near-miss non-defects to measure false-positive rate.)
