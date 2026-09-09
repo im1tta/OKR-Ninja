@@ -1,0 +1,430 @@
+{
+ "id": "fixture1",
+ "fixture": "examples/sample-portfolio.md",
+ "universe": "Brightledger",
+ "mode": "portfolio",
+ "budget": 2,
+ "criterion": "A passing portfolio review surfaces all 14 planted defects cited by canonical ID (where a row accepts either of two IDs, either passes - counted once), each with correct verbatim quotes and source refs; contains zero fabricated quotes (every quoted span exists character-for-character in the fixture); and raises no more than 2 findings beyond this key, with any reported intentional non-defect, off-key mode or duplicate counting against that budget unless an active known-red triage entry covers it.",
+ "defects": [
+  {
+   "id": "G1",
+   "accepted": [
+    "AP-01",
+    "AP-14"
+   ],
+   "alternate_note": "AP-14 · Date as Target also accepted — either ID, counted once",
+   "team": "Payments",
+   "location": "Payments KR P1.2",
+   "evidence": [
+    {
+     "item": "KR P1.2"
+    }
+   ],
+   "note": "\"Ship checkout & billing API v2 to GA by Sep 26\" is a deliverable/milestone, not a measured outcome (no adoption, error-rate, or usage target).",
+   "reference_overlap": {
+    "file": "references/report-format.md",
+    "quote": "Ship checkout API v2 to GA"
+   }
+  },
+  {
+   "id": "G2",
+   "accepted": [
+    "AP-04"
+   ],
+   "team": "Growth",
+   "location": "Growth KR G1.1",
+   "evidence": [
+    {
+     "item": "KR G1.1"
+    }
+   ],
+   "note": "\"Increase trial-to-paid conversion to 22%\" states a target with no current value, and none is retrievable anywhere in this corpus; ambition and progress are unjudgeable."
+  },
+  {
+   "id": "G3",
+   "accepted": [
+    "AP-03"
+   ],
+   "team": "Growth",
+   "location": "Growth KR G2.3",
+   "evidence": [
+    {
+     "item": "KR G2.3"
+    }
+   ],
+   "note": "\"Reach 50,000 monthly blog pageviews\" rises with exposure but indicates none of the funnel outcomes the objective claims (revenue, signups, conversion)."
+  },
+  {
+   "id": "G4",
+   "accepted": [
+    "AP-02"
+   ],
+   "team": "Platform",
+   "location": "Platform KR PL2.2",
+   "evidence": [
+    {
+     "item": "KR PL2.2"
+    }
+   ],
+   "note": "\"Complete the SOC 2 Type II audit\" is done/not-done; mid-cycle scoring can only be 0% or 100%."
+  },
+  {
+   "id": "G5",
+   "accepted": [
+    "AP-06"
+   ],
+   "team": "Platform",
+   "location": "Platform KR PL1.1 + Appendix (Q2 review)",
+   "evidence": [
+    {
+     "item": "KR PL1.1"
+    },
+    {
+     "section": "Appendix"
+    }
+   ],
+   "note": "Target of 99.9% uptime sits below the Q2-review trailing actual of 99.95% — the KR is achieved by getting worse. Requires verbatim quotes from **both** documents (cross-source rule in `goodness-rubric.md` Part 5).",
+   "reference_overlap": {
+    "file": "references/report-format.md",
+    "quote": "99.95% trailing baseline"
+   }
+  },
+  {
+   "id": "G6",
+   "accepted": [
+    "AP-09"
+   ],
+   "team": "Data",
+   "location": "Data KR D1.3",
+   "evidence": [
+    {
+     "item": "KR D1.3"
+    }
+   ],
+   "note": "\"Significantly improve data quality across core tables\" names no metric, instrument, baseline, or target — it can never be honestly scored."
+  },
+  {
+   "id": "G7",
+   "accepted": [
+    "AP-04"
+   ],
+   "team": "Platform",
+   "location": "Platform KR PL1.3",
+   "evidence": [
+    {
+     "item": "KR PL1.3"
+    }
+   ],
+   "note": "\"Improve internal developer satisfaction score to 8/10\" has no baseline anywhere in the corpus (and the unnamed survey instrument additionally depresses K5)."
+  },
+  {
+   "id": "A1",
+   "accepted": [
+    "AL-02"
+   ],
+   "teams": [
+    "Payments",
+    "Growth"
+   ],
+   "location": "Payments KR P2.2 ↔ Growth KR G2.1",
+   "evidence": [
+    {
+     "item": "KR P2.2"
+    },
+    {
+     "item": "KR G2.1"
+    }
+   ],
+   "note": "Step-up verification on 90% of transactions adds checkout friction while Growth targets checkout conversion 58%→68% — one team's lever predictably damages the other's target, and neither mentions the other team.",
+   "reference_overlap": {
+    "file": "references/report-format.md",
+    "quote": "Increase step-up verification coverage to 90% of transactions"
+   }
+  },
+  {
+   "id": "A2",
+   "accepted": [
+    "AL-01"
+   ],
+   "teams": [
+    "Data",
+    "Platform"
+   ],
+   "location": "Data KR D1.1 ↔ Platform OKRs",
+   "evidence": [
+    {
+     "section": "Data team"
+    },
+    {
+     "section": "Platform team"
+    }
+   ],
+   "note": "Data's 100% schema migration \"rides on the streaming pipeline migration... handled at the infra level\" (Data notes), but nothing in Platform's OKRs or notes mentions the pipeline, and Platform holds \"all non-critical infra requests until Q4.\""
+  },
+  {
+   "id": "A3",
+   "accepted": [
+    "AL-06"
+   ],
+   "teams": [
+    "Growth",
+    "Payments"
+   ],
+   "location": "Growth KR G1.3 ↔ Payments KR P1.2",
+   "evidence": [
+    {
+     "item": "KR G1.3"
+    },
+    {
+     "item": "KR P1.2"
+    }
+   ],
+   "note": "Growth needs the billing API for self-serve upgrades \"by Aug 15\"; Payments targets API v2 GA \"by Sep 26\" — a ~6-week inversion acknowledged by neither KR."
+  },
+  {
+   "id": "A4",
+   "accepted": [
+    "AL-03",
+    "AL-02"
+   ],
+   "alternate_note": "AL-02 also accepted for the incompatible activation targets — either ID, counted once",
+   "teams": [
+    "Growth",
+    "Data"
+   ],
+   "location": "Growth Objective G1 + KR G1.2 ↔ Data Objective D2 + KR D2.2",
+   "evidence": [
+    {
+     "section": "Growth team"
+    },
+    {
+     "section": "Data team"
+    }
+   ],
+   "note": "Both teams claim new-user onboarding/activation with no cross-reference or division of labor, and target the same activation metric with different numbers (40% vs 35%). This is **one** defect — a report that splits it into two findings double-counts."
+  },
+  {
+   "id": "A5",
+   "accepted": [
+    "AL-07"
+   ],
+   "teams": [
+    "Payments",
+    "Data",
+    "Platform"
+   ],
+   "location": "Payments notes + Data notes ↔ Platform notes",
+   "evidence": [
+    {
+     "section": "Payments team"
+    },
+    {
+     "section": "Data team"
+    },
+    {
+     "section": "Platform team"
+    }
+   ],
+   "note": "Payments assumes Platform provisions PCI-scoped infra in July; Data assumes Platform runs the pipeline migration; Platform states Q3 is \"fully committed\" — two implicit bookings against capacity declared not to exist.",
+   "reference_overlap": {
+    "file": "references/report-format.md",
+    "quote": "implicitly committed to work by two other teams"
+   }
+  },
+  {
+   "id": "A6",
+   "accepted": [
+    "AL-04"
+   ],
+   "teams": [
+    "Data"
+   ],
+   "location": "Data Objective D1 ↔ Company priorities C1–C4",
+   "evidence": [
+    {
+     "item": "Objective D1"
+    },
+    {
+     "section": "Company",
+     "optional": true
+    }
+   ],
+   "note": "\"One trustworthy source of truth\" has no explicit parent link, moves no company-level metric, and no priority on page 88101 mentions data-platform work — all three orphan checks fail."
+  },
+  {
+   "id": "A7",
+   "accepted": [
+    "AL-10"
+   ],
+   "teams": [
+    "Payments",
+    "Growth",
+    "Platform",
+    "Data"
+   ],
+   "location": "Company priority C4 ↔ all four teams",
+   "evidence": [
+    {
+     "section": "Company"
+    },
+    {
+     "section": "Payments team",
+     "optional": true
+    },
+    {
+     "section": "Growth team",
+     "optional": true
+    },
+    {
+     "section": "Platform team",
+     "optional": true
+    },
+    {
+     "section": "Data team",
+     "optional": true
+    }
+   ],
+   "note": "\"Launch Brightledger Capital: invoice-financing pilot live with 3 design partners by Sep 30\" is a dated company priority that no team's objectives, KRs, or notes mention — the portfolio has a hole."
+  }
+ ],
+ "non_defects": [
+  {
+   "id": "N1",
+   "forbid": [
+    "AP-07"
+   ],
+   "at": [
+    {
+     "item": "KR P2.1"
+    }
+   ],
+   "text": "**Payments KR P2.1** (chargeback 0.9% → 0.45%): an ambitious but legitimate 2x cut — far below AP-07's >5x bar, with the mechanism (P2.2 step-up coverage) stated on the same page."
+  },
+  {
+   "id": "N2",
+   "forbid": [
+    "AP-01",
+    "AP-14"
+   ],
+   "at": [
+    {
+     "item": "KR G1.3"
+    }
+   ],
+   "text": "**Growth KR G1.3** (\"Launch self-serve plan upgrades by Aug 15 and drive 300 upgrades through the new flow this quarter\"): carries a countable adoption outcome (300 upgrades), so neither AP-01 nor AP-14 applies despite \"Launch... by\". (Its date is load-bearing evidence for A3, which *is* on the key.)"
+  },
+  {
+   "id": "N3",
+   "forbid": [
+    "AP-01"
+   ],
+   "at": [
+    {
+     "item": "KR D2.1"
+    }
+   ],
+   "text": "**Data KR D2.1** (\"Ship personalized onboarding checklists to 100% of new signups\"): \"Ship\" plus a coverage denominator (100% of new signups) is an adoption measure, not a pure milestone — not AP-01."
+  },
+  {
+   "id": "N4",
+   "forbid": [
+    "AL-08",
+    "AL-09"
+   ],
+   "at": [
+    {
+     "item": "KR P1.1"
+    },
+    {
+     "item": "KR G2.1"
+    }
+   ],
+   "text": "**Payments KR P1.1 vs Growth KR G2.1**: \"checkout success rate\" (91.2% → 95%, card transactions) and \"checkout conversion\" (58% → 68%, self-serve signups) are different metrics with different names and populations — not AL-08 and not AL-09."
+  },
+  {
+   "id": "N5",
+   "forbid": [
+    "AP-08"
+   ],
+   "at": [],
+   "text": "**AP-08 · Committed vs Aspirational Not Labeled does not fire**: every team page states a commitment convention and Growth marks G2.3 aspirational."
+  },
+  {
+   "id": "N6",
+   "forbid": [
+    "AL-02",
+    "AL-09"
+   ],
+   "at": [
+    {
+     "section": "Company"
+    },
+    {
+     "item": "KR P2.1"
+    }
+   ],
+   "text": "**Company C3 vs Payments KR P2.1**: \"under 0.5%\" and \"to 0.45%\" are consistent targets on the same metric — not AL-02 and not AL-09."
+  }
+ ],
+ "not_covered": [
+  "AL-05",
+  "AL-08",
+  "AL-09",
+  "AL-11",
+  "AL-12",
+  "AP-05",
+  "AP-07",
+  "AP-08",
+  "AP-10",
+  "AP-11",
+  "AP-12",
+  "AP-13",
+  "AP-15"
+ ],
+ "not_covered_note": "",
+ "slices": {
+  "platform-single-team": {
+   "team": "Platform",
+   "mode": "single-team",
+   "input_sections": [
+    "Platform team",
+    "Appendix"
+   ],
+   "strategy_provided": false,
+   "expected": [
+    "G4",
+    "G5",
+    "G7"
+   ],
+   "budget": 1,
+   "forbid_al": true,
+   "o4": "N/A",
+   "render": {
+    "title": "Single-team eval slice (Platform)",
+    "intro": "Grades **single-team mode** against this same fixture — no separate fixture needed.",
+    "run": "review the **Platform team** alone, in single-team mode. Input scope: the \"Platform team — Q3 2026\" section plus the \"Appendix — Q2 2026 business review (extracts)\" section. The company-priorities section is **not** provided, so the report must state that company-level strategy tracing was out of scope. Content from other teams' sections is outside the slice's input scope.",
+    "must": [
+     "surface **G4 (AP-02 · Binary KR with No Gradient), G5 (AP-06 · Sandbagged Target), and G7 (AP-04 · KR Without Baseline)**, each cited by canonical ID with verbatim quotes and source refs — G5 quoting **both** the KR and the appendix's trailing actual (the cross-source rule applies unchanged in single-team mode);",
+     "report **zero AL-XX findings** — Platform's notes tempt a contention/dependency story, but the counterparty is out of scope; cross-team mentions belong under outbound dependency notes, unverified, with no severity;",
+     "score **O4 as N/A** per the rubric's no-strategy-source rule (no strategy source exists in the slice's input scope), with the rubric's gap note recorded in the score section — not a findings-section entry, and not counted against the budget below;",
+     "contain **zero fabricated quotes** — every quoted span must exist character-for-character in this file;",
+     "raise **no more than 1 finding beyond the three in item 1**, with any finding grounded in content outside the slice's input scope counting against that budget."
+    ]
+   }
+  }
+ },
+ "triage": [
+  {
+   "id": "T1",
+   "finding": "AP-10",
+   "anchor": {
+    "item": "Objective PL1"
+   },
+   "bucket": "fixture-ambiguous",
+   "decision": "tolerate until the objective wording is disambiguated",
+   "rationale": "self-test entry",
+   "status": "known-red"
+  }
+ ],
+ "_frozen": "Self-test snapshot of evals/keys/sample-portfolio.json without triage entries; the self-test corpus grades against this file so live triage decisions never move its expectations."
+}

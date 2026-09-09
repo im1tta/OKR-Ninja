@@ -1,0 +1,1359 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-09T07:38:38Z",
+  "mode": "portfolio",
+  "provenance": {
+    "batch": "2026-09-09-smoke-02f27be",
+    "tier": "smoke",
+    "arm": "candidate",
+    "slice": "fixture1-portfolio",
+    "run": 1,
+    "skill_sha": "02f27bece216b8ac870e327ef582f4458d11dbd9",
+    "dirty": false,
+    "skill_ref": "worktree",
+    "model": "claude-fable-5-1",
+    "prompt_hash": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",
+    "key_hash": "b0c0812183820a1dc5dc7980d77d669754d00d6260bf5bb2745645ccbe5010c9",
+    "key_hash_at_plan": "b0c0812183820a1dc5dc7980d77d669754d00d6260bf5bb2745645ccbe5010c9",
+    "started_at": "2026-09-09T07:38:38Z",
+    "wall_seconds": 3725.7,
+    "tokens": 250902
+  },
+  "findings_parsed": 14,
+  "produced": true,
+  "rows": {
+    "G1": {
+      "status": "found",
+      "matched_id": "AP-01",
+      "id_exact": true,
+      "finding_line": 87
+    },
+    "G2": {
+      "status": "found",
+      "matched_id": "AP-04",
+      "id_exact": true,
+      "finding_line": 72
+    },
+    "G3": {
+      "status": "found",
+      "matched_id": "AP-03",
+      "id_exact": true,
+      "finding_line": 78
+    },
+    "G4": {
+      "status": "found",
+      "matched_id": "AP-02",
+      "id_exact": true,
+      "finding_line": 64
+    },
+    "G5": {
+      "status": "found",
+      "matched_id": "AP-06",
+      "id_exact": true,
+      "finding_line": 43
+    },
+    "G6": {
+      "status": "found",
+      "matched_id": "AP-09",
+      "id_exact": true,
+      "finding_line": 35
+    },
+    "G7": {
+      "status": "missed",
+      "matched_id": null,
+      "id_exact": false,
+      "partials": []
+    },
+    "A1": {
+      "status": "missed",
+      "matched_id": null,
+      "id_exact": false,
+      "partials": []
+    },
+    "A2": {
+      "status": "found",
+      "matched_id": "AL-01",
+      "id_exact": true,
+      "finding_line": 126
+    },
+    "A3": {
+      "status": "found",
+      "matched_id": "AL-06",
+      "id_exact": true,
+      "finding_line": 106
+    },
+    "A4": {
+      "status": "found",
+      "matched_id": "AL-03",
+      "id_exact": true,
+      "finding_line": 136
+    },
+    "A5": {
+      "status": "found",
+      "matched_id": "AL-07",
+      "id_exact": true,
+      "finding_line": 95
+    },
+    "A6": {
+      "status": "found",
+      "matched_id": "AL-04",
+      "id_exact": true,
+      "finding_line": 146
+    },
+    "A7": {
+      "status": "found",
+      "matched_id": "AL-10",
+      "id_exact": true,
+      "finding_line": 116
+    }
+  },
+  "findings": [
+    {
+      "heading": "### [Critical] AP-09 Metric Nobody Can Measure — Data",
+      "report_line": 35,
+      "severity": "Critical",
+      "id": "AP-09",
+      "kind": "match",
+      "anchor": "KR D1.3",
+      "key": "AP-09@KR D1.3",
+      "match": {
+        "row": "G6",
+        "matched_id": "AP-09",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Significantly improve data quality across core tables.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 76,
+          "section": "Data team",
+          "ref_line": 76,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "data quality",
+        "data quality",
+        "KR D1.3: Core-table data-quality checks (freshness, null-rate, referential integrity — `<named checks>` in `<data-quality tool>`) passing: `<baseline>`% → `<target>`% of checks green, measured weekly."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-06 Sandbagged Target — Platform",
+      "report_line": 43,
+      "severity": "Major",
+      "id": "AP-06",
+      "kind": "match",
+      "anchor": "KR PL1.1",
+      "key": "AP-06@KR PL1.1",
+      "match": {
+        "row": "G5",
+        "matched_id": "AP-06",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 57,
+          "section": "Platform team",
+          "ref_line": 57,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 89,
+          "section": "Appendix",
+          "ref_line": 89,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "achieved",
+        "KR PL1.1: API uptime (Datadog SLO monitor, trailing 90 days) 99.95% → `<≥99.97%>`, with zero SLO-breaching incidents in Q3."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-10 BAU Dressed as OKR — Platform",
+      "report_line": 50,
+      "severity": "Major",
+      "id": "AP-10",
+      "kind": "duplicate",
+      "anchor": "KR PL1.1",
+      "key": "AP-10@KR PL1.1",
+      "match": null,
+      "duplicate_of": "G5",
+      "partial": [],
+      "flags": [
+        "off_key"
+      ],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 57,
+          "section": "Platform team",
+          "ref_line": 57,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 56,
+          "section": "Platform team",
+          "ref_line": 56,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Maintain",
+        "Keep the lights on",
+        "cheaper",
+        "KR PL1.1: Customer-facing Sev1–Sev2 incidents `<Q2 count>` → `<target>` per quarter; p95 API latency `<baseline>` ms → `<target>` ms."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-12 Orphan KR — Platform",
+      "report_line": 57,
+      "severity": "Major",
+      "id": "AP-12",
+      "kind": "extra",
+      "anchor": "KR PL1.3",
+      "key": "AP-12@KR PL1.3",
+      "match": null,
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [
+        "off_key"
+      ],
+      "excluded": true,
+      "triage": "T1",
+      "bucket": "rubric-gap",
+      "evidence": [
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 59,
+          "section": "Platform team",
+          "ref_line": 59,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 56,
+          "section": "Platform team",
+          "ref_line": 56,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Keep the lights on, cheaper",
+        "from",
+        "satisfaction",
+        "developer",
+        "survey",
+        "Objective PL3: Engineers ship without waiting on Platform",
+        "KR PL3.1: Internal developer satisfaction (quarterly `<survey instrument>`, n ≥ `<n>`) `<Q2 baseline>`/10 → 8/10",
+        "KR PL1.3: Infra change lead time (request → provisioned) `<baseline>` days → `<target>` days."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-02 Binary KR with No Gradient — Platform",
+      "report_line": 64,
+      "severity": "Major",
+      "id": "AP-02",
+      "kind": "match",
+      "anchor": "KR PL2.2",
+      "key": "AP-02@KR PL2.2",
+      "match": {
+        "row": "G4",
+        "matched_id": "AP-02",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Complete the SOC 2 Type II audit.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 63,
+          "section": "Platform team",
+          "ref_line": 63,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "KR PL2.2: SOC 2 Type II evidence requests closed `<0/N>` → `<N/N>` by `<date>`; auditor fieldwork complete by `<date>`; Type II report received by `<date>`."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-04 KR Without Baseline — Growth",
+      "report_line": 72,
+      "severity": "Major",
+      "id": "AP-04",
+      "kind": "match",
+      "anchor": "KR G1.1",
+      "key": "AP-04@KR G1.1",
+      "match": {
+        "row": "G2",
+        "matched_id": "AP-04",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Increase trial-to-paid conversion to 22%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 39,
+          "section": "Growth team",
+          "ref_line": 39,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "trial-to-paid",
+        "KR G1.1: Trial-to-paid conversion `<Q2 actual>`% → 22% (30-day trial cohorts, per `<billing/analytics source>`)."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-03 Vanity Metric — Growth",
+      "report_line": 78,
+      "severity": "Major",
+      "id": "AP-03",
+      "kind": "match",
+      "anchor": "KR G2.3",
+      "key": "AP-03@KR G2.3",
+      "match": {
+        "row": "G3",
+        "matched_id": "AP-03",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Reach 50,000 monthly blog pageviews. *(aspirational)*",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 46,
+          "section": "Growth team",
+          "ref_line": 46,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Turn our funnel into a machine",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 43,
+          "section": "Growth team",
+          "ref_line": 43,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "blog",
+        "pageview",
+        "KR G2.3 (aspirational): Qualified signups attributed to organic content `<baseline>`/mo → `<target>`/mo (per `<attribution source>`)."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-01 Task Masquerading as KR — Payments",
+      "report_line": 87,
+      "severity": "Major",
+      "id": "AP-01",
+      "kind": "match",
+      "anchor": "KR P1.2",
+      "key": "AP-01@KR P1.2",
+      "match": {
+        "row": "G1",
+        "matched_id": "AP-01",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Ship checkout & billing API v2 to GA by Sep 26.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 23,
+          "section": "Payments team",
+          "ref_line": 23,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "KR P1.2: `<target>`% of card-transaction checkout volume served by checkout & billing API v2 by Sep 26, with v2 authorization success rate ≥ v1's."
+      ]
+    },
+    {
+      "heading": "### [Critical] AL-07 Resource contention: Platform ↔ Payments ↔ Data",
+      "report_line": 95,
+      "severity": "Critical",
+      "id": "AL-07",
+      "kind": "match",
+      "anchor": "KR P1.2",
+      "key": "AL-07@KR P1.2",
+      "match": {
+        "row": "A5",
+        "matched_id": "AL-07",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "API v2 GA depends on the new PCI-scoped infra — assuming Platform provisions this in July as discussed in standup.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 30,
+          "section": "Payments team",
+          "ref_line": 30,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Ship checkout & billing API v2 to GA by Sep 26.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 23,
+          "section": "Payments team",
+          "ref_line": 23,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (aspirational).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 19,
+          "section": "Payments team",
+          "ref_line": 19,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "schema v2 rollout rides on the streaming pipeline migration; we've sized our part at 3 engineer-months and expect the pipeline itself to be handled at the infra level.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 82,
+          "section": "Data team",
+          "ref_line": 82,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Migrate 100% of product events to unified event schema v2.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 74,
+          "section": "Data team",
+          "ref_line": 74,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (aspirational).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 71,
+          "section": "Data team",
+          "ref_line": 71,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Q3 is fully committed between SOC 2 evidence collection and the cost work. Holding all non-critical infra requests until Q4.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 65,
+          "section": "Platform team",
+          "ref_line": 65,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "the infra level",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 82,
+          "section": "Data team",
+          "ref_line": 82,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "in July",
+        "Plural demand ≠ contention",
+        "Payments",
+        "PCI",
+        "API v2",
+        "Data",
+        "pipeline",
+        "streaming",
+        "schema",
+        "provision",
+        "the infra level",
+        "Platform",
+        "Late date ≠ inversion",
+        "infra requests",
+        "until Q4"
+      ]
+    },
+    {
+      "heading": "### [Critical] AL-06 Timeline mismatch: Growth ↔ Payments",
+      "report_line": 106,
+      "severity": "Critical",
+      "id": "AL-06",
+      "kind": "match",
+      "anchor": "KR G1.3",
+      "key": "AL-06@KR G1.3",
+      "match": {
+        "row": "A3",
+        "matched_id": "AL-06",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [
+        "unverified"
+      ],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Launch self-serve plan upgrades by Aug 15 and drive 300 upgrades through the new flow this quarter.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 41,
+          "section": "Growth team",
+          "ref_line": 41,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "self-serve upgrades (G1.3) will use the new billing API — Marcus synced with Priya in June, should be fine.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 48,
+          "section": "Growth team",
+          "ref_line": 48,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (aspirational).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 36,
+          "section": "Growth team",
+          "ref_line": 36,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Ship checkout & billing API v2 to GA by Sep 26.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 23,
+          "section": "Payments team",
+          "ref_line": 23,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (aspirational).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 19,
+          "section": "Payments team",
+          "ref_line": 19,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Late date ≠ inversion",
+          "role": "supporting",
+          "class": "unverified",
+          "input_line": null,
+          "section": null,
+          "ref_line": 23,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "beta",
+          "role": "supporting",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 23,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "preview",
+          "role": "supporting",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 23,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "alpha",
+          "role": "supporting",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 23,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "early access",
+          "role": "supporting",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 23,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "sandbox",
+          "role": "supporting",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 23,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "staging",
+          "role": "supporting",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 23,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "the new billing API",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 48,
+          "section": "Growth team",
+          "ref_line": 23,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "the new billing API",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 48,
+          "section": "Growth team",
+          "ref_line": 18,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "checkout & billing API v2",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 23,
+          "section": "Payments team",
+          "ref_line": 18,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "300 upgrades ... this quarter",
+        "should be fine",
+        "300 upgrades"
+      ]
+    },
+    {
+      "heading": "### [Critical] AL-10 Strategy coverage gap: Company priorities (C4) ↔ Payments / Growth / Platform / Data",
+      "report_line": 116,
+      "severity": "Critical",
+      "id": "AL-10",
+      "kind": "match",
+      "anchor": "Objective P1",
+      "key": "AL-10@Objective P1",
+      "match": {
+        "row": "A7",
+        "matched_id": "AL-10",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "**C4 — Launch Brightledger Capital:** invoice-financing pilot live with 3 design partners by Sep 30.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 13,
+          "section": "Company",
+          "ref_line": 13,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Owner: Dana W. (CEO)",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Company",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Capital",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 13,
+          "section": "Company",
+          "ref_line": 21,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "financing",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 13,
+          "section": "Company",
+          "ref_line": 21,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "invoice-financing",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 13,
+          "section": "Company",
+          "ref_line": 21,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "pilot",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 13,
+          "section": "Company",
+          "ref_line": 21,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "design partner",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 13,
+          "section": "Company",
+          "ref_line": 21,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "lending",
+          "role": "evidence",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 21,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "credit",
+          "role": "evidence",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 21,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "loan",
+          "role": "evidence",
+          "class": "term",
+          "input_line": null,
+          "section": null,
+          "ref_line": 21,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Make checkout something customers never think about",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Payments team",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Cut fraud losses without drama",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 26,
+          "section": "Payments team",
+          "ref_line": 26,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Zero hits ≠ coverage gap"
+      ]
+    },
+    {
+      "heading": "### [Major] AL-01 Unacknowledged dependency: Data ↔ Platform",
+      "report_line": 126,
+      "severity": "Major",
+      "id": "AL-01",
+      "kind": "match",
+      "anchor": "KR D1.1",
+      "key": "AL-01@KR D1.1",
+      "match": {
+        "row": "A2",
+        "matched_id": "AL-01",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Migrate 100% of product events to unified event schema v2.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 74,
+          "section": "Data team",
+          "ref_line": 74,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "schema v2 rollout rides on the streaming pipeline migration; we've sized our part at 3 engineer-months and expect the pipeline itself to be handled at the infra level.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 82,
+          "section": "Data team",
+          "ref_line": 82,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "pipeline",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 82,
+          "section": "Data team",
+          "ref_line": 65,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "streaming",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 82,
+          "section": "Data team",
+          "ref_line": 65,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "schema",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": null,
+          "section": null,
+          "ref_line": 65,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": true
+        },
+        {
+          "text": "event",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 74,
+          "section": "Data team",
+          "ref_line": 65,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Data",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": null,
+          "section": null,
+          "ref_line": 65,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": true
+        },
+        {
+          "text": "migration",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 82,
+          "section": "Data team",
+          "ref_line": 65,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Holding all non-critical infra requests until Q4.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 65,
+          "section": "Platform team",
+          "ref_line": 65,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "our part",
+        "rides on",
+        "handled at the infra level",
+        "Missing mention ≠ unacknowledged",
+        "the infra level"
+      ]
+    },
+    {
+      "heading": "### [Major] AL-03 Duplicated / overlapping objectives: Growth ↔ Data",
+      "report_line": 136,
+      "severity": "Major",
+      "id": "AL-03",
+      "kind": "match",
+      "anchor": "Objective G1",
+      "key": "AL-03@Objective G1",
+      "match": {
+        "row": "A4",
+        "matched_id": "AL-03",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Make the first week with Brightledger magical",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 38,
+          "section": "Growth team",
+          "ref_line": 38,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Lift new-user activation rate (first invoice sent within 7 days) from 31% to 40%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 40,
+          "section": "Growth team",
+          "ref_line": 40,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Own onboarding personalization end-to-end",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 78,
+          "section": "Data team",
+          "ref_line": 78,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Ship personalized onboarding checklists to 100% of new signups.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 79,
+          "section": "Data team",
+          "ref_line": 79,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Lift new-user activation rate to 35% via onboarding experiments.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 80,
+          "section": "Data team",
+          "ref_line": 80,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "new-user activation rate",
+        "Similar objectives ≠ duplication",
+        "the infra level",
+        "first invoice sent within 7 days",
+        "new-user activation rate"
+      ]
+    },
+    {
+      "heading": "### [Minor] AL-04 Orphan objective: Data ↔ Company priorities",
+      "report_line": 146,
+      "severity": "Minor",
+      "id": "AL-04",
+      "kind": "match",
+      "anchor": "Objective D1",
+      "key": "AL-04@Objective D1",
+      "match": {
+        "row": "A6",
+        "matched_id": "AL-04",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "One trustworthy source of truth",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 73,
+          "section": "Data team",
+          "ref_line": 73,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Migrate 100% of product events to unified event schema v2.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 74,
+          "section": "Data team",
+          "ref_line": 74,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Cut critical-dashboard data latency from 6h to 1h.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 75,
+          "section": "Data team",
+          "ref_line": 75,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Significantly improve data quality across core tables.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 76,
+          "section": "Data team",
+          "ref_line": 76,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "we've sized our part at 3 engineer-months",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 82,
+          "section": "Data team",
+          "ref_line": 82,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "**C1 — Grow self-serve revenue:** mid-market self-serve ARR from $8.4M to $11M run-rate by end of Q3.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Company",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "**C2 — Become enterprise-ready:** complete SOC 2 Type II and hold enterprise-grade reliability.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 11,
+          "section": "Company",
+          "ref_line": 11,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "**C3 — Cut fraud losses:** bring chargeback rate under 0.5% after the Q2 incident.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 12,
+          "section": "Company",
+          "ref_line": 12,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "**C4 — Launch Brightledger Capital:** invoice-financing pilot live with 3 design partners by Sep 30.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 13,
+          "section": "Company",
+          "ref_line": 13,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "checkout success rate ... for card transactions",
+          "role": "supporting",
+          "class": "near_miss",
+          "input_line": 22,
+          "section": "Payments team",
+          "ref_line": 30,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "checkout conversion ... for self-serve signups",
+          "role": "supporting",
+          "class": "near_miss",
+          "input_line": 44,
+          "section": "Growth team",
+          "ref_line": 30,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "No parent link ≠ orphan",
+        "3 engineer-months"
+      ]
+    }
+  ],
+  "extras": [],
+  "duplicates": [
+    "AP-10@KR PL1.1"
+  ],
+  "excluded": [
+    "AP-12@KR PL1.3"
+  ],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 2
+  },
+  "budget": {
+    "limit": 2,
+    "counted": 1,
+    "excluded": 1
+  },
+  "quotes": {
+    "total": 72,
+    "evidence": 59,
+    "supporting": 13,
+    "verbatim": 60,
+    "near_miss": 2,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 1,
+    "term": 9,
+    "ambiguous": 2,
+    "key_leak": 0,
+    "mentions": 55,
+    "fabricated_spans": [],
+    "unverified_spans": [
+      {
+        "text": "Late date ≠ inversion",
+        "finding": "### [Critical] AL-06 Timeline mismatch: Growth ↔ Payments",
+        "key_leak": false
+      }
+    ]
+  },
+  "structure": {
+    "pass": true,
+    "failures": [],
+    "warnings": [
+      "unverified supporting quote 'Late date ≠ inversion': ### [Critical] AL-06 Timeline mismatch: Growth ↔ Payments",
+      "ref says line 23 but quote is on input line 48: ### [Critical] AL-06 Timeline mismatch: Growth ↔ Payments",
+      "ref says line 18 but quote is on input line 48: ### [Critical] AL-06 Timeline mismatch: Growth ↔ Payments",
+      "ref says line 18 but quote is on input line 23: ### [Critical] AL-06 Timeline mismatch: Growth ↔ Payments",
+      "ref says line 21 but quote is on input line 13: ### [Critical] AL-10 Strategy coverage gap: Company priorities (C4) ↔ Payments / Growth / Platform / Data",
+      "ref says line 21 but quote is on input line 13: ### [Critical] AL-10 Strategy coverage gap: Company priorities (C4) ↔ Payments / Growth / Platform / Data",
+      "ref says line 21 but quote is on input line 13: ### [Critical] AL-10 Strategy coverage gap: Company priorities (C4) ↔ Payments / Growth / Platform / Data",
+      "ref says line 21 but quote is on input line 13: ### [Critical] AL-10 Strategy coverage gap: Company priorities (C4) ↔ Payments / Growth / Platform / Data",
+      "ref says line 21 but quote is on input line 13: ### [Critical] AL-10 Strategy coverage gap: Company priorities (C4) ↔ Payments / Growth / Platform / Data",
+      "ref says line 65 but quote is on input line 82: ### [Major] AL-01 Unacknowledged dependency: Data ↔ Platform",
+      "ref says line 65 but quote is on input line 82: ### [Major] AL-01 Unacknowledged dependency: Data ↔ Platform",
+      "quote occurs on several input lines and the ref names none of them, not anchored: 'schema' (### [Major] AL-01 Unacknowledged dependency: Data ↔ Platform)",
+      "ref says line 65 but quote is on input line 74: ### [Major] AL-01 Unacknowledged dependency: Data ↔ Platform",
+      "quote occurs on several input lines and the ref names none of them, not anchored: 'Data' (### [Major] AL-01 Unacknowledged dependency: Data ↔ Platform)",
+      "ref says line 65 but quote is on input line 82: ### [Major] AL-01 Unacknowledged dependency: Data ↔ Platform",
+      "ref says line 30 but quote is on input line 22: ### [Minor] AL-04 Orphan objective: Data ↔ Company priorities",
+      "ref says line 30 but quote is on input line 44: ### [Minor] AL-04 Orphan objective: Data ↔ Company priorities"
+    ]
+  },
+  "failures": [
+    "missed row G7 (AP-04)",
+    "missed row A1 (AL-02)"
+  ],
+  "pass": false
+}

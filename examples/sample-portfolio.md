@@ -132,6 +132,12 @@ Near-misses planted to measure false-positive discipline. Reporting one of these
 5. **AP-08 · Committed vs Aspirational Not Labeled does not fire**: every team page states a commitment convention and Growth marks G2.3 aspirational.
 6. **Company C3 vs Payments KR P2.1**: "under 0.5%" and "to 0.45%" are consistent targets on the same metric — not AL-02 and not AL-09.
 
+### Triage entries
+
+Recurring findings beyond the key, each classified once so the same debate is not re-had. A **known-red** entry is reported by the grader but excluded from the extra-findings budget until its fix lands; a **fixed** entry no longer affects counting.
+
+1. **T1 · AP-12 on KR PL1.3** — bucket: rubric-gap · status: known-red · decision: Reported but not counted until the goodness rubric gains the one-finding-per-KR rule (root-cause AP-ID, secondary IDs cross-referenced) in the content-fix change; then this entry moves to fixed. · rationale: In 3 of 5 baseline single-team runs (2026-09-08-baseline-02f27be) the skill files AP-12 Orphan KR on PL1.3 beside the planted AP-04 KR Without Baseline, arguing that developer satisfaction does not serve 'Keep the lights on, cheaper'. It is the same KR reported under a second ID, not a false detection; the alignment taxonomy already forbids this for AL findings (Part 3 §5) and the goodness rubric has no equivalent. Confirmed by the user on 2026-09-09.
+
 ### Modes deliberately not covered
 
 The fixture plants no instance of **AL-05, AL-08, AL-09, AL-11, or AL-12** (nor of anti-patterns AP-05, AP-07, AP-08, AP-10, AP-11, AP-12, AP-13, AP-15). A finding citing any of them is off-key and counts against the extra-findings budget.
@@ -142,7 +148,7 @@ A passing portfolio review must:
 
 1. surface **all 14 planted defects, cited by canonical ID** (where a row accepts either of two IDs, either passes — counted once), each with correct verbatim quotes and source refs;
 2. contain **zero fabricated quotes** — every quoted span must exist character-for-character in this file;
-3. raise **no more than 2 findings beyond this key** (the stated budget), with any reported item from the Intentional non-defects list counting against that budget.
+3. raise **no more than 2 findings beyond this key** (the stated budget), with any reported item from the Intentional non-defects list counting against that budget — except findings covered by an active known-red triage entry (see Triage entries), which are reported but not counted.
 
 ### Single-team eval slice (Platform)
 

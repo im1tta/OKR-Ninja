@@ -1,0 +1,63 @@
+{
+  "harness_version": 2,
+  "batch": "2026-09-09-smoke-02f27be",
+  "tier": "smoke",
+  "created": "2026-09-09T06:35:46Z",
+  "runs_per_slice": 1,
+  "slices": [
+    "fixture2-portfolio",
+    "fixture1-portfolio",
+    "fixture1-platform-single-team"
+  ],
+  "arms": {
+    "candidate": {
+      "ref": "worktree",
+      "skill_sha": "02f27bece216b8ac870e327ef582f4458d11dbd9",
+      "dirty": false,
+      "snapshot": "evals/runs/2026-09-09-smoke-02f27be/skill/candidate"
+    }
+  },
+  "prompt_hashes": {
+    "portfolio": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",
+    "single-team": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04"
+  },
+  "key_hashes": {
+    "fixture2": "a5533e3c7dea81ff8d050bdee523b562f6ee897b15ce0a7d07c73c8752473957",
+    "fixture1": "b0c0812183820a1dc5dc7980d77d669754d00d6260bf5bb2745645ccbe5010c9"
+  },
+  "runs": [
+    {
+      "arm": "candidate",
+      "slice": "fixture2-portfolio",
+      "n": 1,
+      "dir": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture2-portfolio/run-1",
+      "prompt": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture2-portfolio/run-1/prompt.md",
+      "report": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture2-portfolio/run-1/report.md",
+      "input": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture2-portfolio/input/sample-portfolio-2.md",
+      "mode": "portfolio",
+      "status": "pending"
+    },
+    {
+      "arm": "candidate",
+      "slice": "fixture1-portfolio",
+      "n": 1,
+      "dir": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture1-portfolio/run-1",
+      "prompt": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture1-portfolio/run-1/prompt.md",
+      "report": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture1-portfolio/run-1/report.md",
+      "input": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture1-portfolio/input/sample-portfolio.md",
+      "mode": "portfolio",
+      "status": "pending"
+    },
+    {
+      "arm": "candidate",
+      "slice": "fixture1-platform-single-team",
+      "n": 1,
+      "dir": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture1-platform-single-team/run-1",
+      "prompt": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture1-platform-single-team/run-1/prompt.md",
+      "report": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture1-platform-single-team/run-1/report.md",
+      "input": "evals/runs/2026-09-09-smoke-02f27be/candidate/fixture1-platform-single-team/input/sample-portfolio.md",
+      "mode": "single-team",
+      "status": "done"
+    }
+  ]
+}

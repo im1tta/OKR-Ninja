@@ -31,8 +31,13 @@ OKR-Ninja/
 │   ├── alignment-taxonomy.md       # AL-XX cross-team failure modes and how to detect them
 │   └── report-format.md            # Output contract: severity scale, source-ref format, report templates
 ├── examples/
-│   ├── sample-portfolio.md         # Fixture 1: fictional 4-team portfolio with planted defects + answer key
+│   ├── sample-portfolio.md         # Fixture 1: fictional 4-team portfolio with planted defects + generated answer key
 │   └── sample-portfolio-2.md       # Fixture 2: fictional 5-team portfolio covering the catalog modes fixture 1 leaves uncovered
+├── evals/
+│   ├── keys/                       # Canonical JSON answer keys (the fixtures' answer-key sections are generated from these)
+│   ├── prompts/                    # Frozen run-prompt templates (portfolio, single-team)
+│   ├── grader/                     # harness.py — deterministic grader/planner/scorecard (stdlib only) + selftest corpus
+│   └── runs/                       # Committed eval batches: reports, grades, scorecards
 ├── openspec/                       # OpenSpec (OPSX) change-of-record scaffold
 ├── .claude/                        # OPSX commands (commands/opsx/*) and skills (skills/openspec-*)
 ├── README.md                       # This file
@@ -82,5 +87,5 @@ Prompts asking to write new OKRs from scratch ("draft OKRs for my team") are out
 - **Single-team depth parity** — close the gaps left by absorbing single-team review with the existing rubric machinery: tracking-continuity and claimed-vs-actual-tracking dimensions (Jira activity vs stated cadence), a computed /100 headline score, deterministic check scripts (placeholder detection, coverage counts, score caps), and a dedicated single-team fixture with its own answer key (today single-team mode is evaluated via fixture 1's Platform slice).
 - **Historical drift tracking** — compare a team's OKRs quarter-over-quarter to surface silently dropped KRs, moving goalposts, and recycled objectives.
 - **Scoring calibration set** — a labelled corpus of real-world (anonymized) OKRs with agreed rubric scores, to keep 0–4 scoring consistent across model versions.
-- **CI eval harness** — automated evals (via skill-creator's eval tooling) that run the skill against each fixture under `examples/` and assert its eval criterion — all planted defects found by ID, zero fabricated quotes, no more findings beyond the answer key than its stated budget — so regressions fail CI. (The OPSX verify gate already runs a scoped version of this fixture eval on every skill-content change; docs-only changes skip it.)
+- **Eval harness (landed)** — `evals/` holds canonical JSON answer keys, a deterministic grader with self-tests, and the `/okr-eval` command, which runs the skill against each fixture as subagents on your Claude Code subscription (no API tokens) and grades every report: all planted defects found by canonical ID, zero fabricated quotes, no more counted findings beyond the key than its budget. Tiers: `smoke` (1 run per slice, wired into the OPSX verify gate), `baseline` (5 runs per slice at a git ref) and `decision` (5 runs per slice per arm, old skill vs new, with a fixed regression rule). Scorecards live under `evals/runs/`. Still open: a headless `claude -p` driver for CI, and automated routing tests for the skill description.
 - **More fixtures** — larger portfolios (8–12 teams). (Full-catalog defect coverage landed with `examples/sample-portfolio-2.md`, which plants the 13 modes fixture 1 leaves uncovered; both fixtures carry near-miss non-defects to measure false-positive rate.)

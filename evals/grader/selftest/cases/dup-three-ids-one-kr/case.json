@@ -1,0 +1,21 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": "platform-single-team",
+  "report": "report.md",
+  "expected": {
+    "rows.G7.status": "found",
+    "rows.G7.matched_id": "AP-04",
+    "duplicates": [
+      "AP-09@KR PL1.3",
+      "AP-12@KR PL1.3"
+    ],
+    "extras": [],
+    "budget.counted": 2,
+    "pass": false,
+    "failures": {
+      "contains": [
+        "budget exceeded: 2 counted findings > 1"
+      ]
+    }
+  }
+}

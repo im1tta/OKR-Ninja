@@ -1,0 +1,13 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "quotes.verbatim": 1,
+    "quotes.ambiguous": 0,
+    "extras": [
+      "AP-08@Platform team"
+    ],
+    "violations.non_defect": 1
+  }
+}

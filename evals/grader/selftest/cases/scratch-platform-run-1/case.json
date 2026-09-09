@@ -1,0 +1,22 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": "platform-single-team",
+  "report": "report.md",
+  "input": "input.md",
+  "expected": {
+    "pass": false,
+    "budget.counted": 3,
+    "quotes.fabricated": 0,
+    "structure.pass": true,
+    "extras": [
+      "AP-10@Objective PL1"
+    ],
+    "duplicates": [
+      "AP-09@KR PL1.3",
+      "AP-12@KR PL1.3"
+    ],
+    "rows.G4.status": "found",
+    "rows.G5.status": "found",
+    "rows.G7.status": "found"
+  }
+}

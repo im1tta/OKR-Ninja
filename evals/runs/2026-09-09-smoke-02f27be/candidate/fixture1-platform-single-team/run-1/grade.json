@@ -1,0 +1,398 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-09T06:54:03Z",
+  "mode": "single-team",
+  "provenance": {
+    "batch": "2026-09-09-smoke-02f27be",
+    "tier": "smoke",
+    "arm": "candidate",
+    "slice": "fixture1-platform-single-team",
+    "run": 1,
+    "skill_sha": "02f27bece216b8ac870e327ef582f4458d11dbd9",
+    "dirty": false,
+    "skill_ref": "worktree",
+    "model": "claude-fable-5-1",
+    "prompt_hash": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04",
+    "key_hash": "b0c0812183820a1dc5dc7980d77d669754d00d6260bf5bb2745645ccbe5010c9",
+    "key_hash_at_plan": "b0c0812183820a1dc5dc7980d77d669754d00d6260bf5bb2745645ccbe5010c9",
+    "started_at": "2026-09-09T06:54:03Z",
+    "wall_seconds": 1047.2,
+    "tokens": 160031
+  },
+  "findings_parsed": 4,
+  "produced": true,
+  "rows": {
+    "G4": {
+      "status": "found",
+      "matched_id": "AP-02",
+      "id_exact": true,
+      "finding_line": 109
+    },
+    "G5": {
+      "status": "found",
+      "matched_id": "AP-06",
+      "id_exact": true,
+      "finding_line": 101
+    },
+    "G7": {
+      "status": "found",
+      "matched_id": "AP-04",
+      "id_exact": true,
+      "finding_line": 116
+    }
+  },
+  "findings": [
+    {
+      "heading": "### [Major] AP-06 Sandbagged Target — Platform",
+      "report_line": 101,
+      "severity": "Major",
+      "id": "AP-06",
+      "kind": "match",
+      "anchor": "KR PL1.1",
+      "key": "AP-06@KR PL1.1",
+      "match": {
+        "row": "G5",
+        "matched_id": "AP-06",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Appendix",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (aspirational).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 5,
+          "section": "Platform team",
+          "ref_line": 5,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Maintain",
+        "maintain / stay above where baseline already exceeds target",
+        "cheaper",
+        "KR PL1.1 (committed): API uptime, trailing 90 days, per the Datadog SLO monitor: 99.95% (Q2 actual) → 99.97% at quarter end.",
+        "at or above 99.9%"
+      ]
+    },
+    {
+      "heading": "### [Major] AP-02 Binary KR with No Gradient — Platform",
+      "report_line": 109,
+      "severity": "Major",
+      "id": "AP-02",
+      "kind": "match",
+      "anchor": "KR PL2.2",
+      "key": "AP-02@KR PL2.2",
+      "match": {
+        "row": "G4",
+        "matched_id": "AP-02",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Complete the SOC 2 Type II audit.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 14,
+          "section": "Platform team",
+          "ref_line": 14,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Q3 is fully committed between SOC 2 evidence collection and the cost work.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 16,
+          "section": "Platform team",
+          "ref_line": 16,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Complete",
+        "KR PL2.2 (committed): SOC 2 Type II evidence requests closed 0/<N> → <N>/<N>, with the auditor's Type II report received by <date within Q3>."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-04 KR Without Baseline — Platform",
+      "report_line": 116,
+      "severity": "Major",
+      "id": "AP-04",
+      "kind": "match",
+      "anchor": "KR PL1.3",
+      "key": "AP-04@KR PL1.3",
+      "match": {
+        "row": "G7",
+        "matched_id": "AP-04",
+        "id_exact": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Platform team",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "to 8/10",
+        "from",
+        "KR PL1.3: Internal developer satisfaction score, quarterly internal developer survey (<survey instrument of record>, n ≥ <N>): <Q2 score>/10 → 8/10."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-12 Orphan KR — Platform",
+      "report_line": 122,
+      "severity": "Major",
+      "id": "AP-12",
+      "kind": "extra",
+      "anchor": "Objective PL1",
+      "key": "AP-12@Objective PL1",
+      "match": null,
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [
+        "off_key",
+        "unverified"
+      ],
+      "excluded": true,
+      "triage": "T1",
+      "bucket": "rubric-gap",
+      "evidence": [
+        {
+          "text": "Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 7,
+          "section": "Platform team",
+          "ref_line": 7,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Platform team",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Holding all non-critical infra requests until Q4.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 16,
+          "section": "Platform team",
+          "ref_line": 16,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Reduce cloud spend per 1,000 transactions from $4.10 to $3.20.",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 9,
+          "section": "Platform team",
+          "ref_line": 9,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Complete",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 14,
+          "section": "Platform team",
+          "ref_line": 5,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (aspirational).",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 5,
+          "section": "Platform team",
+          "ref_line": 5,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "no system of record could report it",
+          "role": "supporting",
+          "class": "unverified",
+          "input_line": null,
+          "section": null,
+          "ref_line": 13,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "cheaper",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 7,
+          "section": "Platform team",
+          "ref_line": 13,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Maintain",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 13,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "(currently 7 open)",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 13,
+          "section": "Platform team",
+          "ref_line": 13,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Owner: Elena R.",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 4,
+          "section": "Platform team",
+          "ref_line": 4,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Guardrail for PL1 (not scored as a KR): internal developer satisfaction score does not fall below <Q2 score>/10 while non-critical infra requests are held until Q4."
+      ]
+    }
+  ],
+  "extras": [],
+  "duplicates": [],
+  "excluded": [
+    "AP-12@Objective PL1"
+  ],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 1
+  },
+  "budget": {
+    "limit": 1,
+    "counted": 0,
+    "excluded": 1
+  },
+  "quotes": {
+    "total": 18,
+    "evidence": 9,
+    "supporting": 9,
+    "verbatim": 17,
+    "near_miss": 0,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 1,
+    "term": 0,
+    "ambiguous": 0,
+    "key_leak": 0,
+    "mentions": 11,
+    "fabricated_spans": [],
+    "unverified_spans": [
+      {
+        "text": "no system of record could report it",
+        "finding": "### [Major] AP-12 Orphan KR — Platform",
+        "key_leak": false
+      }
+    ]
+  },
+  "structure": {
+    "pass": true,
+    "failures": [],
+    "warnings": [
+      "ref says line 5 but quote is on input line 14: ### [Major] AP-12 Orphan KR — Platform",
+      "unverified supporting quote 'no system of record could report it': ### [Major] AP-12 Orphan KR — Platform",
+      "ref says line 13 but quote is on input line 7: ### [Major] AP-12 Orphan KR — Platform",
+      "ref says line 13 but quote is on input line 8: ### [Major] AP-12 Orphan KR — Platform"
+    ]
+  },
+  "failures": [],
+  "pass": true
+}
