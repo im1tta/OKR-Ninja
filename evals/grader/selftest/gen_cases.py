@@ -14,8 +14,9 @@ def case(name, report, expected, key="sample-portfolio.json", slice=None, extra_
     (d / "case.json").write_text(json.dumps(c, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 P = "sample-portfolio.md"
-def ap(sev, aid, name, team, ev_lines, why="x", rewrite="\"<placeholder>\""):
-    return "### [{}] {} {} — {}\n{}\n- Why it's a problem: {}\n- Scores affected: K1=1\n- Suggested rewrite: {}\n".format(sev, aid, name, team, "\n".join(ev_lines), why, rewrite)
+def ap(sev, aid, name, team, ev_lines, why="x", rewrite="\"<placeholder>\"", also=None):
+    lines = list(ev_lines) + (["- Also: " + also] if also else [])
+    return "### [{}] {} {} — {}\n{}\n- Why it's a problem: {}\n- Scores affected: K1=1\n- Suggested rewrite: {}\n".format(sev, aid, name, team, "\n".join(lines), why, rewrite)
 def E(q, heading, line, label="Evidence", path=P):
     return "- {}: \"{}\" ({} › {} › line {})".format(label, q, path, heading, line)
 
@@ -71,6 +72,13 @@ case("quote-repeated-line-located-by-ref", port_head + ap("Major", "AP-08", "Com
 case("quote-repeated-line-no-ref-match", port_head + ap("Major", "AP-08", "Committed vs Aspirational Not Labeled", "Platform",
      [E("Commitment: KRs are committed unless marked (aspirational).", "Platform team — Q3 2026", 999)]),
      {"quotes.verbatim": 1, "quotes.ambiguous": 1, "extras": ["AP-08@unlocated"], "structure.warnings": {"contains": ["not anchored"]}})
+
+case("secondary-folded-g7-credited", port_head + ap("Major", "AP-12", "Orphan KR", "Platform", [E(*PL13)], also="AP-04 KR Without Baseline"),
+     {"rows.G7.status": "found", "rows.G7.matched_id": "AP-04", "rows.G7.id_exact": False, "duplicates": [], "extras": []})
+case("secondary-without-anchor", port_head + ap("Major", "AP-12", "Orphan KR", "Platform", [E(*PL1)], also="AP-04 KR Without Baseline"),
+     {"rows.G7.status": "partial", "extras": ["AP-12@Objective PL1"]})
+case("secondary-prose-mention-no-credit", port_head + ap("Major", "AP-12", "Orphan KR", "Platform", [E(*PL13)], why="the KR also lacks a baseline, so AP-04 applies as well"),
+     {"rows.G7.status": "missed", "extras": ["AP-12@KR PL1.3"]})
 case("no-findings", "# Report\n\n## 1. Executive summary\n\nNothing found.\n",
      {"findings_parsed": 0, "pass": False, "structure.failures": {"contains": ["no findings parsed"]}})
 

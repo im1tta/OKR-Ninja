@@ -1,0 +1,11 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "rows.G7.status": "missed",
+    "extras": [
+      "AP-12@KR PL1.3"
+    ]
+  }
+}

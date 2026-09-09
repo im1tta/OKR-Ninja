@@ -106,7 +106,8 @@
     {
       "id": "G7",
       "accepted": [
-        "AP-04"
+        "AP-04",
+        "AP-09"
       ],
       "team": "Platform",
       "location": "Platform KR PL1.3",
@@ -115,7 +116,8 @@
           "item": "KR PL1.3"
         }
       ],
-      "note": "\"Improve internal developer satisfaction score to 8/10\" has no baseline anywhere in the corpus (and the unnamed survey instrument additionally depresses K5)."
+      "note": "\"Improve internal developer satisfaction score to 8/10\" has no baseline anywhere in the corpus (and the unnamed survey instrument additionally depresses K5).",
+      "alternate_note": "AP-09 · Metric Nobody Can Measure also accepted — either ID, counted once"
     },
     {
       "id": "A1",
@@ -421,9 +423,9 @@
         "item": "KR PL1.3"
       },
       "bucket": "rubric-gap",
-      "decision": "Reported but not counted until the goodness rubric gains the one-finding-per-KR rule (root-cause AP-ID, secondary IDs cross-referenced) in the content-fix change; then this entry moves to fixed.",
+      "decision": "Fixed by change fix-baseline-recall-gaps (2026-09-09): goodness rubric Part 5 rule 9 files one finding per KR under the root-cause ID with secondary IDs on the Also line, and the grader credits secondary IDs; a repeated block on one KR counts again from this change on.",
       "rationale": "In 3 of 5 baseline single-team runs (2026-09-08-baseline-02f27be) the skill files AP-12 Orphan KR on PL1.3 beside the planted AP-04 KR Without Baseline, arguing that developer satisfaction does not serve 'Keep the lights on, cheaper'. It is the same KR reported under a second ID, not a false detection; the alignment taxonomy already forbids this for AL findings (Part 3 §5) and the goodness rubric has no equivalent. Confirmed by the user on 2026-09-09.",
-      "status": "known-red"
+      "status": "fixed"
     }
   ]
 }

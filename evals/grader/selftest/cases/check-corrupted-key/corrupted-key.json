@@ -106,7 +106,8 @@
   {
    "id": "G7",
    "accepted": [
-    "AP-04"
+    "AP-04",
+    "AP-09"
    ],
    "team": "Platform",
    "location": "Platform KR PL1.3",
@@ -115,7 +116,8 @@
      "item": "KR PL1.3"
     }
    ],
-   "note": "\"Improve internal developer satisfaction score to 8/10\" has no baseline anywhere in the corpus (and the unnamed survey instrument additionally depresses K5)."
+   "note": "\"Improve internal developer satisfaction score to 8/10\" has no baseline anywhere in the corpus (and the unnamed survey instrument additionally depresses K5).",
+   "alternate_note": "AP-09 · Metric Nobody Can Measure also accepted — either ID, counted once"
   },
   {
    "id": "A1",

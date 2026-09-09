@@ -1,0 +1,180 @@
+{
+  "harness_version": 2,
+  "batch": "2026-09-09-repair-setlevel",
+  "tier": "candidate",
+  "created": "2026-09-09T13:02:39Z",
+  "runs_per_slice": 5,
+  "prompt_hashes": {
+    "portfolio": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",
+    "single-team": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04"
+  },
+  "key_hashes": {
+    "fixture2": "a5533e3c7dea81ff8d050bdee523b562f6ee897b15ce0a7d07c73c8752473957",
+    "fixture1": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d"
+  },
+  "key_hashes_at_plan": {
+    "fixture2": "a5533e3c7dea81ff8d050bdee523b562f6ee897b15ce0a7d07c73c8752473957",
+    "fixture1": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d"
+  },
+  "warnings": [],
+  "arms": {
+    "candidate": {
+      "skill_sha": "8d1cb12220606048868c21bc9877da44dc5b0ff2",
+      "dirty": true,
+      "ref": "worktree",
+      "models": [
+        "claude-opus-5"
+      ],
+      "slices": {
+        "fixture2-portfolio": {
+          "runs": 5,
+          "produced": 5,
+          "pass": 5,
+          "structure_pass": 5,
+          "rows": {
+            "G1": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-05"
+              ],
+              "caveat": null
+            },
+            "G2": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-07"
+              ],
+              "caveat": null
+            },
+            "G3": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-08"
+              ],
+              "caveat": null
+            },
+            "G4": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-10"
+              ],
+              "caveat": null
+            },
+            "G5": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-11"
+              ],
+              "caveat": null
+            },
+            "G6": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-12"
+              ],
+              "caveat": null
+            },
+            "G7": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-13"
+              ],
+              "caveat": null
+            },
+            "G8": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-15"
+              ],
+              "caveat": null
+            },
+            "A1": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-05"
+              ],
+              "caveat": null
+            },
+            "A2": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-08"
+              ],
+              "caveat": null
+            },
+            "A3": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-09"
+              ],
+              "caveat": null
+            },
+            "A4": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-11"
+              ],
+              "caveat": null
+            },
+            "A5": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-12"
+              ],
+              "caveat": null
+            }
+          },
+          "extras": [],
+          "violations": {
+            "non_defect": 0,
+            "off_key": 0
+          },
+          "budget_counted": [
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "quotes": {
+            "total": 275,
+            "evidence": 167,
+            "supporting": 108,
+            "verbatim": 263,
+            "near_miss": 0,
+            "out_of_scope": 0,
+            "fabricated": 0,
+            "unverified": 3,
+            "term": 9,
+            "ambiguous": 16,
+            "key_leak": 0,
+            "mentions": 131
+          },
+          "structure_failures": [],
+          "cost": {
+            "tokens_mean": 179260.0,
+            "tokens_max": 193690,
+            "seconds_mean": 962.6,
+            "seconds_max": 1140.1
+          },
+          "models": [
+            "claude-opus-5"
+          ]
+        }
+      }
+    }
+  }
+}

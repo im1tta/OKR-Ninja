@@ -640,10 +640,16 @@ def parse_report(text, names=()):
             j += 1
         block = lines[i + 1: j]
         f = {"heading": lines[i].strip(), "line": i + 1, "severity": m.group(2), "id": m.group(3),
-             "title": m.group(4).strip(), "evidence": [], "mentions": []}
+             "title": m.group(4).strip(), "evidence": [], "mentions": [], "secondary": []}
         for k, bl in enumerate(block):
+            label = line_label(bl)
+            if label.lower() == "also":
+                for sid in re.findall(r"\b(?:AP|AL)-\d{2}\b", bl):
+                    if sid != f["id"] and sid not in f["secondary"]:
+                        f["secondary"].append(sid)
+                continue
             ev, men = extract_spans(bl)
-            role = "evidence" if is_evidence_label(line_label(bl), names) else "supporting"
+            role = "evidence" if is_evidence_label(label, names) else "supporting"
             for (s, ref, rl) in ev:
                 f["evidence"].append({"text": s.strip(), "ref": ref, "ref_line": rl, "report_line": i + 2 + k,
                                       "role": role})
@@ -867,15 +873,20 @@ def grade_report(report_text, key, slice_spec, input_lines, fixture, provenance)
     claimed = {}
     for idx, f in enumerate(findings):
         f["match"], f["partial"] = None, []
-        for rid, d in rows.items():
-            if f["id"] not in d["accepted"] or rid in claimed:
-                continue
-            miss = missing_anchors(f, rid)
-            if not miss:
-                f["match"] = {"row": rid, "matched_id": f["id"], "id_exact": f["id"] == d["accepted"][0]}
-                claimed[rid] = idx
+        for cand in [f["id"]] + f["secondary"]:
+            for rid, d in rows.items():
+                if cand not in d["accepted"] or rid in claimed:
+                    continue
+                miss = missing_anchors(f, rid)
+                if not miss:
+                    f["match"] = {"row": rid, "matched_id": cand,
+                                  "id_exact": cand == f["id"] and f["id"] == d["accepted"][0],
+                                  "via_secondary": cand != f["id"]}
+                    claimed[rid] = idx
+                    break
+                f["partial"].append({"row": rid, "id": cand, "missing": [anchor_label(a) for a in miss]})
+            if f["match"]:
                 break
-            f["partial"].append({"row": rid, "missing": [anchor_label(a) for a in miss]})
     for f in findings:
         f["duplicate_of"] = None
         if f["match"]:
@@ -942,8 +953,8 @@ def grade_report(report_text, key, slice_spec, input_lines, fixture, provenance)
     for rid in expected:
         if rid in claimed:
             f = findings[claimed[rid]]
-            rows_out[rid] = {"status": "found", "matched_id": f["id"], "id_exact": f["match"]["id_exact"],
-                             "finding_line": f["line"]}
+            rows_out[rid] = {"status": "found", "matched_id": f["match"]["matched_id"], "id_exact": f["match"]["id_exact"],
+                             "via_secondary": f["match"].get("via_secondary", False), "finding_line": f["line"]}
         else:
             partials = [{"finding_line": f["line"], "missing": p["missing"]}
                         for f in findings for p in f["partial"] if p["row"] == rid]
@@ -978,7 +989,7 @@ def grade_report(report_text, key, slice_spec, input_lines, fixture, provenance)
 
     def finding_out(f):
         return {"heading": f["heading"], "report_line": f["line"], "severity": f["severity"], "id": f["id"],
-                "kind": f["kind"], "anchor": f["anchor"], "key": "%s@%s" % (f["id"], f["anchor"]),
+                "secondary": f["secondary"], "kind": f["kind"], "anchor": f["anchor"], "key": "%s@%s" % (f["id"], f["anchor"]),
                 "match": f["match"], "duplicate_of": f["duplicate_of"], "partial": f["partial"],
                 "flags": f["flags"], "excluded": f["excluded"], "triage": f["triage"], "bucket": f["bucket"],
                 "evidence": [{k: e[k] for k in ("text", "role", "class", "input_line", "section", "ref_line", "ref_line_ok", "key_leak", "ambiguous")}
@@ -1081,7 +1092,7 @@ def cmd_plan(args):
         arms = {}
         if args.tier in ("baseline", "decision"):
             arms["baseline"] = snapshot_from_git(args.baseline_ref or "main", bdir / "skill" / "baseline")
-        if args.tier in ("smoke", "decision"):
+        if args.tier in ("smoke", "candidate", "decision"):
             arms["candidate"] = snapshot_from_worktree(bdir / "skill" / "candidate")
         meta = {"harness_version": HARNESS_VERSION, "batch": batch, "tier": args.tier, "created": now_iso(),
                 "runs_per_slice": runs, "slices": slices, "arms": arms,
@@ -1335,10 +1346,27 @@ def cmd_compare(args):
         cmd_aggregate(ns)
     sc = load_json(scp)
     arms = sc["arms"]
-    if "baseline" not in arms or "candidate" not in arms:
-        raise Fail("compare needs both a baseline and a candidate arm; batch has %s" % ", ".join(arms))
-    base, cand = arms["baseline"], arms["candidate"]
     warnings = []
+    paired, baseline_batch = True, None
+    if args.baseline_batch:
+        obdir = Path(args.baseline_batch).resolve()
+        if not (obdir / "scorecard.json").exists():
+            cmd_aggregate(argparse.Namespace(batch_dir=str(obdir)))
+        other = load_json(obdir / "scorecard.json")
+        oarms = other["arms"]
+        base = oarms.get("baseline") or (list(oarms.values())[0] if len(oarms) == 1 else None)
+        if base is None:
+            raise Fail("baseline batch %s must hold a baseline arm or exactly one arm" % other["batch"])
+        if "candidate" not in arms:
+            raise Fail("compare --baseline-batch needs a candidate arm in %s" % sc["batch"])
+        cand = arms["candidate"]
+        paired, baseline_batch = False, {"batch": other["batch"], "created": other["created"]}
+        warnings.append("unpaired: baseline arm taken from batch %s (created %s), candidate from %s (created %s)" % (
+            other["batch"], other["created"], sc["batch"], sc["created"]))
+    else:
+        if "baseline" not in arms or "candidate" not in arms:
+            raise Fail("compare needs both a baseline and a candidate arm; batch has %s" % ", ".join(arms))
+        base, cand = arms["baseline"], arms["candidate"]
     if base["models"] and cand["models"] and set(base["models"]) != set(cand["models"]):
         print("error: arms ran on different models: baseline %s vs candidate %s" % (base["models"], cand["models"]))
         sys.exit(2)
@@ -1369,13 +1397,14 @@ def cmd_compare(args):
                 improvements.append({"rule": "extra_resolved", "slice": sid, "key": k, "baseline": n, "candidate": ck.get(k, 0)})
         if c["quotes"]["fabricated"] > 0:
             regressions.append({"rule": "fabricated", "slice": sid, "candidate": c["quotes"]["fabricated"]})
-    comparison = {"harness_version": HARNESS_VERSION, "batch": sc["batch"], "created": now_iso(),
+    comparison = {"harness_version": HARNESS_VERSION, "batch": sc["batch"], "created": now_iso(), "paired": paired,
+                  "baseline_batch": baseline_batch,
                   "baseline": {"skill_sha": base["skill_sha"], "models": base["models"]},
                   "candidate": {"skill_sha": cand["skill_sha"], "models": cand["models"]},
                   "regressions": regressions, "improvements": improvements, "warnings": warnings,
                   "verdict": "REGRESSION" if regressions else "OK"}
     dump_json(bdir / "comparison.json", comparison)
-    print("## Comparison %s: %s" % (sc["batch"], comparison["verdict"]))
+    print("## Comparison %s: %s%s" % (sc["batch"], comparison["verdict"], "" if paired else " (unpaired)"))
     for r in regressions:
         print("  REGRESSION %s" % json.dumps(r))
     for r in improvements:
@@ -1547,9 +1576,9 @@ def main(argv=None):
     p.set_defaults(fn=cmd_render_key)
 
     p = sub.add_parser("plan", help="create or resume a batch and list pending runs")
-    p.add_argument("--tier", choices=("smoke", "baseline", "decision"), required=True)
+    p.add_argument("--tier", choices=("smoke", "candidate", "baseline", "decision"), required=True)
     p.add_argument("--slices", help="comma-separated slice ids (default: all)")
-    p.add_argument("--runs", type=int, help="runs per slice per arm (default 1 for smoke, 5 otherwise)")
+    p.add_argument("--runs", type=int, help="runs per slice per arm (default 1 for smoke, 5 otherwise; candidate = candidate arm only)")
     p.add_argument("--baseline-ref", help="git ref for the baseline arm (default main)")
     p.add_argument("--batch", help="batch id (default <date>-<tier>-<sha7>)")
     p.add_argument("--json", action="store_true")
@@ -1580,6 +1609,7 @@ def main(argv=None):
     p = sub.add_parser("compare", help="apply the regression rule between the arms of a batch")
     p.add_argument("batch_dir")
     p.add_argument("--refresh", action="store_true", help="re-aggregate before comparing")
+    p.add_argument("--baseline-batch", help="take the baseline arm from another batch (unpaired comparison)")
     p.set_defaults(fn=cmd_compare)
 
     p = sub.add_parser("selftest", help="grade the bundled self-test cases")

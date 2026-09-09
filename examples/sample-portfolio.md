@@ -107,7 +107,7 @@
 | G4 | AP-02 · Binary KR with No Gradient | Platform KR PL2.2 | "Complete the SOC 2 Type II audit" is done/not-done; mid-cycle scoring can only be 0% or 100%. |
 | G5 | AP-06 · Sandbagged Target | Platform KR PL1.1 + Appendix (Q2 review) | Target of 99.9% uptime sits below the Q2-review trailing actual of 99.95% — the KR is achieved by getting worse. Requires verbatim quotes from **both** documents (cross-source rule in `goodness-rubric.md` Part 5). |
 | G6 | AP-09 · Metric Nobody Can Measure | Data KR D1.3 | "Significantly improve data quality across core tables" names no metric, instrument, baseline, or target — it can never be honestly scored. |
-| G7 | AP-04 · KR Without Baseline | Platform KR PL1.3 | "Improve internal developer satisfaction score to 8/10" has no baseline anywhere in the corpus (and the unnamed survey instrument additionally depresses K5). |
+| G7 | AP-04 · KR Without Baseline *(AP-09 · Metric Nobody Can Measure also accepted — either ID, counted once)* | Platform KR PL1.3 | "Improve internal developer satisfaction score to 8/10" has no baseline anywhere in the corpus (and the unnamed survey instrument additionally depresses K5). |
 
 ### Alignment defects
 
@@ -136,7 +136,7 @@ Near-misses planted to measure false-positive discipline. Reporting one of these
 
 Recurring findings beyond the key, each classified once so the same debate is not re-had. A **known-red** entry is reported by the grader but excluded from the extra-findings budget until its fix lands; a **fixed** entry no longer affects counting.
 
-1. **T1 · AP-12 on KR PL1.3** — bucket: rubric-gap · status: known-red · decision: Reported but not counted until the goodness rubric gains the one-finding-per-KR rule (root-cause AP-ID, secondary IDs cross-referenced) in the content-fix change; then this entry moves to fixed. · rationale: In 3 of 5 baseline single-team runs (2026-09-08-baseline-02f27be) the skill files AP-12 Orphan KR on PL1.3 beside the planted AP-04 KR Without Baseline, arguing that developer satisfaction does not serve 'Keep the lights on, cheaper'. It is the same KR reported under a second ID, not a false detection; the alignment taxonomy already forbids this for AL findings (Part 3 §5) and the goodness rubric has no equivalent. Confirmed by the user on 2026-09-09.
+1. **T1 · AP-12 on KR PL1.3** — bucket: rubric-gap · status: fixed · decision: Fixed by change fix-baseline-recall-gaps (2026-09-09): goodness rubric Part 5 rule 9 files one finding per KR under the root-cause ID with secondary IDs on the Also line, and the grader credits secondary IDs; a repeated block on one KR counts again from this change on. · rationale: In 3 of 5 baseline single-team runs (2026-09-08-baseline-02f27be) the skill files AP-12 Orphan KR on PL1.3 beside the planted AP-04 KR Without Baseline, arguing that developer satisfaction does not serve 'Keep the lights on, cheaper'. It is the same KR reported under a second ID, not a false detection; the alignment taxonomy already forbids this for AL findings (Part 3 §5) and the goodness rubric has no equivalent. Confirmed by the user on 2026-09-09.
 
 ### Modes deliberately not covered
 
@@ -148,7 +148,7 @@ A passing portfolio review must:
 
 1. surface **all 14 planted defects, cited by canonical ID** (where a row accepts either of two IDs, either passes — counted once), each with correct verbatim quotes and source refs;
 2. contain **zero fabricated quotes** — every quoted span must exist character-for-character in this file;
-3. raise **no more than 2 findings beyond this key** (the stated budget), with any reported item from the Intentional non-defects list counting against that budget — except findings covered by an active known-red triage entry (see Triage entries), which are reported but not counted.
+3. raise **no more than 2 findings beyond this key** (the stated budget), with any reported item from the Intentional non-defects list counting against that budget.
 
 ### Single-team eval slice (Platform)
 

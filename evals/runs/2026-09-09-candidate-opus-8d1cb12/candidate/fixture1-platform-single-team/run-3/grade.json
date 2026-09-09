@@ -1,0 +1,304 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-09T12:14:14Z",
+  "mode": "single-team",
+  "provenance": {
+    "batch": "2026-09-09-candidate-opus-8d1cb12",
+    "tier": "candidate",
+    "arm": "candidate",
+    "slice": "fixture1-platform-single-team",
+    "run": 3,
+    "skill_sha": "8d1cb12220606048868c21bc9877da44dc5b0ff2",
+    "dirty": true,
+    "skill_ref": "worktree",
+    "model": "claude-opus-5",
+    "prompt_hash": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04",
+    "key_hash": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d",
+    "key_hash_at_plan": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d",
+    "started_at": "2026-09-09T12:14:14Z",
+    "wall_seconds": 480.1,
+    "tokens": 115687
+  },
+  "findings_parsed": 4,
+  "produced": true,
+  "rows": {
+    "G4": {
+      "status": "found",
+      "matched_id": "AP-02",
+      "id_exact": false,
+      "via_secondary": true,
+      "finding_line": 127
+    },
+    "G5": {
+      "status": "found",
+      "matched_id": "AP-06",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 114
+    },
+    "G7": {
+      "status": "found",
+      "matched_id": "AP-09",
+      "id_exact": false,
+      "via_secondary": false,
+      "finding_line": 107
+    }
+  },
+  "findings": [
+    {
+      "heading": "### [Critical] AP-09 Metric Nobody Can Measure — Platform",
+      "report_line": 107,
+      "severity": "Critical",
+      "id": "AP-09",
+      "secondary": [
+        "AP-04",
+        "AP-12"
+      ],
+      "kind": "match",
+      "anchor": "KR PL1.3",
+      "key": "AP-09@KR PL1.3",
+      "match": {
+        "row": "G7",
+        "matched_id": "AP-09",
+        "id_exact": false,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Platform team",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "internal developer satisfaction score",
+        "Keep the lights on, cheaper",
+        "KR PL1.3 (committed): Internal developer satisfaction among the `<n>` product engineers who consume platform services, quarterly survey run in `<named survey tool>`, n ≥ `<minimum responses>`: `<baseline>`/10 → 8/10.",
+        "KR PL1.3 (committed): Pages per on-call week `<baseline>` → `<target>`, source `<named paging system>`."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-06 Sandbagged Target — Platform",
+      "report_line": 114,
+      "severity": "Major",
+      "id": "AP-06",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR PL1.1",
+      "key": "AP-06@KR PL1.1",
+      "match": {
+        "row": "G5",
+        "matched_id": "AP-06",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Appendix",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (aspirational).",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 5,
+          "section": "Platform team",
+          "ref_line": 5,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "KR PL1.1 (committed): API uptime 99.95% (Q2 trailing-90-day actual, Datadog SLO monitor) → 99.97%, measured monthly on the same Datadog SLO monitor, with monthly error budget consumed ≤ `<threshold>`%."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-10 BAU Dressed as OKR — Platform",
+      "report_line": 121,
+      "severity": "Major",
+      "id": "AP-10",
+      "secondary": [],
+      "kind": "extra",
+      "anchor": "Objective PL1",
+      "key": "AP-10@Objective PL1",
+      "match": null,
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [
+        "off_key",
+        "unverified"
+      ],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 7,
+          "section": "Platform team",
+          "ref_line": 7,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Objective PL1: Platform costs less per transaction and wakes fewer people up.",
+          "role": "supporting",
+          "class": "unverified",
+          "input_line": null,
+          "section": null,
+          "ref_line": 9,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "KR PL1.1 (committed): Cloud spend per 1,000 transactions $4.10 → $3.20.",
+          "role": "supporting",
+          "class": "unverified",
+          "input_line": null,
+          "section": null,
+          "ref_line": 9,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Keep the lights on",
+        "KR PL1.2 (committed): Pages per on-call week `<baseline>` → `<target>`, source `<named paging system>`."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-01 Task Masquerading as KR — Platform",
+      "report_line": 127,
+      "severity": "Major",
+      "id": "AP-01",
+      "secondary": [
+        "AP-02"
+      ],
+      "kind": "match",
+      "anchor": "KR PL2.2",
+      "key": "AP-01@KR PL2.2",
+      "match": {
+        "row": "G4",
+        "matched_id": "AP-02",
+        "id_exact": false,
+        "via_secondary": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Complete the SOC 2 Type II audit.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 14,
+          "section": "Platform team",
+          "ref_line": 14,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Complete",
+        "KR PL2.2 (committed): SOC 2 Type II evidence requests closed `<0>`/`<N>` → `<N>`/`<N>`, tracked weekly in `<named GRC tool>`; observation window opened by `<date>` and the auditor's Type II report received before quarter end with zero qualified exceptions."
+      ]
+    }
+  ],
+  "extras": [
+    "AP-10@Objective PL1"
+  ],
+  "duplicates": [],
+  "excluded": [],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 1
+  },
+  "budget": {
+    "limit": 1,
+    "counted": 1,
+    "excluded": 0
+  },
+  "quotes": {
+    "total": 8,
+    "evidence": 5,
+    "supporting": 3,
+    "verbatim": 6,
+    "near_miss": 0,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 2,
+    "term": 0,
+    "ambiguous": 0,
+    "key_leak": 0,
+    "mentions": 9,
+    "fabricated_spans": [],
+    "unverified_spans": [
+      {
+        "text": "Objective PL1: Platform costs less per transaction and wakes fewer people up.",
+        "finding": "### [Major] AP-10 BAU Dressed as OKR — Platform",
+        "key_leak": false
+      },
+      {
+        "text": "KR PL1.1 (committed): Cloud spend per 1,000 transactions $4.10 → $3.20.",
+        "finding": "### [Major] AP-10 BAU Dressed as OKR — Platform",
+        "key_leak": false
+      }
+    ]
+  },
+  "structure": {
+    "pass": true,
+    "failures": [],
+    "warnings": [
+      "unverified supporting quote 'Objective PL1: Platform costs less per transaction and wakes': ### [Major] AP-10 BAU Dressed as OKR — Platform",
+      "unverified supporting quote 'KR PL1.1 (committed): Cloud spend per 1,000 transactions $4.': ### [Major] AP-10 BAU Dressed as OKR — Platform"
+    ]
+  },
+  "failures": [],
+  "pass": true
+}

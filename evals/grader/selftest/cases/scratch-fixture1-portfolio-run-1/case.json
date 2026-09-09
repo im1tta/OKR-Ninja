@@ -5,11 +5,10 @@
   "input": "input.md",
   "expected": {
     "pass": false,
-    "budget.counted": 4,
+    "budget.counted": 3,
     "quotes.fabricated": 0,
     "structure.pass": true,
     "extras": [
-      "AP-09@KR PL1.3",
       "AP-10@Objective PL1",
       "AP-01@KR D2.1",
       "AL-08@KR P1.1"
@@ -21,7 +20,7 @@
     "rows.G4.status": "found",
     "rows.G5.status": "found",
     "rows.G6.status": "found",
-    "rows.G7.status": "missed",
+    "rows.G7.status": "found",
     "rows.A1.status": "found",
     "rows.A2.status": "found",
     "rows.A3.status": "found",

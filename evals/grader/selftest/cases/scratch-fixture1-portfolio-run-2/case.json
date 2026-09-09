@@ -5,24 +5,24 @@
   "input": "input.md",
   "expected": {
     "pass": false,
-    "budget.counted": 5,
+    "budget.counted": 4,
     "quotes.fabricated": 0,
     "structure.pass": true,
     "extras": [
       "AP-01@KR D1.1",
       "AP-04@KR D2.2",
-      "AP-09@KR PL1.3",
-      "AP-12@KR PL1.3",
       "AP-10@Objective PL1"
     ],
-    "duplicates": [],
+    "duplicates": [
+      "AP-12@KR PL1.3"
+    ],
     "rows.G1.status": "found",
     "rows.G2.status": "found",
     "rows.G3.status": "found",
     "rows.G4.status": "found",
     "rows.G5.status": "found",
     "rows.G6.status": "found",
-    "rows.G7.status": "partial",
+    "rows.G7.status": "found",
     "rows.A1.status": "found",
     "rows.A2.status": "found",
     "rows.A3.status": "found",

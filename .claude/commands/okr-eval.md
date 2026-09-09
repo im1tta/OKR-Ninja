@@ -4,7 +4,7 @@ description: Run the OKR-Ninja eval harness — smoke (1 run per slice), baselin
 
 # /okr-eval — run the eval harness
 
-**Usage:** `/okr-eval smoke [slice,slice]` · `/okr-eval baseline [--ref <git-ref>]` · `/okr-eval decision --baseline <git-ref> [--runs N] [slice,slice]` · add `--batch <id>` to resume an existing batch.
+**Usage:** `/okr-eval smoke [slice,slice]` · `/okr-eval baseline [--ref <git-ref>]` · `/okr-eval candidate [--runs N] [slice,slice]` · `/okr-eval decision --baseline <git-ref> [--runs N] [slice,slice]` · add `--batch <id>` to resume an existing batch.
 
 Arguments: `$ARGUMENTS`
 
@@ -37,7 +37,8 @@ Before grading, move any working files a runner left at its run-directory root (
 
 ```bash
 python3 evals/grader/harness.py aggregate <batch_dir>        # grades any run without grade.json, writes scorecard.json, prints the table
-python3 evals/grader/harness.py compare <batch_dir>          # decision batches only: applies the regression rule, writes comparison.json
+python3 evals/grader/harness.py compare <batch_dir>          # decision batches: applies the regression rule, writes comparison.json
+python3 evals/grader/harness.py compare <batch_dir> --baseline-batch <other_batch_dir>   # candidate-only batch vs an earlier baseline batch: same rule, marked unpaired
 ```
 
 ## 4. Report to the user
@@ -49,5 +50,6 @@ Never edit keys, fixtures, or triage entries to turn a batch green. For an extra
 ## Notes
 
 - Runs write only inside their run directory. `<batch>/<arm>/<slice>/input/` and `<batch>/skill/` are regenerable and gitignored; what gets committed per batch is `prompt.md`, `report.md`, `run.json` and `grade.json` per run plus `scorecard.json` and `comparison.json`.
+- The `candidate` tier runs only the working-tree arm (default 5 runs per slice) for a cheaper, **unpaired** comparison against a committed baseline batch on the same model; a paired `decision` batch remains the release-grade check.
 - The baseline arm is exported from git (`git archive <ref> SKILL.md references`), the candidate arm from the working tree; every grade records the arm's SHA, a dirty flag, the model, the prompt-template hash and the key hash.
 - `python3 evals/grader/harness.py selftest` checks the grader itself; run it after any change to the harness.

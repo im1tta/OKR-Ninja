@@ -1,7 +1,7 @@
 # alignment-detection Specification
 
 ## Purpose
-Defines the classification behavior the alignment taxonomy (`references/alignment-taxonomy.md`) must produce when cross-team defects match multiple AL-XX failure modes — starting with the AL-01/AL-07 boundary.
+Defines the detection and classification behavior the alignment taxonomy (`references/alignment-taxonomy.md`) must produce for cross-team defects — the AL-01/AL-07 boundary for defects matching multiple failure modes, and AL-02 candidate generation.
 
 ## Requirements
 

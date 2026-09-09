@@ -1,0 +1,83 @@
+{
+  "harness_version": 2,
+  "batch": "2026-09-09-repair-setlevel",
+  "tier": "candidate",
+  "created": "2026-09-09T12:42:51Z",
+  "runs_per_slice": 5,
+  "slices": [
+    "fixture2-portfolio"
+  ],
+  "arms": {
+    "candidate": {
+      "ref": "worktree",
+      "skill_sha": "8d1cb12220606048868c21bc9877da44dc5b0ff2",
+      "dirty": true,
+      "snapshot": "evals/runs/2026-09-09-repair-setlevel/skill/candidate"
+    }
+  },
+  "prompt_hashes": {
+    "portfolio": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",
+    "single-team": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04"
+  },
+  "key_hashes": {
+    "fixture2": "a5533e3c7dea81ff8d050bdee523b562f6ee897b15ce0a7d07c73c8752473957",
+    "fixture1": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d"
+  },
+  "runs": [
+    {
+      "arm": "candidate",
+      "slice": "fixture2-portfolio",
+      "n": 1,
+      "dir": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-1",
+      "prompt": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-1/prompt.md",
+      "report": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-1/report.md",
+      "input": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/input/sample-portfolio-2.md",
+      "mode": "portfolio",
+      "status": "pending"
+    },
+    {
+      "arm": "candidate",
+      "slice": "fixture2-portfolio",
+      "n": 2,
+      "dir": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-2",
+      "prompt": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-2/prompt.md",
+      "report": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-2/report.md",
+      "input": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/input/sample-portfolio-2.md",
+      "mode": "portfolio",
+      "status": "pending"
+    },
+    {
+      "arm": "candidate",
+      "slice": "fixture2-portfolio",
+      "n": 3,
+      "dir": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-3",
+      "prompt": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-3/prompt.md",
+      "report": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-3/report.md",
+      "input": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/input/sample-portfolio-2.md",
+      "mode": "portfolio",
+      "status": "pending"
+    },
+    {
+      "arm": "candidate",
+      "slice": "fixture2-portfolio",
+      "n": 4,
+      "dir": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-4",
+      "prompt": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-4/prompt.md",
+      "report": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-4/report.md",
+      "input": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/input/sample-portfolio-2.md",
+      "mode": "portfolio",
+      "status": "pending"
+    },
+    {
+      "arm": "candidate",
+      "slice": "fixture2-portfolio",
+      "n": 5,
+      "dir": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-5",
+      "prompt": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-5/prompt.md",
+      "report": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/run-5/report.md",
+      "input": "evals/runs/2026-09-09-repair-setlevel/candidate/fixture2-portfolio/input/sample-portfolio-2.md",
+      "mode": "portfolio",
+      "status": "pending"
+    }
+  ]
+}
