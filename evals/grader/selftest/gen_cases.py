@@ -79,6 +79,10 @@ case("secondary-without-anchor", port_head + ap("Major", "AP-12", "Orphan KR", "
      {"rows.G7.status": "partial", "extras": ["AP-12@Objective PL1"]})
 case("secondary-prose-mention-no-credit", port_head + ap("Major", "AP-12", "Orphan KR", "Platform", [E(*PL13)], why="the KR also lacks a baseline, so AP-04 applies as well"),
      {"rows.G7.status": "missed", "extras": ["AP-12@KR PL1.3"]})
+
+case("quote-short-fabricated-not-term", port_head + ap("Major", "AP-04", "KR Without Baseline", "Platform",
+     [E("SLO was 92%", "Objective PL1", 57)]),
+     {"quotes.fabricated": 1, "quotes.term": 0, "pass": False, "failures": {"contains": ["fabricated quotes: 1"]}})
 case("no-findings", "# Report\n\n## 1. Executive summary\n\nNothing found.\n",
      {"findings_parsed": 0, "pass": False, "structure.failures": {"contains": ["no findings parsed"]}})
 

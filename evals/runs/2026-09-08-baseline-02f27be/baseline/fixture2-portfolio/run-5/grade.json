@@ -1,6 +1,6 @@
 {
   "harness_version": 2,
-  "graded_at": "2026-09-09T06:34:47Z",
+  "graded_at": "2026-09-09T13:16:23Z",
   "mode": "portfolio",
   "provenance": {
     "batch": "2026-09-08-baseline-02f27be",
@@ -26,78 +26,91 @@
       "status": "found",
       "matched_id": "AP-05",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 100
     },
     "G2": {
       "status": "found",
       "matched_id": "AP-07",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 56
     },
     "G3": {
       "status": "found",
       "matched_id": "AP-08",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 63
     },
     "G4": {
       "status": "found",
       "matched_id": "AP-10",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 74
     },
     "G5": {
       "status": "found",
       "matched_id": "AP-11",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 46
     },
     "G6": {
       "status": "found",
       "matched_id": "AP-12",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 84
     },
     "G7": {
       "status": "found",
       "matched_id": "AP-13",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 39
     },
     "G8": {
       "status": "found",
       "matched_id": "AP-15",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 91
     },
     "A1": {
       "status": "found",
       "matched_id": "AL-05",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 164
     },
     "A2": {
       "status": "found",
       "matched_id": "AL-08",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 141
     },
     "A3": {
       "status": "found",
       "matched_id": "AL-09",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 153
     },
     "A4": {
       "status": "found",
       "matched_id": "AL-11",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 114
     },
     "A5": {
       "status": "found",
       "matched_id": "AL-12",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 128
     }
   },
@@ -107,13 +120,15 @@
       "report_line": 39,
       "severity": "Critical",
       "id": "AP-13",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR DS2.4",
       "key": "AP-13@KR DS2.4",
       "match": {
         "row": "G7",
         "matched_id": "AP-13",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -156,13 +171,15 @@
       "report_line": 46,
       "severity": "Minor",
       "id": "AP-11",
+      "secondary": [],
       "kind": "match",
       "anchor": "Objective DS1",
       "key": "AP-11@Objective DS1",
       "match": {
         "row": "G5",
         "matched_id": "AP-11",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -250,13 +267,15 @@
       "report_line": 56,
       "severity": "Major",
       "id": "AP-07",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR CR2.1",
       "key": "AP-07@KR CR2.1",
       "match": {
         "row": "G2",
         "matched_id": "AP-07",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -330,13 +349,15 @@
       "report_line": 63,
       "severity": "Minor",
       "id": "AP-08",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR CR1.1",
       "key": "AP-08@KR CR1.1",
       "match": {
         "row": "G3",
         "matched_id": "AP-08",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -400,13 +421,15 @@
       "report_line": 74,
       "severity": "Major",
       "id": "AP-10",
+      "secondary": [],
       "kind": "match",
       "anchor": "Objective CS1",
       "key": "AP-10@Objective CS1",
       "match": {
         "row": "G4",
         "matched_id": "AP-10",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -491,13 +514,15 @@
       "report_line": 84,
       "severity": "Major",
       "id": "AP-12",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR IN1.3",
       "key": "AP-12@KR IN1.3",
       "match": {
         "row": "G6",
         "matched_id": "AP-12",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -539,13 +564,15 @@
       "report_line": 91,
       "severity": "Major",
       "id": "AP-15",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR IN2.2",
       "key": "AP-15@KR IN2.2",
       "match": {
         "row": "G8",
         "matched_id": "AP-15",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -586,13 +613,15 @@
       "report_line": 100,
       "severity": "Major",
       "id": "AP-05",
+      "secondary": [],
       "kind": "match",
       "anchor": "Objective AC1",
       "key": "AP-05@Objective AC1",
       "match": {
         "row": "G1",
         "matched_id": "AP-05",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -667,13 +696,15 @@
       "report_line": 114,
       "severity": "Critical",
       "id": "AL-11",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR CR3.1",
       "key": "AL-11@KR CR3.1",
       "match": {
         "row": "A4",
         "matched_id": "AL-11",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -764,13 +795,15 @@
       "report_line": 128,
       "severity": "Major",
       "id": "AL-12",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR DS2.2",
       "key": "AL-12@KR DS2.2",
       "match": {
         "row": "A5",
         "matched_id": "AL-12",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -844,13 +877,15 @@
       "report_line": 141,
       "severity": "Major",
       "id": "AL-08",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR DS2.1",
       "key": "AL-08@KR DS2.1",
       "match": {
         "row": "A2",
         "matched_id": "AL-08",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -918,13 +953,15 @@
       "report_line": 153,
       "severity": "Major",
       "id": "AL-09",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR AC2.2",
       "key": "AL-09@KR AC2.2",
       "match": {
         "row": "A3",
         "matched_id": "AL-09",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -1009,13 +1046,15 @@
       "report_line": 164,
       "severity": "Minor",
       "id": "AL-05",
+      "secondary": [],
       "kind": "match",
       "anchor": "Objective CS2",
       "key": "AL-05@Objective CS2",
       "match": {
         "row": "A1",
         "matched_id": "AL-05",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],

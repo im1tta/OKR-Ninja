@@ -1,0 +1,15 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "quotes.fabricated": 1,
+    "quotes.term": 0,
+    "pass": false,
+    "failures": {
+      "contains": [
+        "fabricated quotes: 1"
+      ]
+    }
+  }
+}

@@ -660,8 +660,12 @@ def parse_report(text, names=()):
 
 
 def is_short(s1):
-    """A quoted span of fewer than three words is a term (a label or search word), not a quote of source text."""
-    return len(s1.split()) < 3 or len(s1) < 12
+    """A quoted span of fewer than three words is a term (a label or search word), not a quote of source text.
+
+    The word count is the whole rule, per the eval-harness spec: a character-length escape hatch would
+    exempt short 3+-word spans — exactly the shape of an invented numeric target — from the fabrication
+    check, and the fabrication invariant is the one this repo cannot weaken."""
+    return len(s1.split()) < 3
 
 
 def pick_line(lines, ref_line):

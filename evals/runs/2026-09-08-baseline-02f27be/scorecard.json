@@ -2,7 +2,7 @@
   "harness_version": 2,
   "batch": "2026-09-08-baseline-02f27be",
   "tier": "baseline",
-  "created": "2026-09-09T06:34:48Z",
+  "created": "2026-09-09T13:17:04Z",
   "runs_per_slice": 5,
   "prompt_hashes": {
     "portfolio": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",
@@ -10,7 +10,7 @@
   },
   "key_hashes": {
     "fixture2": "a5533e3c7dea81ff8d050bdee523b562f6ee897b15ce0a7d07c73c8752473957",
-    "fixture1": "b0c0812183820a1dc5dc7980d77d669754d00d6260bf5bb2745645ccbe5010c9"
+    "fixture1": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d"
   },
   "key_hashes_at_plan": {
     "fixture2": "a5533e3c7dea81ff8d050bdee523b562f6ee897b15ce0a7d07c73c8752473957",
@@ -29,7 +29,7 @@
         "fixture1-platform-single-team": {
           "runs": 5,
           "produced": 5,
-          "pass": 5,
+          "pass": 4,
           "structure_pass": 5,
           "rows": {
             "G4": {
@@ -52,7 +52,8 @@
               "found": 5,
               "id_exact": 5,
               "accepted": [
-                "AP-04"
+                "AP-04",
+                "AP-09"
               ],
               "caveat": null
             }
@@ -65,9 +66,9 @@
               "flags": [
                 "off_key"
               ],
-              "excluded": true,
-              "bucket": "rubric-gap",
-              "triage": "T1"
+              "excluded": false,
+              "bucket": null,
+              "triage": null
             },
             {
               "key": "AP-10@Objective PL1",
@@ -87,9 +88,9 @@
               "flags": [
                 "off_key"
               ],
-              "excluded": true,
-              "bucket": "rubric-gap",
-              "triage": "T1"
+              "excluded": false,
+              "bucket": null,
+              "triage": null
             }
           ],
           "violations": {
@@ -97,11 +98,11 @@
             "off_key": 5
           },
           "budget_counted": [
+            1,
             0,
-            0,
-            0,
-            0,
-            1
+            1,
+            1,
+            2
           ],
           "quotes": {
             "total": 44,
@@ -187,7 +188,8 @@
               "found": 5,
               "id_exact": 5,
               "accepted": [
-                "AP-04"
+                "AP-04",
+                "AP-09"
               ],
               "caveat": null
             },
@@ -269,8 +271,8 @@
             "near_miss": 0,
             "out_of_scope": 0,
             "fabricated": 0,
-            "unverified": 2,
-            "term": 3,
+            "unverified": 3,
+            "term": 2,
             "ambiguous": 8,
             "key_leak": 0,
             "mentions": 191

@@ -2,7 +2,7 @@
   "harness_version": 2,
   "batch": "2026-09-09-smoke-02f27be",
   "tier": "smoke",
-  "created": "2026-09-09T07:48:47Z",
+  "created": "2026-09-09T13:17:05Z",
   "runs_per_slice": 1,
   "prompt_hashes": {
     "portfolio": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",
@@ -10,7 +10,7 @@
   },
   "key_hashes": {
     "fixture2": "a5533e3c7dea81ff8d050bdee523b562f6ee897b15ce0a7d07c73c8752473957",
-    "fixture1": "b0c0812183820a1dc5dc7980d77d669754d00d6260bf5bb2745645ccbe5010c9"
+    "fixture1": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d"
   },
   "key_hashes_at_plan": {
     "fixture2": "a5533e3c7dea81ff8d050bdee523b562f6ee897b15ce0a7d07c73c8752473957",
@@ -52,7 +52,8 @@
               "found": 1,
               "id_exact": 1,
               "accepted": [
-                "AP-04"
+                "AP-04",
+                "AP-09"
               ],
               "caveat": null
             }
@@ -66,9 +67,9 @@
                 "off_key",
                 "unverified"
               ],
-              "excluded": true,
-              "bucket": "rubric-gap",
-              "triage": "T1"
+              "excluded": false,
+              "bucket": null,
+              "triage": null
             }
           ],
           "violations": {
@@ -76,7 +77,7 @@
             "off_key": 1
           },
           "budget_counted": [
-            0
+            1
           ],
           "quotes": {
             "total": 18,
@@ -162,7 +163,8 @@
               "found": 0,
               "id_exact": 0,
               "accepted": [
-                "AP-04"
+                "AP-04",
+                "AP-09"
               ],
               "caveat": null
             },
@@ -243,9 +245,9 @@
               "flags": [
                 "off_key"
               ],
-              "excluded": true,
-              "bucket": "rubric-gap",
-              "triage": "T1"
+              "excluded": false,
+              "bucket": null,
+              "triage": null
             }
           ],
           "violations": {
@@ -253,7 +255,7 @@
             "off_key": 2
           },
           "budget_counted": [
-            1
+            2
           ],
           "quotes": {
             "total": 72,

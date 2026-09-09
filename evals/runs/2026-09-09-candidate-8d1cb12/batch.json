@@ -191,5 +191,6 @@
       "mode": "single-team",
       "status": "pending"
     }
-  ]
+  ],
+  "note": "ABANDONED, intentionally. Planned as the 15-run candidate batch for change fix-baseline-recall-gaps on claude-fable-5-1; the Fable quota was exhausted after 5 runs on 2026-09-09 and the session switched to claude-opus-5. The remaining 10 runs were NOT re-run here, because a batch must not mix models: they were run in batch 2026-09-09-candidate-opus-8d1cb12 instead. The 5 graded runs are kept as partial same-model evidence and are cited in that change's tasks.md 5.2. Runs with a prompt but no report are the abandoned 10."
 }

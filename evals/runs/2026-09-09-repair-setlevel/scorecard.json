@@ -2,7 +2,7 @@
   "harness_version": 2,
   "batch": "2026-09-09-repair-setlevel",
   "tier": "candidate",
-  "created": "2026-09-09T13:02:39Z",
+  "created": "2026-09-09T13:17:04Z",
   "runs_per_slice": 5,
   "prompt_hashes": {
     "portfolio": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",

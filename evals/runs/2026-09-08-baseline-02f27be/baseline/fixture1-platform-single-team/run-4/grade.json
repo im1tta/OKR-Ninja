@@ -1,6 +1,6 @@
 {
   "harness_version": 2,
-  "graded_at": "2026-09-09T06:34:47Z",
+  "graded_at": "2026-09-09T13:16:22Z",
   "mode": "single-team",
   "provenance": {
     "batch": "2026-09-08-baseline-02f27be",
@@ -13,7 +13,7 @@
     "skill_ref": "main",
     "model": "claude-fable-5-1",
     "prompt_hash": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04",
-    "key_hash": "b0c0812183820a1dc5dc7980d77d669754d00d6260bf5bb2745645ccbe5010c9",
+    "key_hash": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d",
     "key_hash_at_plan": "8e483b809b09783417f4851044412bb3e765fedcfccf1f3430c05381e011d1ae",
     "started_at": "2026-09-08T13:04:40Z",
     "wall_seconds": 721.7,
@@ -26,18 +26,21 @@
       "status": "found",
       "matched_id": "AP-02",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 75
     },
     "G5": {
       "status": "found",
       "matched_id": "AP-06",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 67
     },
     "G7": {
       "status": "found",
       "matched_id": "AP-04",
       "id_exact": true,
+      "via_secondary": false,
       "finding_line": 82
     }
   },
@@ -47,13 +50,15 @@
       "report_line": 67,
       "severity": "Major",
       "id": "AP-06",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR PL1.1",
       "key": "AP-06@KR PL1.1",
       "match": {
         "row": "G5",
         "matched_id": "AP-06",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -109,13 +114,15 @@
       "report_line": 75,
       "severity": "Major",
       "id": "AP-02",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR PL2.2",
       "key": "AP-02@KR PL2.2",
       "match": {
         "row": "G4",
         "matched_id": "AP-02",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -157,13 +164,15 @@
       "report_line": 82,
       "severity": "Major",
       "id": "AP-04",
+      "secondary": [],
       "kind": "match",
       "anchor": "KR PL1.3",
       "key": "AP-04@KR PL1.3",
       "match": {
         "row": "G7",
         "matched_id": "AP-04",
-        "id_exact": true
+        "id_exact": true,
+        "via_secondary": false
       },
       "duplicate_of": null,
       "partial": [],
@@ -205,6 +214,7 @@
       "report_line": 88,
       "severity": "Major",
       "id": "AP-12",
+      "secondary": [],
       "kind": "extra",
       "anchor": "Objective PL1",
       "key": "AP-12@Objective PL1",
@@ -214,9 +224,9 @@
       "flags": [
         "off_key"
       ],
-      "excluded": true,
-      "triage": "T1",
-      "bucket": "rubric-gap",
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
       "evidence": [
         {
           "text": "Keep the lights on, cheaper",
@@ -261,19 +271,19 @@
       ]
     }
   ],
-  "extras": [],
-  "duplicates": [],
-  "excluded": [
+  "extras": [
     "AP-12@Objective PL1"
   ],
+  "duplicates": [],
+  "excluded": [],
   "violations": {
     "non_defect": 0,
     "off_key": 1
   },
   "budget": {
     "limit": 1,
-    "counted": 0,
-    "excluded": 1
+    "counted": 1,
+    "excluded": 0
   },
   "quotes": {
     "total": 10,
