@@ -1,0 +1,17 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "quotes.unverified": 2,
+    "quotes.fabricated": 0,
+    "quotes.supporting": 2,
+    "quotes.evidence": 1,
+    "rows.G2.status": "found",
+    "structure.warnings": {
+      "contains": [
+        "unverified supporting quote"
+      ]
+    }
+  }
+}

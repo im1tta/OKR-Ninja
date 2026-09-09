@@ -261,5 +261,23 @@ Non-negotiable. A score or anti-pattern finding that violates these rules must b
 6. **Quote minimally.** Quote the triggering span, not whole pages — enough that a reader can verify the finding without opening the source, and no more.
 7. **Verify before reporting.** Before a finding enters the report, re-open the source and confirm the quoted span exists verbatim. A quote that fails re-verification drops the finding entirely.
 8. **Rewrites are labeled as proposals.** Before→after rewrites must mark the "after" as OKR-Ninja's proposal, never presented as if sourced. Invented numbers in a proposal use a `<placeholder>` or the tag "[proposal — placeholder target]" — the convention is defined once in `references/report-format.md` §3.
+9. **One finding per instance.** A goodness report files at most one finding block per objective or key-result instance. When several anti-patterns apply to the same instance, head the block with the root-cause ID and list every other applicable anti-pattern on the block's `Also:` line (template in `references/report-format.md` §3) as "AP-XX <canonical name>"; a second block for the same instance is a reporting defect, not extra rigor. Root-cause precedence: **measurability** first (AP-09 Metric Nobody Can Measure, AP-13 Ambiguous Denominator), then **structure** (AP-01 Task Masquerading as KR, AP-02 Binary KR with No Gradient, AP-10 BAU Dressed as OKR, AP-11 Objective as Kitchen Sink, AP-12 Orphan KR, AP-14 Date as Target), then **calibration and hygiene** (AP-03 Vanity Metric, AP-04 KR Without Baseline, AP-05 Everything Is a P0, AP-06 Sandbagged Target, AP-07 Unmoored Moonshot, AP-08 Committed vs Aspirational Not Labeled, AP-15 Ownerless KR); within a tier, the lower-numbered ID leads. A KR that cannot be measured must be rewritten before its baseline or ambition can matter, and a KR that is a task or an orphan must change shape before its numbers do. The rule is per instance — two different KRs with the same defect are two blocks — and the block's "Why it's a problem" and "Suggested rewrite" lines address every listed anti-pattern. **A set-level anti-pattern is its own instance.** AP-05 Everything Is a P0 and AP-08 Committed vs Aspirational Not Labeled are scoped to a whole objective set or team page, not to any single objective or KR, so they are never folded into a member's block and never appear on a member's `Also:` line: the set is the instance, and it gets its own finding quoting the set-level evidence (the uniform labels, or the absent commitment convention). Folding one into a member KR's block hides a defect the set has and the KR does not.
+
+   **Before** (two blocks on one KR — a reporting defect; fictional Meridian team Harbor):
+   > ### [Critical] AP-13 Ambiguous Denominator — Harbor
+   > - Evidence: "Reduce seller onboarding drop-off to 15%." (Harbor Q3 OKRs › Objective H2)
+   > - Why it's a problem: "drop-off" of what population is never stated …
+   >
+   > ### [Major] AP-04 KR Without Baseline — Harbor
+   > - Evidence: "Reduce seller onboarding drop-off to 15%." (Harbor Q3 OKRs › Objective H2)
+   > - Why it's a problem: no current value anywhere in the corpus …
+
+   **After** (one block; AP-13 leads because measurability outranks calibration):
+   > ### [Critical] AP-13 Ambiguous Denominator — Harbor
+   > - Evidence: "Reduce seller onboarding drop-off to 15%." (Harbor Q3 OKRs › Objective H2)
+   > - Also: AP-04 KR Without Baseline
+   > - Why it's a problem: the KR never says drop-off of what — wizard starts, invited sellers, or accounts created — so any number can be claimed; and it states no current value, so the 15% cannot be judged as ambition or progress.
+   > - Scores affected: K1=0, K3=1
+   > - Suggested rewrite: "KR: Seller onboarding drop-off — sellers who start the listing wizard but list nothing within 14 days, as a share of wizard starts, weekly from `<dashboard>` — `<baseline>`% → 15%." [proposal — placeholder target]
 
 **Finding format:** goodness findings use the template and required fields defined in `references/report-format.md` §3 (Severity · AP-ID + canonical anti-pattern name · Team · Verbatim quote + source ref · Why it's a problem · Scores affected · Suggested rewrite). This file defines the evidence rules only; no finding template lives here.

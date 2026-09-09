@@ -1,0 +1,14 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "findings_parsed": 0,
+    "pass": false,
+    "structure.failures": {
+      "contains": [
+        "no findings parsed"
+      ]
+    }
+  }
+}

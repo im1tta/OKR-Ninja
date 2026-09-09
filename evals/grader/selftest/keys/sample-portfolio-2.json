@@ -1,0 +1,366 @@
+{
+  "id": "fixture2",
+  "fixture": "examples/sample-portfolio-2.md",
+  "universe": "Coppervale",
+  "mode": "portfolio",
+  "budget": 2,
+  "criterion": "A passing portfolio review surfaces all 13 planted defects cited by canonical ID, each with correct verbatim quotes and source refs; contains zero fabricated quotes (every quoted span exists character-for-character in the fixture); and raises no more than 2 findings beyond this key, with any reported intentional non-defect, off-key mode or duplicate counting against that budget unless an active known-red triage entry covers it.",
+  "defects": [
+    {
+      "id": "G1",
+      "accepted": [
+        "AP-05"
+      ],
+      "team": "Accounts",
+      "location": "Accounts, all four objectives",
+      "evidence": [
+        {
+          "section": "Accounts team"
+        }
+      ],
+      "note": "AC1–AC4 uniformly labeled \"Priority: P0\", reinforced by the notes (\"every one of these is P0 for us this quarter — we're not choosing\") — the set encodes no trade-off."
+    },
+    {
+      "id": "G2",
+      "accepted": [
+        "AP-07"
+      ],
+      "team": "Courier",
+      "location": "Courier KR CR2.1",
+      "evidence": [
+        {
+          "item": "KR CR2.1"
+        }
+      ],
+      "note": "\"Driver referral installs 3,000 → 45,000 this quarter\" is a 15x stretch with no mechanism, intermediate milestone, or resourcing signal anywhere on the page (\"big swing\" states no how)."
+    },
+    {
+      "id": "G3",
+      "accepted": [
+        "AP-08"
+      ],
+      "team": "Courier",
+      "location": "Courier page (set level)",
+      "evidence": [
+        {
+          "section": "Courier team"
+        }
+      ],
+      "note": "Courier is the only page with no commitment-convention line and no labels, while targets vary wildly in stretch (crash-free 99.2% → 99.6% beside the 15x CR2.1). Counted separately from G2: G2 is the KR-level defect, G3 the set-level labeling defect."
+    },
+    {
+      "id": "G4",
+      "accepted": [
+        "AP-10"
+      ],
+      "team": "Core Systems",
+      "location": "Core Systems Objective CS1",
+      "evidence": [
+        {
+          "item": "Objective CS1"
+        }
+      ],
+      "note": "\"Continue running the platform smoothly for every team\" is a standing operational duty framed as a goal — achieved by default staffing."
+    },
+    {
+      "id": "G5",
+      "accepted": [
+        "AP-11"
+      ],
+      "team": "Dispatch",
+      "location": "Dispatch Objective DS1",
+      "evidence": [
+        {
+          "item": "Objective DS1"
+        }
+      ],
+      "note": "\"Delight enterprise dispatchers and expand Coppervale into two new regions\" joins two unrelated end-states with disjoint audiences; its KRs (dispatcher NPS vs DE/FR pilots) cluster into unrelated groups."
+    },
+    {
+      "id": "G6",
+      "accepted": [
+        "AP-12"
+      ],
+      "team": "Insights",
+      "location": "Insights KR IN1.3",
+      "evidence": [
+        {
+          "item": "KR IN1.3"
+        }
+      ],
+      "note": "\"Driver-app App Store rating 4.1 → 4.6\" has no causal chain to \"Execs run Monday mornings from our dashboards\" and shares no nouns or domain with it."
+    },
+    {
+      "id": "G7",
+      "accepted": [
+        "AP-13"
+      ],
+      "team": "Dispatch",
+      "location": "Dispatch KR DS2.4",
+      "evidence": [
+        {
+          "item": "KR DS2.4"
+        }
+      ],
+      "note": "\"Reduce the failure rate from 6% to 3%\" never defines the population — failures of delivery attempts, unique shipments, route plans, or something else — and nothing on the page disambiguates; any number can be claimed."
+    },
+    {
+      "id": "G8",
+      "accepted": [
+        "AP-15"
+      ],
+      "team": "Insights",
+      "location": "Insights KR IN2.2",
+      "evidence": [
+        {
+          "item": "KR IN2.2"
+        }
+      ],
+      "note": "The page's own convention assigns per-KR owners, and this KR's reads \"Owner: TBD\" — no accountable individual, and none derivable for it elsewhere in the corpus."
+    },
+    {
+      "id": "A1",
+      "accepted": [
+        "AL-05"
+      ],
+      "teams": [
+        "Core Systems"
+      ],
+      "location": "Core Systems Objective CS2 ↔ Company C2",
+      "evidence": [
+        {
+          "item": "Objective CS2"
+        },
+        {
+          "section": "Company"
+        }
+      ],
+      "note": "CS2 explicitly claims \"supports C2 — enterprise churn\", but its KRs (deploy frequency, change-failure rate, CI time) measure neither churn nor any workstream C2 names (onboarding time-to-value, escalation backlog, delivery-promise reporting) — the link is decorative; all three KRs could land in a quarter where churn worsens."
+    },
+    {
+      "id": "A2",
+      "accepted": [
+        "AL-08"
+      ],
+      "teams": [
+        "Dispatch",
+        "Accounts"
+      ],
+      "location": "Dispatch KR DS2.1 ↔ Accounts KR AC3.1",
+      "evidence": [
+        {
+          "item": "KR DS2.1"
+        },
+        {
+          "item": "KR AC3.1"
+        }
+      ],
+      "note": "Both teams carry KRs on \"On-time delivery rate\" under materially different definitions — completed-within-window / completed jobs, weekly, Ops Console vs scanned-at-destination / all scheduled deliveries including cancellations, monthly, Billing warehouse. Same name, different measurement."
+    },
+    {
+      "id": "A3",
+      "accepted": [
+        "AL-09"
+      ],
+      "teams": [
+        "Accounts"
+      ],
+      "location": "Accounts KR AC2.2 ↔ Appendix (Q4 review)",
+      "evidence": [
+        {
+          "item": "KR AC2.2"
+        },
+        {
+          "section": "Appendix"
+        }
+      ],
+      "note": "Accounts states \"Customer CSAT 86 → 90 (quarterly relationship survey; Q4 2026 baseline)\" while the Q4 review states \"Customer CSAT ended Q4 2026 at 78\" from the same survey and period — an eight-point discrepancy with no definitional split findable, so the +4 target may be a +12 ask."
+    },
+    {
+      "id": "A4",
+      "accepted": [
+        "AL-11"
+      ],
+      "teams": [
+        "Courier",
+        "Core Systems",
+        "Insights"
+      ],
+      "location": "Courier KR CR3.1 → Core Systems KR CS3.1 → Insights KR IN2.1 → Courier",
+      "evidence": [
+        {
+          "item": "KR CR3.1"
+        },
+        {
+          "item": "KR CS3.1"
+        },
+        {
+          "item": "KR IN2.1"
+        }
+      ],
+      "note": "Courier instruments \"once Core Systems GAs the SDK\"; Core GAs \"after Insights validates event schema v3 in production\"; Insights validates \"after Courier instruments the new driver-app event stream\". Three teams, each first in line behind another — no valid execution order as written; every edge is quotable."
+    },
+    {
+      "id": "A5",
+      "accepted": [
+        "AL-12"
+      ],
+      "teams": [
+        "Dispatch",
+        "Accounts"
+      ],
+      "location": "Dispatch KR DS2.2 ↔ Accounts KR AC3.2",
+      "evidence": [
+        {
+          "item": "KR DS2.2"
+        },
+        {
+          "item": "KR AC3.2"
+        }
+      ],
+      "note": "Dispatch's committed \"600 enterprise trial starts via the partner portal launch\" depends on the portal that Accounts lists as \"(stretch — only if the billing migration lands early)\" — a committed number built on an explicitly-maybe deliverable."
+    }
+  ],
+  "non_defects": [
+    {
+      "id": "N1",
+      "forbid": [
+        "AP-03",
+        "AP-12"
+      ],
+      "at": [
+        {
+          "item": "KR CR2.1"
+        }
+      ],
+      "text": "**Courier KR CR2.1 is G2 (AP-07) only** — quarterly attributed installs are not a cumulative vanity total (not AP-03), and installs are the referral objective CR2's intended outcome (not AP-12)."
+    },
+    {
+      "id": "N2",
+      "forbid": [
+        "AL-09"
+      ],
+      "at": [
+        {
+          "item": "KR DS2.1"
+        },
+        {
+          "item": "KR AC3.1"
+        }
+      ],
+      "text": "**Dispatch KR DS2.1 vs Accounts KR AC3.1 baselines (91% vs 78%)**: the gap is fully explained by the A2 definitional split — not AL-09; report the collision once, as AL-08."
+    },
+    {
+      "id": "N3",
+      "forbid": [
+        "AP-04",
+        "AP-09"
+      ],
+      "at": [
+        {
+          "item": "KR DS2.4"
+        }
+      ],
+      "text": "**Dispatch KR DS2.4**: the baseline is present (6%) so not AP-04, and a source exists (\"ops weekly report\") so not AP-09 — the defect is the undefined denominator (AP-13, G7)."
+    },
+    {
+      "id": "N4",
+      "forbid": [
+        "AP-07"
+      ],
+      "at": [
+        {
+          "item": "KR AC3.2"
+        }
+      ],
+      "text": "**Accounts KR AC3.2** (partner portal 0 → 40): a zero-baseline launch that is explicitly labeled stretch and gated on a named mechanism (the billing migration) — not AP-07; its stretch label is load-bearing evidence for A5."
+    },
+    {
+      "id": "N5",
+      "forbid": [
+        "AL-01",
+        "AL-06"
+      ],
+      "at": [
+        {
+          "item": "KR CR3.1"
+        },
+        {
+          "item": "KR CS3.1"
+        },
+        {
+          "item": "KR IN2.1"
+        }
+      ],
+      "text": "**The A4 cycle edges are not AL-01 and not AL-06**: each depended-on deliverable appears in its producer's own OKRs (SDK in CS3.1, validation in IN2.1, instrumentation in CR3.1), and no edge carries a date to invert."
+    },
+    {
+      "id": "N6",
+      "forbid": [
+        "AL-02",
+        "AL-09"
+      ],
+      "at": [
+        {
+          "item": "KR CR1.2"
+        },
+        {
+          "section": "Company"
+        }
+      ],
+      "text": "**Courier KR CR1.2 (retention to 78%) vs Company C3 (to 80%)**: consistent — the KR states it is the \"Q1 step toward the FY27 80% goal in C3\", not a conflicting target."
+    },
+    {
+      "id": "N7",
+      "forbid": [
+        "AP-07",
+        "AP-01",
+        "AP-14"
+      ],
+      "at": [
+        {
+          "item": "KR AC4.2"
+        }
+      ],
+      "text": "**Accounts KR AC4.2** (billing migration 38% → 100%): bounded completion of an in-flight migration with a countable coverage denominator — neither AP-07 (not open-ended growth) nor AP-01/AP-14 (not a dateline milestone)."
+    },
+    {
+      "id": "N8",
+      "forbid": [
+        "AL-12"
+      ],
+      "at": [
+        {
+          "item": "KR CR3.1"
+        },
+        {
+          "item": "KR CS3.1"
+        },
+        {
+          "item": "KR IN2.1"
+        }
+      ],
+      "text": "**The A4 cycle edges are not reported as AL-12**: Courier's page states no labeling scheme at all, and the taxonomy's own disconfirming check applies — a team that labels nothing has not implicitly marked everything aspirational. The scheme's absence is already reported as G3 (AP-08); per the taxonomy's one-finding-one-failure-mode rule, reporting the same absence again as per-edge label ambiguity double-counts one root cause."
+    }
+  ],
+  "not_covered": [
+    "AL-01",
+    "AL-02",
+    "AL-03",
+    "AL-04",
+    "AL-06",
+    "AL-07",
+    "AL-10",
+    "AP-01",
+    "AP-02",
+    "AP-03",
+    "AP-04",
+    "AP-06",
+    "AP-09",
+    "AP-14"
+  ],
+  "not_covered_note": " — those are fixture 1's territory (`examples/sample-portfolio.md`)",
+  "slices": {},
+  "triage": [],
+  "_frozen": "Self-test snapshot of evals/keys/sample-portfolio-2.json without triage entries; the self-test corpus grades against this file so live triage decisions never move its expectations."
+}

@@ -1,0 +1,11 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "rows.G7.status": "partial",
+    "extras": [
+      "AP-12@Objective PL1"
+    ]
+  }
+}

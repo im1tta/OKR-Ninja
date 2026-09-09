@@ -1,0 +1,15 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": "platform-single-team",
+  "report": "report.md",
+  "expected": {
+    "pass": true,
+    "structure.pass": true,
+    "rows.G4.status": "found",
+    "rows.G5.status": "found",
+    "rows.G7.status": "found",
+    "budget.counted": 0,
+    "extras": [],
+    "duplicates": []
+  }
+}

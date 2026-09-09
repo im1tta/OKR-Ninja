@@ -8,3 +8,7 @@
 # Scratch / working files
 *.tmp
 scratch/
+
+# Eval harness — regenerable per-batch files (sliced inputs, skill snapshots); runner scratch dirs are covered by scratch/
+evals/runs/**/input/
+evals/runs/**/skill/

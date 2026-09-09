@@ -1,0 +1,14 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "rows.G2.status": "found",
+    "rows.G7.status": "found",
+    "extras": [
+      "AP-07@KR P2.1"
+    ],
+    "violations.non_defect": 1,
+    "budget.counted": 1
+  }
+}

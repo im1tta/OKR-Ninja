@@ -1,0 +1,13 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": "platform-single-team",
+  "report": "report.md",
+  "expected": {
+    "quotes.out_of_scope": 1,
+    "quotes.fabricated": 0,
+    "budget.counted": 1,
+    "extras": [
+      "AP-04@unlocated"
+    ]
+  }
+}

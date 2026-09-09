@@ -1,0 +1,15 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": "platform-single-team",
+  "report": "report.md",
+  "expected": {
+    "budget.counted": 2,
+    "budget.limit": 1,
+    "pass": false,
+    "failures": {
+      "contains": [
+        "budget exceeded"
+      ]
+    }
+  }
+}

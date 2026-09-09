@@ -1,0 +1,11 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "quotes.term": 2,
+    "quotes.unverified": 0,
+    "quotes.fabricated": 0,
+    "rows.G2.status": "found"
+  }
+}

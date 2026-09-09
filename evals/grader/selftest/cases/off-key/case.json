@@ -1,0 +1,11 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "violations.off_key": 1,
+    "extras": [
+      "AP-10@Objective PL1"
+    ]
+  }
+}

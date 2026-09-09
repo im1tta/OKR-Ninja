@@ -79,12 +79,13 @@ One block per finding, grouped by team, ordered by severity. The heading carries
 ```
 ### [<Severity>] AP-XX <Canonical anti-pattern name> — <Team>
 - Evidence: "<verbatim quote>" (<source ref>)
+- Also: AP-YY <Canonical anti-pattern name> · AP-ZZ <Canonical anti-pattern name>
 - Why it's a problem: <1–2 sentences, tied to the anti-pattern as defined in goodness-rubric.md>
 - Scores affected: <dimension codes and scores this finding drove, e.g. K2=1, K1=0>
 - Suggested rewrite: <concrete replacement objective/KR text>
 ```
 
-Required fields: **Severity · AP-ID + canonical name · Team · Verbatim quote + source ref · Why it's a problem · Scores affected · Suggested rewrite.** The quote must satisfy the evidence rules in `references/goodness-rubric.md` Part 5. The rewrite must be concrete replacement text, not advice about writing one.
+Required fields: **Severity · AP-ID + canonical name · Team · Verbatim quote + source ref · Also (only when a second anti-pattern applies to the same instance) · Why it's a problem · Scores affected · Suggested rewrite.** The quote must satisfy the evidence rules in `references/goodness-rubric.md` Part 5. The rewrite must be concrete replacement text, not advice about writing one. The `Also:` line follows the evidence lines and lists every other anti-pattern that applies to the same objective or KR, each as "AP-XX <canonical name>" exactly as the rubric spells it, separated by " · " — it is omitted when none applies and never carries evidence of its own; which ID heads the block is decided by the rubric's one-finding-per-instance rule (Part 5, rule 9), and a second block for the same instance is a reporting defect.
 
 **Proposed-number convention** (defined here once; applies to every rewrite and recommendation in this report, §3 and §4 alike): a rewrite is OKR-Ninja's **proposal**, never presented as sourced. Any number not quoted verbatim from the corpus appears either as a `<placeholder>` or carries the tag `[proposal — placeholder target]`. Real figures quoted from the corpus may be reused as-is with their source ref.
 

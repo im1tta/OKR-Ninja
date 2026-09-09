@@ -1,0 +1,9 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "rows.G5.status": "found",
+    "extras": []
+  }
+}

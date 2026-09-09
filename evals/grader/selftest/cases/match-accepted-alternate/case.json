@@ -1,0 +1,11 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "rows.G1.status": "found",
+    "rows.G1.matched_id": "AP-14",
+    "rows.G1.id_exact": false,
+    "extras": []
+  }
+}

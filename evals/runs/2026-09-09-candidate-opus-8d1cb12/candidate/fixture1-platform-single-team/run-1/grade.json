@@ -1,0 +1,326 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-09T13:16:24Z",
+  "mode": "single-team",
+  "provenance": {
+    "batch": "2026-09-09-candidate-opus-8d1cb12",
+    "tier": "candidate",
+    "arm": "candidate",
+    "slice": "fixture1-platform-single-team",
+    "run": 1,
+    "skill_sha": "8d1cb12220606048868c21bc9877da44dc5b0ff2",
+    "dirty": true,
+    "skill_ref": "worktree",
+    "model": "claude-opus-5",
+    "prompt_hash": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04",
+    "key_hash": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d",
+    "key_hash_at_plan": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d",
+    "started_at": "2026-09-09T11:57:21Z",
+    "wall_seconds": 506.5,
+    "tokens": 117289
+  },
+  "findings_parsed": 4,
+  "produced": true,
+  "rows": {
+    "G4": {
+      "status": "found",
+      "matched_id": "AP-02",
+      "id_exact": false,
+      "via_secondary": true,
+      "finding_line": 108
+    },
+    "G5": {
+      "status": "found",
+      "matched_id": "AP-06",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 101
+    },
+    "G7": {
+      "status": "found",
+      "matched_id": "AP-09",
+      "id_exact": false,
+      "via_secondary": false,
+      "finding_line": 86
+    }
+  },
+  "findings": [
+    {
+      "heading": "### [Critical] AP-09 Metric Nobody Can Measure — Platform",
+      "report_line": 86,
+      "severity": "Critical",
+      "id": "AP-09",
+      "secondary": [
+        "AP-04"
+      ],
+      "kind": "match",
+      "anchor": "KR PL1.3",
+      "key": "AP-09@KR PL1.3",
+      "match": {
+        "row": "G7",
+        "matched_id": "AP-09",
+        "id_exact": false,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Platform team",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Appendix",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "internal developer satisfaction score",
+        "8/10",
+        "KR PL1.3: Platform developer-experience survey, run in weeks 1 and 12 of Q3 to all `<n>` engineers outside Platform via `<survey tool>`, question 'How satisfied are you with the internal platform? (1–10)': `<week-1 baseline>`/10 → 8/10, with response rate ≥ `<threshold>`%."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-10 BAU Dressed as OKR — Platform",
+      "report_line": 94,
+      "severity": "Major",
+      "id": "AP-10",
+      "secondary": [],
+      "kind": "extra",
+      "anchor": "Objective PL1",
+      "key": "AP-10@Objective PL1",
+      "match": null,
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [
+        "off_key",
+        "unverified"
+      ],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Objective PL1: Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 7,
+          "section": "Platform team",
+          "ref_line": 7,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Objective PL1: Serve Q3's traffic on a materially cheaper platform without customers noticing the difference.",
+          "role": "supporting",
+          "class": "unverified",
+          "input_line": null,
+          "section": null,
+          "ref_line": 21,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Reduce cloud spend per 1,000 transactions from $4.10 to $3.20.",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 9,
+          "section": "Platform team",
+          "ref_line": 21,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Guardrail (not an OKR): API uptime ≥ 99.95%, monthly, Datadog SLO monitor.",
+          "role": "supporting",
+          "class": "unverified",
+          "input_line": null,
+          "section": null,
+          "ref_line": 21,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Keep the lights on",
+        "Maintain",
+        "cheaper"
+      ]
+    },
+    {
+      "heading": "### [Major] AP-06 Sandbagged Target — Platform",
+      "report_line": 101,
+      "severity": "Major",
+      "id": "AP-06",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR PL1.1",
+      "key": "AP-06@KR PL1.1",
+      "match": {
+        "row": "G5",
+        "matched_id": "AP-06",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Appendix",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "at or above 99.9%",
+        "KR PL1.1: API uptime 99.95% (Q2 trailing-90-day actual, Datadog SLO monitor) → 99.98%, measured monthly on the same monitor, with no month below 99.95%."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-01 Task Masquerading as KR — Platform",
+      "report_line": 108,
+      "severity": "Major",
+      "id": "AP-01",
+      "secondary": [
+        "AP-02"
+      ],
+      "kind": "match",
+      "anchor": "KR PL2.2",
+      "key": "AP-01@KR PL2.2",
+      "match": {
+        "row": "G4",
+        "matched_id": "AP-02",
+        "id_exact": false,
+        "via_secondary": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Complete the SOC 2 Type II audit.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 14,
+          "section": "Platform team",
+          "ref_line": 14,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "KR PL2.2: SOC 2 Type II evidence accepted by the auditor: 0/`<total in-scope controls>` → `<total in-scope controls>`/`<total in-scope controls>`, tracked weekly in `<evidence tracker>`; Type II report received by `<date>` with 0 unresolved exceptions."
+      ]
+    }
+  ],
+  "extras": [
+    "AP-10@Objective PL1"
+  ],
+  "duplicates": [],
+  "excluded": [],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 1
+  },
+  "budget": {
+    "limit": 1,
+    "counted": 1,
+    "excluded": 0
+  },
+  "quotes": {
+    "total": 10,
+    "evidence": 7,
+    "supporting": 3,
+    "verbatim": 8,
+    "near_miss": 0,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 2,
+    "term": 0,
+    "ambiguous": 0,
+    "key_leak": 0,
+    "mentions": 9,
+    "fabricated_spans": [],
+    "unverified_spans": [
+      {
+        "text": "Objective PL1: Serve Q3's traffic on a materially cheaper platform without customers noticing the difference.",
+        "finding": "### [Major] AP-10 BAU Dressed as OKR — Platform",
+        "key_leak": false
+      },
+      {
+        "text": "Guardrail (not an OKR): API uptime ≥ 99.95%, monthly, Datadog SLO monitor.",
+        "finding": "### [Major] AP-10 BAU Dressed as OKR — Platform",
+        "key_leak": false
+      }
+    ]
+  },
+  "structure": {
+    "pass": true,
+    "failures": [],
+    "warnings": [
+      "unverified supporting quote \"Objective PL1: Serve Q3's traffic on a materially cheaper pl\": ### [Major] AP-10 BAU Dressed as OKR — Platform",
+      "ref says line 21 but quote is on input line 9: ### [Major] AP-10 BAU Dressed as OKR — Platform",
+      "unverified supporting quote 'Guardrail (not an OKR): API uptime ≥ 99.95%, monthly, Datado': ### [Major] AP-10 BAU Dressed as OKR — Platform"
+    ]
+  },
+  "failures": [],
+  "pass": true
+}
