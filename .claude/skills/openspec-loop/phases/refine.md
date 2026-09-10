@@ -20,7 +20,7 @@ Restate, in one or two lines: the idea, the problem it solves, and who it's for.
 - **Affected surfaces** — SKILL.md triggering/description, the operating procedure steps, `references/` (goodness rubric, alignment taxonomy, report format), the `examples/` fixture and its answer key.
 - **Mode routing** (project-specific, easy to miss) — does the change keep the two-mode contract crisp (team count at scope intake selects the mode: 1 team → single-team full-depth goodness with no cross-team findings; 2+ → portfolio + alignment; the description claims both modes and names no external skill)? Surface this whenever the description, scope-intake step, or report templates are touched.
 - **Evidence discipline** — does the change preserve the verbatim-quote-with-source requirement everywhere findings are produced? No paraphrase presented as quote.
-- **Success criteria** — how we'll know it worked; which planted defects in `examples/sample-portfolio.md` the change should newly catch (or stop false-positive-ing on).
+- **Success criteria** — how we'll know it worked; which planted defects the change should newly catch (or stop false-positive-ing on), in whichever fixture(s) under `examples/` cover the modes it touches.
 - **Data sources** — impact on Jira/Confluence MCP extraction vs the local-file fallback; changes to the normalized OKR structure (team, objective, KRs, owners, parent link, dependencies).
 - **Edge cases & failure modes** — empty/partial OKR sets, a team with no OKRs, unreachable sources, ambiguous team names, N too large for full pairwise comparison.
 - **Dependencies & sequencing** — what must exist first; what this unblocks.

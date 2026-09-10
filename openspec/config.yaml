@@ -32,8 +32,10 @@ context: |
 rules:
   proposal:
     - Always include a "Non-goals" section
-    - State which planted defects in examples/sample-portfolio.md the change
-      should newly catch, if the change touches detection behavior
+    - State which planted defects the change should newly catch, if the change
+      touches detection behavior - naming them in whichever fixture(s) under
+      examples/ cover the modes it touches (each fixture's answer key lists the
+      modes it deliberately leaves to the other)
   tasks:
     - Any rubric/taxonomy change must include a matching before-and-after
       rewrite example and, when detection behavior changes, a fixture update
@@ -45,7 +47,7 @@ operations:
   archive:
     guidance:
       - Do not archive until the verify gate in
-        .claude/skills/openspec-loop/phases/verify-gate.md is green - structural
-        checks, plus the fixture eval against examples/sample-portfolio.md when
-        the change touched SKILL.md's procedure, the rubric, the taxonomy, or the
-        report format. Never loosen the gate to pass.
+        .claude/skills/openspec-loop/phases/verify-gate.md is green on its own
+        terms - that file defines which checks run, which fixture(s) under
+        examples/ apply to the touched category, and who may run them (a fresh
+        subagent, never the change's author). Never loosen the gate to pass.
