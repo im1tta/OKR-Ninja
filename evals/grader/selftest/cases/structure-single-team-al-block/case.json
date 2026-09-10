@@ -1,0 +1,19 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": "platform-single-team",
+  "report": "report.md",
+  "expected": {
+    "pass": false,
+    "structure.pass": false,
+    "structure.failures": {
+      "contains": [
+        "AL block in single-team report"
+      ]
+    },
+    "failures": {
+      "contains": [
+        "AL block in single-team"
+      ]
+    }
+  }
+}

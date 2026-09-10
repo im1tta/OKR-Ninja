@@ -1,0 +1,16 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "rows.G2.status": "found",
+    "quotes.near_miss": 2,
+    "quotes.verbatim": 0,
+    "quotes.fabricated": 0,
+    "failures": {
+      "contains": [
+        "missed row G1"
+      ]
+    }
+  }
+}

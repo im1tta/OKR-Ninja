@@ -1,0 +1,8 @@
+{
+  "type": "check",
+  "key": "corrupted-key.json",
+  "expect_mentions": [
+    "G1",
+    "KR NONEXISTENT.99"
+  ]
+}

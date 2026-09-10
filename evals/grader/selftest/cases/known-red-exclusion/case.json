@@ -1,0 +1,14 @@
+{
+  "key": "key-with-triage.json",
+  "slice": "platform-single-team",
+  "report": "report.md",
+  "expected": {
+    "excluded": [
+      "AP-10@Objective PL1"
+    ],
+    "extras": [],
+    "budget.counted": 0,
+    "budget.excluded": 1,
+    "pass": true
+  }
+}

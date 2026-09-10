@@ -1,0 +1,16 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "rows.G5.status": "partial",
+    "rows.G5.partials": {
+      "contains": [
+        "section Appendix"
+      ]
+    },
+    "extras": [
+      "AP-06@KR PL1.1"
+    ]
+  }
+}

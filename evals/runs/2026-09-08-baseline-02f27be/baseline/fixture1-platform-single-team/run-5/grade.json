@@ -1,0 +1,378 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-09T13:16:22Z",
+  "mode": "single-team",
+  "provenance": {
+    "batch": "2026-09-08-baseline-02f27be",
+    "tier": "baseline",
+    "arm": "baseline",
+    "slice": "fixture1-platform-single-team",
+    "run": 5,
+    "skill_sha": "02f27bece216b8ac870e327ef582f4458d11dbd9",
+    "dirty": false,
+    "skill_ref": "main",
+    "model": "claude-fable-5-1",
+    "prompt_hash": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04",
+    "key_hash": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d",
+    "key_hash_at_plan": "8e483b809b09783417f4851044412bb3e765fedcfccf1f3430c05381e011d1ae",
+    "started_at": "2026-09-08T13:15:18Z",
+    "wall_seconds": 932.4,
+    "tokens": 157475
+  },
+  "findings_parsed": 5,
+  "produced": true,
+  "rows": {
+    "G4": {
+      "status": "found",
+      "matched_id": "AP-02",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 95
+    },
+    "G5": {
+      "status": "found",
+      "matched_id": "AP-06",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 81
+    },
+    "G7": {
+      "status": "found",
+      "matched_id": "AP-04",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 89
+    }
+  },
+  "findings": [
+    {
+      "heading": "### [Major] AP-06 Sandbagged Target — Platform",
+      "report_line": 81,
+      "severity": "Major",
+      "id": "AP-06",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR PL1.1",
+      "key": "AP-06@KR PL1.1",
+      "match": {
+        "row": "G5",
+        "matched_id": "AP-06",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [
+        "unverified"
+      ],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Appendix",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "KRs are committed unless marked (aspirational).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 5,
+          "section": "Platform team",
+          "ref_line": 5,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "KR PL1.1 (committed): API uptime, trailing 90 days per the Datadog SLO monitor, 99.95% → ≥ 99.97%",
+          "role": "supporting",
+          "class": "unverified",
+          "input_line": null,
+          "section": null,
+          "ref_line": 21,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime ≥ 99.95% (Datadog SLO monitor)",
+          "role": "supporting",
+          "class": "unverified",
+          "input_line": null,
+          "section": null,
+          "ref_line": 21,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Maintain"
+      ]
+    },
+    {
+      "heading": "### [Major] AP-04 KR Without Baseline — Platform",
+      "report_line": 89,
+      "severity": "Major",
+      "id": "AP-04",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR PL1.3",
+      "key": "AP-04@KR PL1.3",
+      "match": {
+        "row": "G7",
+        "matched_id": "AP-04",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Platform team",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "from",
+        "8/10",
+        "KR PL1.3: Internal developer satisfaction, quarterly platform survey (`<instrument name>`, n ≥ `<n>`): `<Q2 baseline>`/10 → 8/10"
+      ]
+    },
+    {
+      "heading": "### [Major] AP-02 Binary KR with No Gradient — Platform",
+      "report_line": 95,
+      "severity": "Major",
+      "id": "AP-02",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR PL2.2",
+      "key": "AP-02@KR PL2.2",
+      "match": {
+        "row": "G4",
+        "matched_id": "AP-02",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Complete the SOC 2 Type II audit.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 14,
+          "section": "Platform team",
+          "ref_line": 14,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Q3 is fully committed between SOC 2 evidence collection and the cost work.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 16,
+          "section": "Platform team",
+          "ref_line": 16,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Complete",
+        "KR PL2.2: SOC 2 Type II audit evidence requests closed: 0/`<total>` → `<total>`/`<total>` per the audit evidence tracker, with the auditor's Type II report received by `<date>`"
+      ]
+    },
+    {
+      "heading": "### [Minor] AP-10 BAU Dressed as OKR — Platform",
+      "report_line": 102,
+      "severity": "Minor",
+      "id": "AP-10",
+      "secondary": [],
+      "kind": "extra",
+      "anchor": "Objective PL1",
+      "key": "AP-10@Objective PL1",
+      "match": null,
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [
+        "off_key"
+      ],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 7,
+          "section": "Platform team",
+          "ref_line": 7,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Keep the lights on",
+        "Maintain",
+        "cheaper",
+        "Keep the lights on",
+        "Objective PL1: Run the platform cheaper without anyone noticing",
+        "API uptime ≥ 99.95% (Datadog SLO monitor)"
+      ]
+    },
+    {
+      "heading": "### [Minor] AP-12 Orphan KR — Platform",
+      "report_line": 109,
+      "severity": "Minor",
+      "id": "AP-12",
+      "secondary": [],
+      "kind": "duplicate",
+      "anchor": "KR PL1.3",
+      "key": "AP-12@KR PL1.3",
+      "match": null,
+      "duplicate_of": "G7",
+      "partial": [],
+      "flags": [
+        "off_key"
+      ],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Platform team",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 7,
+          "section": "Platform team",
+          "ref_line": 7,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "lights on",
+        "cheaper",
+        "Objective PL3: Internal developers get what they need from the platform without waiting on us — KR PL3.1: Internal developer satisfaction, quarterly platform survey (`<instrument name>`, n ≥ `<n>`): `<Q2 baseline>`/10 → 8/10",
+        "/10"
+      ]
+    }
+  ],
+  "extras": [
+    "AP-10@Objective PL1"
+  ],
+  "duplicates": [
+    "AP-12@KR PL1.3"
+  ],
+  "excluded": [],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 2
+  },
+  "budget": {
+    "limit": 1,
+    "counted": 2,
+    "excluded": 0
+  },
+  "quotes": {
+    "total": 12,
+    "evidence": 10,
+    "supporting": 2,
+    "verbatim": 10,
+    "near_miss": 0,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 2,
+    "term": 0,
+    "ambiguous": 0,
+    "key_leak": 0,
+    "mentions": 16,
+    "fabricated_spans": [],
+    "unverified_spans": [
+      {
+        "text": "KR PL1.1 (committed): API uptime, trailing 90 days per the Datadog SLO monitor, 99.95% → ≥ 99.97%",
+        "finding": "### [Major] AP-06 Sandbagged Target — Platform",
+        "key_leak": false
+      },
+      {
+        "text": "API uptime ≥ 99.95% (Datadog SLO monitor)",
+        "finding": "### [Major] AP-06 Sandbagged Target — Platform",
+        "key_leak": false
+      }
+    ]
+  },
+  "structure": {
+    "pass": true,
+    "failures": [],
+    "warnings": [
+      "unverified supporting quote 'KR PL1.1 (committed): API uptime, trailing 90 days per the D': ### [Major] AP-06 Sandbagged Target — Platform",
+      "unverified supporting quote 'API uptime ≥ 99.95% (Datadog SLO monitor)': ### [Major] AP-06 Sandbagged Target — Platform"
+    ]
+  },
+  "failures": [
+    "budget exceeded: 2 counted findings > 1"
+  ],
+  "pass": false
+}

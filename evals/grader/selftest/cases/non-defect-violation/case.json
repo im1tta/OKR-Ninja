@@ -1,0 +1,12 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "violations.non_defect": 1,
+    "extras": [
+      "AP-01@KR D2.1"
+    ],
+    "budget.counted": 1
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "quotes.verbatim": 1,
+    "quotes.ambiguous": 1,
+    "extras": [
+      "AP-08@unlocated"
+    ],
+    "structure.warnings": {
+      "contains": [
+        "not anchored"
+      ]
+    }
+  }
+}

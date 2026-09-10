@@ -1,0 +1,14 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "rows.G1.status": "found",
+    "rows.G1.matched_id": "AP-14",
+    "duplicates": [
+      "AP-01@KR P1.2"
+    ],
+    "extras": [],
+    "budget.counted": 1
+  }
+}

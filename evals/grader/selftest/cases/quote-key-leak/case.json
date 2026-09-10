@@ -1,0 +1,10 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "quotes.fabricated": 1,
+    "quotes.key_leak": 1,
+    "pass": false
+  }
+}

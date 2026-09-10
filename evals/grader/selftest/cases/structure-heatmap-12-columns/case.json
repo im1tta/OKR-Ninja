@@ -1,0 +1,14 @@
+{
+  "key": "sample-portfolio.json",
+  "slice": null,
+  "report": "report.md",
+  "expected": {
+    "structure.pass": false,
+    "structure.failures": {
+      "contains": [
+        "extra column(s) K8"
+      ]
+    },
+    "rows.G2.status": "found"
+  }
+}

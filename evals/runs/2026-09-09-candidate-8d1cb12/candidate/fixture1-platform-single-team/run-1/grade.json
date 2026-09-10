@@ -1,0 +1,234 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-09T13:16:23Z",
+  "mode": "single-team",
+  "provenance": {
+    "batch": "2026-09-09-candidate-8d1cb12",
+    "tier": "candidate",
+    "arm": "candidate",
+    "slice": "fixture1-platform-single-team",
+    "run": 1,
+    "skill_sha": "8d1cb12220606048868c21bc9877da44dc5b0ff2",
+    "dirty": true,
+    "skill_ref": "worktree",
+    "model": "claude-fable-5-1",
+    "prompt_hash": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04",
+    "key_hash": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d",
+    "key_hash_at_plan": "1f6b311c8c15b8fc860e1e84e7b0762181b8cf5922f2e1d3253346a66fb8502d",
+    "started_at": "2026-09-09T08:54:44Z",
+    "wall_seconds": 767.0,
+    "tokens": 142077
+  },
+  "findings_parsed": 3,
+  "produced": true,
+  "rows": {
+    "G4": {
+      "status": "found",
+      "matched_id": "AP-02",
+      "id_exact": false,
+      "via_secondary": true,
+      "finding_line": 119
+    },
+    "G5": {
+      "status": "found",
+      "matched_id": "AP-06",
+      "id_exact": false,
+      "via_secondary": true,
+      "finding_line": 111
+    },
+    "G7": {
+      "status": "found",
+      "matched_id": "AP-09",
+      "id_exact": false,
+      "via_secondary": false,
+      "finding_line": 103
+    }
+  },
+  "findings": [
+    {
+      "heading": "### [Critical] AP-09 Metric Nobody Can Measure — Platform",
+      "report_line": 103,
+      "severity": "Critical",
+      "id": "AP-09",
+      "secondary": [
+        "AP-12",
+        "AP-04"
+      ],
+      "kind": "match",
+      "anchor": "KR PL1.3",
+      "key": "AP-09@KR PL1.3",
+      "match": {
+        "row": "G7",
+        "matched_id": "AP-09",
+        "id_exact": false,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Platform team",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 7,
+          "section": "Platform team",
+          "ref_line": 7,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "satisfaction",
+        "score",
+        "Keep the lights on, cheaper",
+        "KR PL1.3 (guardrail on the cost work): Internal developer satisfaction with the platform — `<named survey instrument, e.g. the existing engineering pulse survey>`, question 'How satisfied are you with the platform?' answered 1–10, one wave per quarter, n ≥ `<n>` engineers from product teams — `<baseline>`/10 (last wave) → 8/10, and never below `<floor>`/10 in any wave while cloud spend per 1,000 transactions falls from $4.10 to $3.20.",
+        "Product engineers build on the platform without waiting on us"
+      ]
+    },
+    {
+      "heading": "### [Major] AP-10 BAU Dressed as OKR — Platform",
+      "report_line": 111,
+      "severity": "Major",
+      "id": "AP-10",
+      "secondary": [
+        "AP-06"
+      ],
+      "kind": "match",
+      "anchor": "KR PL1.1",
+      "key": "AP-10@KR PL1.1",
+      "match": {
+        "row": "G5",
+        "matched_id": "AP-06",
+        "id_exact": false,
+        "via_secondary": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Appendix",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Maintain",
+        "KR PL1.1: API uptime, trailing 90 days per the Datadog SLO monitor: 99.95% (Q2 actual) → `<target above 99.95%>`, held while cloud spend per 1,000 transactions falls from $4.10 to $3.20.",
+        "KR PL1.1: Customer-facing Sev-1/Sev-2 incidents per quarter: `<Q2 count>` → `<target>` (Datadog incident records)."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-01 Task Masquerading as KR — Platform",
+      "report_line": 119,
+      "severity": "Major",
+      "id": "AP-01",
+      "secondary": [
+        "AP-02"
+      ],
+      "kind": "match",
+      "anchor": "KR PL2.2",
+      "key": "AP-01@KR PL2.2",
+      "match": {
+        "row": "G4",
+        "matched_id": "AP-02",
+        "id_exact": false,
+        "via_secondary": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Complete the SOC 2 Type II audit.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 14,
+          "section": "Platform team",
+          "ref_line": 14,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Complete",
+        "KR PL2.2: SOC 2 Type II — auditor evidence requests delivered 0/`<n>` → `<n>`/`<n>` (tracked weekly in `<evidence tracker>`), fieldwork closed with `<0>` exceptions, and the final report received and shared with `<k>` enterprise prospects by `<date within Q3>`."
+      ]
+    }
+  ],
+  "extras": [],
+  "duplicates": [],
+  "excluded": [],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 0
+  },
+  "budget": {
+    "limit": 1,
+    "counted": 0,
+    "excluded": 0
+  },
+  "quotes": {
+    "total": 5,
+    "evidence": 5,
+    "supporting": 0,
+    "verbatim": 5,
+    "near_miss": 0,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 0,
+    "term": 0,
+    "ambiguous": 0,
+    "key_leak": 0,
+    "mentions": 10,
+    "fabricated_spans": [],
+    "unverified_spans": []
+  },
+  "structure": {
+    "pass": true,
+    "failures": [],
+    "warnings": []
+  },
+  "failures": [],
+  "pass": true
+}
