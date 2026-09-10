@@ -161,7 +161,7 @@
           "section": "Platform team"
         }
       ],
-      "note": "Data's 100% schema migration \"rides on the streaming pipeline migration... handled at the infra level\" (Data notes), but nothing in Platform's OKRs or notes mentions the pipeline, and Platform holds \"all non-critical infra requests until Q4.\""
+      "note": "Data's schema-v2 migration (KR D1.1) \"rides on the streaming pipeline migration... handled at the infra level\" (Data notes), but nothing in Platform's OKRs or notes mentions the pipeline, and Platform holds \"all non-critical infra requests until Q4.\""
     },
     {
       "id": "A3",
@@ -325,7 +325,7 @@
           "item": "KR D2.1"
         }
       ],
-      "text": "**Data KR D2.1** (\"Ship personalized onboarding checklists to 100% of new signups\"): \"Ship\" plus a coverage denominator (100% of new signups) is an adoption measure, not a pure milestone — not AP-01."
+      "text": "**Data KR D2.1** (\"Ship personalized onboarding checklists and cut new-signup support tickets in the first 7 days from 38 per 100 signups to 20\"): a delivery verb opens the KR, but its measure is a support-ticket rate new signups move by having a better first week — shipping the checklists to everyone does not satisfy it — and it states a baseline→target pair with an explicit denominator. Not AP-01."
     },
     {
       "id": "N4",
@@ -366,6 +366,30 @@
         }
       ],
       "text": "**Company C3 vs Payments KR P2.1**: \"under 0.5%\" and \"to 0.45%\" are consistent targets on the same metric — not AL-02 and not AL-09."
+    },
+    {
+      "id": "N7",
+      "forbid": [
+        "AP-10"
+      ],
+      "at": [
+        {
+          "item": "Objective PL1"
+        }
+      ],
+      "text": "**Platform Objective PL1** (\"Keep the lights on, cheaper\"): the objective names a change — *cheaper* — and KR PL1.2 realizes it with a baseline→target pair (\"Reduce cloud spend per 1,000 transactions from $4.10 to $3.20\"). Operational-sounding wording wrapped around a named, measured change is not AP-10; the anti-pattern is for an objective that commits the team to no change at all."
+    },
+    {
+      "id": "N8",
+      "forbid": [
+        "AP-01"
+      ],
+      "at": [
+        {
+          "item": "KR D1.1"
+        }
+      ],
+      "text": "**Data KR D1.1** (\"Cut cross-source metric discrepancies flagged by the weekly exec-dashboard reconciliation check from 14 to 0, by serving all product events from unified event schema v2\"): the schema-v2 migration is named as the mechanism, not as the measure — the KR is scored on a discrepancy count the dashboard's consumers see. Not AP-01."
     }
   ],
   "not_covered": [
@@ -425,6 +449,50 @@
       "bucket": "rubric-gap",
       "decision": "Fixed by change fix-baseline-recall-gaps (2026-09-09): goodness rubric Part 5 rule 9 files one finding per KR under the root-cause ID with secondary IDs on the Also line, and the grader credits secondary IDs; a repeated block on one KR counts again from this change on.",
       "rationale": "In 3 of 5 baseline single-team runs (2026-09-08-baseline-02f27be) the skill files AP-12 Orphan KR on PL1.3 beside the planted AP-04 KR Without Baseline, arguing that developer satisfaction does not serve 'Keep the lights on, cheaper'. It is the same KR reported under a second ID, not a false detection; the alignment taxonomy already forbids this for AL findings (Part 3 §5) and the goodness rubric has no equivalent. Confirmed by the user on 2026-09-09.",
+      "status": "fixed"
+    },
+    {
+      "id": "T2",
+      "finding": "AP-01",
+      "anchor": {
+        "item": "KR D2.1"
+      },
+      "bucket": "fixture-ambiguous",
+      "decision": "Fixed by change fix-fixture1-precision-extras (2026-09-10): the reports were right and non-defect N3 was wrong. \"Ship personalized onboarding checklists to 100% of new signups\" measures the rollout, which the team completes by shipping, so N3's \"adoption measure\" rationale asserted a property its text did not have. D2.1 now states a support-ticket rate new signups move, keeping \"Ship\" as its opening verb so the row stays a near-miss, and N3's rationale is rewritten against the new text. AP-01 also gained a rescue clause so the boundary is decidable rather than a matter of taste.",
+      "rationale": "Reported as an extra in 2 of 5 portfolio runs of 2026-09-09-candidate-8d1cb12 and in the failing fixture1-portfolio run of 2026-09-10-smoke-9551238, each time flagged as a non-defect violation of N3. The reports' reasoning — the KR is satisfied by a feature flag at 100% — is sound.",
+      "status": "fixed"
+    },
+    {
+      "id": "T3",
+      "finding": "AP-01",
+      "anchor": {
+        "item": "KR D1.1"
+      },
+      "bucket": "fixture-ambiguous",
+      "decision": "Fixed by change fix-fixture1-precision-extras (2026-09-10): \"Migrate 100% of product events to unified event schema v2\" was a true AP-01 the key never planted, so every run that caught it paid budget for being right. D1.1 now states a discrepancy count the dashboard's consumers see, with the migration named as its mechanism so row A2 keeps its evidence; non-defect N8 guards the new boundary. Deliberately not planted as a defect row: the extra appeared in 1 run of 5, and a key row must be found in every run — planting it would convert a bounded precision cost into a recall failure.",
+      "rationale": "Extra in 1 of 5 portfolio runs of 2026-09-09-candidate-opus-8d1cb12, 1 of 5 of 2026-09-09-candidate-8d1cb12, and in the failing fixture1-portfolio run of 2026-09-10-smoke-9551238.",
+      "status": "fixed"
+    },
+    {
+      "id": "T4",
+      "finding": "AP-04",
+      "anchor": {
+        "item": "KR D2.2"
+      },
+      "bucket": "fixture-ambiguous",
+      "decision": "Fixed by change fix-fixture1-precision-extras (2026-09-10): \"Lift new-user activation rate to 35% via onboarding experiments\" stated no baseline — a true unplanted AP-04. D2.2 now reads \"from 31% to 35%\", the same baseline Growth states for the same metric, which leaves row A4 intact and sharpens its 40%-vs-35% collision: same metric, same baseline, incompatible targets.",
+      "rationale": "Extra in 1 of 5 portfolio runs of 2026-09-09-candidate-opus-8d1cb12, 1 of 5 of 2026-09-09-candidate-8d1cb12, and in the failing fixture1-portfolio run of 2026-09-10-smoke-9551238.",
+      "status": "fixed"
+    },
+    {
+      "id": "T5",
+      "finding": "AP-10",
+      "anchor": {
+        "item": "Objective PL1"
+      },
+      "bucket": "rubric-gap",
+      "decision": "Fixed by change fix-fixture1-precision-extras (2026-09-10): a false positive. AP-10's detect line said the objective \"describes the team's standing job with no delta\" without saying where to look for the delta, so BAU-sounding wording fired the anti-pattern on an objective that names a real change. The rule now tests the objective statement: it fires only when the objective asserts continuation and names no change, and not when it names a change at least one KR realizes with a baseline→target pair. PL1 names \"cheaper\" and KR PL1.2 realizes it. Non-defect N7 records the verdict. The test is deliberately not \"do the KRs carry deltas\": fixture 2's planted AP-10 (Core Systems Objective CS1) has KRs with real deltas and must keep firing.",
+      "rationale": "Reported against Platform Objective PL1 in 5 of 5 single-team runs and 2 of 5 portfolio runs of 2026-09-09-candidate-opus-8d1cb12, 1 of 5 single-team runs of 2026-09-08-baseline-02f27be, and the single-team run of 2026-09-10-smoke-9551238, where it consumed that slice's entire budget of 1.",
       "status": "fixed"
     }
   ]

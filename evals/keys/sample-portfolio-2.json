@@ -124,5 +124,17 @@
   "not_covered": ["AL-01", "AL-02", "AL-03", "AL-04", "AL-06", "AL-07", "AL-10", "AP-01", "AP-02", "AP-03", "AP-04", "AP-06", "AP-09", "AP-14"],
   "not_covered_note": " — those are fixture 1's territory (`examples/sample-portfolio.md`)",
   "slices": {},
-  "triage": []
+  "triage": [
+    {
+      "id": "T1",
+      "finding": "AP-12",
+      "anchor": {
+          "item": "KR AC3.2"
+      },
+      "bucket": "fixture-ambiguous",
+      "decision": "Fixed by change fix-fixture1-precision-extras (2026-09-10, scope widened to fixture 2 with the owner's approval): \"Partner portal live for the first 40 partner accounts, 0 → 40\" stated no causal chain to its objective, \"Customers trust the delivery promises we report\", so AP-12 Orphan KR was a defensible reading the key never planted — the same unplanted-true-defect class this change fixed on fixture 1. AC3.2 now names the delivery reporting it gives those partners, which is the objective's own subject. Everything the key depends on is preserved: the portal, 0 → 40, the stretch label and the billing-migration gate, all load-bearing for row A5 (AL-12) and non-defect N4 (AP-07). Not planted as a defect row: it appeared in 3 runs of 5, and a key row must be found in every run.",
+      "rationale": "Extra in 3 of 5 runs of 2026-09-10-candidate-repair1, where it was the finding that pushed one run to 3 counted findings against a budget of 2. Absent from the pre-change batches, but no valid comparison to them exists — the harness refuses it because those arms ran on claude-opus-5 and this one on claude-opus-5[1m] — so it is triaged on its merits rather than attributed to any change.",
+      "status": "fixed"
+  }
+  ]
 }

@@ -1,0 +1,65 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-10T12:30:31Z",
+  "mode": "single-team",
+  "provenance": {
+    "batch": "2026-09-10-candidate-5beed03",
+    "tier": "candidate",
+    "arm": "candidate",
+    "slice": "fixture1-platform-single-team",
+    "run": 1,
+    "skill_sha": "5beed03af3794f816c4554a59fb481e0bd868811",
+    "dirty": true,
+    "skill_ref": "worktree",
+    "model": null,
+    "prompt_hash": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04",
+    "key_hash": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa",
+    "key_hash_at_plan": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa",
+    "started_at": null,
+    "wall_seconds": null,
+    "tokens": null
+  },
+  "findings_parsed": 0,
+  "produced": false,
+  "rows": {},
+  "findings": [],
+  "extras": [],
+  "duplicates": [],
+  "excluded": [],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 0
+  },
+  "budget": {
+    "limit": null,
+    "counted": 0,
+    "excluded": 0
+  },
+  "quotes": {
+    "total": 0,
+    "evidence": 0,
+    "supporting": 0,
+    "verbatim": 0,
+    "near_miss": 0,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 0,
+    "term": 0,
+    "ambiguous": 0,
+    "key_leak": 0,
+    "mentions": 0,
+    "fabricated_spans": [],
+    "unverified_spans": []
+  },
+  "structure": {
+    "pass": false,
+    "failures": [
+      "report not produced"
+    ],
+    "warnings": []
+  },
+  "failures": [
+    "report not produced"
+  ],
+  "pass": false
+}

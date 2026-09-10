@@ -1,0 +1,1088 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-10T13:42:50Z",
+  "mode": "portfolio",
+  "provenance": {
+    "batch": "2026-09-10-candidate-repair2",
+    "tier": "candidate",
+    "arm": "candidate",
+    "slice": "fixture2-portfolio",
+    "run": 5,
+    "skill_sha": "5beed03af3794f816c4554a59fb481e0bd868811",
+    "dirty": true,
+    "skill_ref": "worktree",
+    "model": "claude-opus-5[1m]",
+    "prompt_hash": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",
+    "key_hash": "61fd729af1458ddc1ece089ee414e530514591c992d6ba77954522c77bd8d53d",
+    "key_hash_at_plan": "61fd729af1458ddc1ece089ee414e530514591c992d6ba77954522c77bd8d53d",
+    "started_at": "2026-09-10T13:41:04Z",
+    "wall_seconds": 970.949,
+    "tokens": 159901
+  },
+  "findings_parsed": 14,
+  "produced": true,
+  "rows": {
+    "G1": {
+      "status": "found",
+      "matched_id": "AP-05",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 96
+    },
+    "G2": {
+      "status": "found",
+      "matched_id": "AP-07",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 54
+    },
+    "G3": {
+      "status": "found",
+      "matched_id": "AP-08",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 61
+    },
+    "G4": {
+      "status": "found",
+      "matched_id": "AP-10",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 71
+    },
+    "G5": {
+      "status": "found",
+      "matched_id": "AP-11",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 45
+    },
+    "G6": {
+      "status": "found",
+      "matched_id": "AP-12",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 80
+    },
+    "G7": {
+      "status": "found",
+      "matched_id": "AP-13",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 38
+    },
+    "G8": {
+      "status": "found",
+      "matched_id": "AP-15",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 87
+    },
+    "A1": {
+      "status": "found",
+      "matched_id": "AL-05",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 148
+    },
+    "A2": {
+      "status": "found",
+      "matched_id": "AL-08",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 117
+    },
+    "A3": {
+      "status": "found",
+      "matched_id": "AL-09",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 138
+    },
+    "A4": {
+      "status": "found",
+      "matched_id": "AL-11",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 105
+    },
+    "A5": {
+      "status": "found",
+      "matched_id": "AL-12",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 128
+    }
+  },
+  "findings": [
+    {
+      "heading": "### [Critical] AP-13 Ambiguous Denominator — Dispatch",
+      "report_line": 38,
+      "severity": "Critical",
+      "id": "AP-13",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR DS2.4",
+      "key": "AP-13@KR DS2.4",
+      "match": {
+        "row": "G7",
+        "matched_id": "AP-13",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Reduce the failure rate from 6% to 3% by end of Q1 (ops weekly report).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 29,
+          "section": "Dispatch team",
+          "ref_line": 29,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "On-time delivery rate — jobs completed within the promised window as a share of all completed jobs, measured weekly in the Ops Console — 91% → 95%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 26,
+          "section": "Dispatch team",
+          "ref_line": 26,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "the failure rate",
+        "KR DS2.4: Delivery failure rate — dispatched jobs that end in a failed state as a share of all jobs dispatched, measured weekly in the Ops Console — `<baseline on this denominator>`% → `<target>`% by end of Q1; carry the 6% → 3% figures over only if they are restated on this population."
+      ]
+    },
+    {
+      "heading": "### [Minor] AP-11 Objective as Kitchen Sink — Dispatch",
+      "report_line": 45,
+      "severity": "Minor",
+      "id": "AP-11",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "Objective DS1",
+      "key": "AP-11@Objective DS1",
+      "match": {
+        "row": "G5",
+        "matched_id": "AP-11",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Delight enterprise dispatchers and expand Coppervale into two new regions",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Dispatch team",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Enterprise dispatcher NPS 24 → 40 (quarterly in-product survey, Delighted dashboard",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 22,
+          "section": "Dispatch team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Signed pilot customers in DE and FR: 0 → 6 (CRM",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 23,
+          "section": "Dispatch team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "view).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": null,
+          "section": null,
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": true
+        }
+      ],
+      "mentions": [
+        "and",
+        "Delight",
+        "Objective DS1: Enterprise dispatchers would fight to keep Coppervale — KR: Enterprise dispatcher NPS 24 → 40 (quarterly in-product survey, Delighted dashboard",
+        "); KR: dispatchers running `<share>`% of their shifts end-to-end in Coppervale (Ops Console). Objective DS1b (ranked second): Coppervale runs live dispatch in Germany and France — KR: Signed pilot customers in DE and FR: 0 → 6 (CRM",
+        "view)."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-07 Unmoored Moonshot — Courier",
+      "report_line": 54,
+      "severity": "Major",
+      "id": "AP-07",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR CR2.1",
+      "key": "AP-07@KR CR2.1",
+      "match": {
+        "row": "G2",
+        "matched_id": "AP-07",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Driver referral installs 3,000 → 45,000 this quarter (App Store + Play attributed installs).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 43,
+          "section": "Courier team",
+          "ref_line": 43,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "how",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 111,
+          "section": "Accounts team",
+          "ref_line": 49,
+          "ref_line_ok": false,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "referral growth is our big swing this quarter.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 49,
+          "section": "Courier team",
+          "ref_line": 49,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "our big swing",
+        "KR CR2.1 (aspirational): Driver referral installs 3,000 → `<target>` this quarter, driven by the in-app referral card shipping in week 2 (App Store + Play attributed installs); leading KR (committed): drivers sending ≥ 1 referral invite `<baseline>` → `<target>` weekly (Amplitude)."
+      ]
+    },
+    {
+      "heading": "### [Minor] AP-08 Committed vs Aspirational Not Labeled — Courier",
+      "report_line": 61,
+      "severity": "Minor",
+      "id": "AP-08",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR CR1.1",
+      "key": "AP-08@KR CR1.1",
+      "match": {
+        "row": "G3",
+        "matched_id": "AP-08",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Source: Confluence page 91116 (COUR-OKR-Q1) · Owner: Tomás R. · Last updated 2027-01-06",
+          "role": "supporting",
+          "class": "verbatim",
+          "input_line": 36,
+          "section": "Courier team",
+          "ref_line": 36,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (stretch).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 19,
+          "section": "Dispatch team",
+          "ref_line": 19,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Crash-free sessions 99.2% → 99.6% (Firebase Crashlytics).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 39,
+          "section": "Courier team",
+          "ref_line": 39,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Driver referral installs 3,000 → 45,000 this quarter (App Store + Play attributed installs).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 43,
+          "section": "Courier team",
+          "ref_line": 43,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Commitment: KRs are committed unless marked (stretch).",
+        "(stretch)"
+      ]
+    },
+    {
+      "heading": "### [Major] AP-10 BAU Dressed as OKR — Core Systems",
+      "report_line": 71,
+      "severity": "Major",
+      "id": "AP-10",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "Objective CS1",
+      "key": "AP-10@Objective CS1",
+      "match": {
+        "row": "G4",
+        "matched_id": "AP-10",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Continue running the platform smoothly for every team",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 57,
+          "section": "Core Systems team",
+          "ref_line": 57,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Sev-1 incidents per quarter 9 (Q4 actual, incident review) → ≤ 4.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 58,
+          "section": "Core Systems team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Cloud cost per completed delivery $0.42 → $0.30 (Cost Explorer dashboard",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 59,
+          "section": "Core Systems team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Continue running",
+        "Objective CS1: No team loses a week of its quarter to a platform incident or an unaffordable bill — KR CS1.1: Sev-1 incidents per quarter 9 (Q4 actual, incident review) → ≤ 4. KR CS1.2: Cloud cost per completed delivery $0.42 → $0.30 (Cost Explorer dashboard"
+      ]
+    },
+    {
+      "heading": "### [Major] AP-12 Orphan KR — Insights",
+      "report_line": 80,
+      "severity": "Major",
+      "id": "AP-12",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR IN1.3",
+      "key": "AP-12@KR IN1.3",
+      "match": {
+        "row": "G6",
+        "matched_id": "AP-12",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Driver-app App Store rating 4.1 → 4.6 (App Store Connect). Owner: Vik M.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 81,
+          "section": "Insights team",
+          "ref_line": 81,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Execs run Monday mornings from our dashboards",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 78,
+          "section": "Insights team",
+          "ref_line": 78,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "KR IN1.3: Exec-suite dashboards with a named data owner and a weekly freshness SLA met `<baseline>`/14 → 14/14 (Looker admin panel)."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-15 Ownerless KR — Insights",
+      "report_line": 87,
+      "severity": "Major",
+      "id": "AP-15",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR IN2.2",
+      "key": "AP-15@KR IN2.2",
+      "match": {
+        "row": "G8",
+        "matched_id": "AP-15",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Product squads onboarded to v3 event conventions 2/9 → 9/9 (onboarding tracker). Owner: TBD.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 85,
+          "section": "Insights team",
+          "ref_line": 85,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Weekly active leadership viewers of the exec suite 14 → 35 (Looker usage stats). Owner: Halima D.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 79,
+          "section": "Insights team",
+          "ref_line": 79,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "KR IN2.2: Product squads onboarded to v3 event conventions 2/9 → 9/9 (onboarding tracker). Owner: `<named individual>` (Insights), with each squad's onboarding date agreed by end of week 2."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-05 Everything Is a P0 — Accounts",
+      "report_line": 96,
+      "severity": "Major",
+      "id": "AP-05",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "Objective AC1",
+      "key": "AP-05@Objective AC1",
+      "match": {
+        "row": "G1",
+        "matched_id": "AP-05",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Objective AC1 (Priority: P0): New customers reach first value in days, not weeks",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 95,
+          "section": "Accounts team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Objective AC2 (Priority: P0): Support answers arrive before customers ask twice",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 99,
+          "section": "Accounts team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Objective AC3 (Priority: P0): Customers trust the delivery promises we report",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 103,
+          "section": "Accounts team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Objective AC4 (Priority: P0): Billing runs itself",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 107,
+          "section": "Accounts team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "every one of these is P0 for us this quarter — we're not choosing.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 111,
+          "section": "Accounts team",
+          "ref_line": 111,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Priority: P0 — AC1 and AC2 (the two churn drivers the company page names first). P1 — AC4. P2 — AC3, with AC3.2 dropped to the backlog if the billing migration has not passed `<milestone>` by week 6."
+      ]
+    },
+    {
+      "heading": "### [Critical] AL-11 Circular dependency: Courier ↔ Core Systems ↔ Insights",
+      "report_line": 105,
+      "severity": "Critical",
+      "id": "AL-11",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR CR3.1",
+      "key": "AL-11@KR CR3.1",
+      "match": {
+        "row": "A4",
+        "matched_id": "AL-11",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Instrument all 14 core driver flows with telemetry SDK v1 (0/14 → 14/14, flow coverage checklist) once Core Systems GAs the SDK.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 46,
+          "section": "Courier team",
+          "ref_line": 46,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "GA telemetry SDK v1 after Insights validates event schema v3 in production, with internal apps live on it 1 → 3 (SDK adoption dashboard).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 67,
+          "section": "Core Systems team",
+          "ref_line": 67,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Validate event schema v3 in production — 22 of 22 v3 event types passing conformance checks (0/22 → 22/22, schema CI suite) — after Courier instruments the new driver-app event stream. Owner: Halima D.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 84,
+          "section": "Insights team",
+          "ref_line": 84,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "SDK v1 is code-complete; GA is gated on schema v3 validation (Insights).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 70,
+          "section": "Core Systems team",
+          "ref_line": 70,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "schema v3 validation is sequenced behind Courier's instrumentation of the new event stream",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 87,
+          "section": "Insights team",
+          "ref_line": 87,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "once Core Systems GAs the SDK",
+        "after Insights validates event schema v3 in production",
+        "after Courier instruments the new driver-app event stream",
+        "once",
+        "after",
+        "gated on",
+        "sequenced behind",
+        "telemetry SDK v1",
+        "SDK v1 is code-complete"
+      ]
+    },
+    {
+      "heading": "### [Major] AL-08 Terminology collision: Dispatch ↔ Accounts",
+      "report_line": 117,
+      "severity": "Major",
+      "id": "AL-08",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR DS2.1",
+      "key": "AL-08@KR DS2.1",
+      "match": {
+        "row": "A2",
+        "matched_id": "AL-08",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "On-time delivery rate — jobs completed within the promised window as a share of all completed jobs, measured weekly in the Ops Console — 91% → 95%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 26,
+          "section": "Dispatch team",
+          "ref_line": 26,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "On-time delivery rate — deliveries scanned at the destination inside the promised window as a share of all scheduled deliveries including cancellations, monthly, from the Billing warehouse — 78% → 85%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 104,
+          "section": "Accounts team",
+          "ref_line": 104,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "reduce enterprise logo churn from 8% to 5% across FY27, driven primarily by onboarding time-to-value, the support escalation backlog, and keeping the delivery promises we report to customers.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 11,
+          "section": "Company",
+          "ref_line": 11,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "the same",
+        "On-time delivery rate"
+      ]
+    },
+    {
+      "heading": "### [Major] AL-12 Commitment asymmetry: Dispatch ↔ Accounts",
+      "report_line": 128,
+      "severity": "Major",
+      "id": "AL-12",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR DS2.2",
+      "key": "AL-12@KR DS2.2",
+      "match": {
+        "row": "A5",
+        "matched_id": "AL-12",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "600 enterprise trial starts via the partner portal launch (0 → 600, CRM campaign",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 27,
+          "section": "Dispatch team",
+          "ref_line": 27,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Commitment: KRs are committed unless marked (stretch).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 19,
+          "section": "Dispatch team",
+          "ref_line": 19,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "DS2.2 assumes the partner portal launch — Accounts owns the portal build this quarter.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 31,
+          "section": "Dispatch team",
+          "ref_line": 31,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Partner portal live for the first 40 partner accounts, 0 → 40 (Partner CRM)",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 105,
+          "section": "Accounts team",
+          "ref_line": 105,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "(stretch — only if the billing migration lands early)",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 105,
+          "section": "Accounts team",
+          "ref_line": 105,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Portal timing depends on how fast the billing migration goes (see AC3.2).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 111,
+          "section": "Accounts team",
+          "ref_line": 111,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "the first 40 partner accounts"
+      ]
+    },
+    {
+      "heading": "### [Major] AL-09 Baseline disagreement: Accounts ↔ Company (Q4 2026 business review)",
+      "report_line": 138,
+      "severity": "Major",
+      "id": "AL-09",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR AC2.2",
+      "key": "AL-09@KR AC2.2",
+      "match": {
+        "row": "A3",
+        "matched_id": "AL-09",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Customer CSAT 86 → 90 (quarterly relationship survey; Q4 2026 baseline).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 101,
+          "section": "Accounts team",
+          "ref_line": 101,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Customer CSAT ended Q4 2026 at 78 (quarterly relationship survey, n = 412).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 118,
+          "section": "Appendix",
+          "ref_line": 118,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "quarterly relationship survey",
+        "Customer CSAT",
+        "quarterly relationship survey"
+      ]
+    },
+    {
+      "heading": "### [Major] AL-05 Cascade drift: Core Systems ↔ Company priority C2",
+      "report_line": 148,
+      "severity": "Major",
+      "id": "AL-05",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "Objective CS2",
+      "key": "AL-05@Objective CS2",
+      "match": {
+        "row": "A1",
+        "matched_id": "AL-05",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "reduce enterprise logo churn from 8% to 5% across FY27, driven primarily by onboarding time-to-value, the support escalation backlog, and keeping the delivery promises we report to customers.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 11,
+          "section": "Company",
+          "ref_line": 11,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Objective CS2: Ship with confidence",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 61,
+          "section": "Core Systems team",
+          "ref_line": 61,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Deploy frequency 2/week → 8/week (Buildkite deploy log).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 62,
+          "section": "Core Systems team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Change-failure rate 18% → 8% of production deploys (incident review tags).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 63,
+          "section": "Core Systems team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "CI pipeline p95 42 min → 15 min (Buildkite analytics).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 64,
+          "section": "Core Systems team",
+          "ref_line": null,
+          "ref_line_ok": null,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": []
+    },
+    {
+      "heading": "### [Minor] AL-05 Cascade drift: Courier ↔ Company priority C3",
+      "report_line": 158,
+      "severity": "Minor",
+      "id": "AL-05",
+      "secondary": [],
+      "kind": "extra",
+      "anchor": "Objective CR2",
+      "key": "AL-05@Objective CR2",
+      "match": null,
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "driver-app weekly retention from 71% to 80% across FY27.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 12,
+          "section": "Company",
+          "ref_line": 12,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Every driver in the region hears about Coppervale from another driver",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 42,
+          "section": "Courier team",
+          "ref_line": 42,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Driver referral installs 3,000 → 45,000 this quarter (App Store + Play attributed installs).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 43,
+          "section": "Courier team",
+          "ref_line": 43,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "referral growth is our big swing this quarter."
+      ]
+    }
+  ],
+  "extras": [
+    "AL-05@Objective CR2"
+  ],
+  "duplicates": [],
+  "excluded": [],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 0
+  },
+  "budget": {
+    "limit": 2,
+    "counted": 1,
+    "excluded": 0
+  },
+  "quotes": {
+    "total": 49,
+    "evidence": 48,
+    "supporting": 1,
+    "verbatim": 49,
+    "near_miss": 0,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 0,
+    "term": 0,
+    "ambiguous": 1,
+    "key_leak": 0,
+    "mentions": 32,
+    "fabricated_spans": [],
+    "unverified_spans": []
+  },
+  "structure": {
+    "pass": true,
+    "failures": [],
+    "warnings": [
+      "quote occurs on several input lines and the ref names none of them, not anchored: 'view).' (### [Minor] AP-11 Objective as Kitchen Sink — Dispatch)",
+      "ref says line 49 but quote is on input line 111: ### [Major] AP-07 Unmoored Moonshot — Courier"
+    ]
+  },
+  "failures": [],
+  "pass": true
+}
