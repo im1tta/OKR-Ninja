@@ -73,7 +73,7 @@ Load `references/report-format.md` (at this step) and produce the report for the
 
 ## Step 7 — Publish
 
-Skip this step entirely for runs against `examples/sample-portfolio.md` or any eval — those never publish artifacts or write a registry. Otherwise, publish the report deliverables by following the **"Artifact lifecycle"** section of `references/report-format.md` exactly: the per-portfolio `artifacts.json` registry decides update-vs-create; never create a duplicate artifact for a registered deliverable.
+Skip this step entirely for runs against any of this skill's own fixtures — the files under the `examples/` directory that ships with it — and any eval run — those never publish artifacts or write a registry. Otherwise, publish the report deliverables by following the **"Artifact lifecycle"** section of `references/report-format.md` exactly: the per-portfolio `artifacts.json` registry decides update-vs-create; never create a duplicate artifact for a registered deliverable.
 
 ## Execution model: fan-out vs sequential
 
