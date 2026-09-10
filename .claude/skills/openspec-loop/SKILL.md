@@ -2,7 +2,7 @@
 name: openspec-loop
 description: Drive the full OpenSpec coding loop end-to-end — explore → refine (guided one-question-at-a-time A/B/C Q&A) → propose → apply → verify → archive — with a single human approval gate after refinement, automatic gated progression through the rest, and a bounded repair loop that fixes failures before escalating. Use when the user wants to run "the loop", take an idea from start to archived change, or chain the opsx workflow.
 license: MIT
-compatibility: Requires the openspec CLI and the project quality gate (structural checks + fixture eval against examples/sample-portfolio.md). Orchestrates the existing opsx:* skills; reuses, never re-implements them.
+compatibility: Requires the openspec CLI and the project quality gate (structural checks + fixture eval, scoped as phases/verify-gate.md defines - it names which fixture(s) under examples/ cover a touched category). Orchestrates the existing opsx:* skills; reuses, never re-implements them.
 metadata:
   author: relay
   version: "1.0"

@@ -7,6 +7,21 @@ An [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) for Claude 
 
 Every finding is backed by a **verbatim quote and a source ref** (Confluence page title, Jira issue key, or file path + heading/line — the exact format is defined in `references/report-format.md`). No quote, no finding.
 
+## Who it's for, when it runs, and what it's for
+
+**One reader per mode.** Portfolio mode is written for an **exec or portfolio owner** — a VP, chief of staff, or founder with authority across the teams in scope — reading for organizational OKR quality and cross-team alignment. Single-team mode is written for the **lead of the team under review**. The two connect through §6 of the portfolio report: the exec gets a ready-to-paste single-team prompt, and the lead runs it on their own team.
+
+**Target use-case: cross-cycle drift tracking** — comparing a team or a portfolio quarter over quarter for silently dropped KRs, moving goalposts, and recycled objectives. The skill as built assumes something narrower: a **pre-commit draft review**, where the OKR text is still editable so a concrete rewrite is directly actionable. That gap is known and additive, not a contradiction to patch in place — drift tracking needs a per-cycle store plus tracking-continuity dimensions, and it is the roadmap's centre of gravity. A review run mid-quarter or later should convert rewrite recommendations into guardrails and escalations, because the text is no longer editable.
+
+**What the report is for — four jobs, in build order, which is also the tie-break order:**
+
+1. **Input to a planning conversation** *(portfolio mode; built)* — surface the two or three cross-team collisions worth an hour of humans' time. The ~10-line verdict, the ≤10-item action list, and the both-sides evidence rule exist for this reader. Where depth and brevity conflict in portfolio mode, brevity wins.
+2. **Punch list a lead works through** *(single-team mode; built, depth parity pending)* — exhaustive scoring and a concrete rewrite for every Critical and Major finding. Here depth wins over brevity.
+3. **Coaching artifact** *(unbuilt; arrives with drift tracking)* — quarter-over-quarter comparison only pays off if the reader learns between cycles, so the teaching voice lands with the drift work rather than ahead of it.
+4. **Quality gate before OKRs are locked** *(deliberately last)* — gating on roll-up grades requires scores reproducible across model versions, which the scoring calibration set does not yet provide. Until it does, grades route follow-up (§6) and gate nothing.
+
+**Distribution: a portfolio / demo piece.** Spec discipline and eval rigor are the product, which ranks eval and calibration work above new detection features. Two consequences: the rubric's doctrine stays fixed and opinionated — outcome over output, baselines mandatory, sandbagging treated as a defect — and per-org configurability is an explicit non-goal, even though an org running Google-style aspirational 0.7 targets would need AP-06 and K3 relaxed. Fixtures stay fictional for demo safety as much as for hygiene.
+
 ## Scope: two modes, one skill
 
 The skill is closed and self-contained. Team count at scope intake selects the mode:

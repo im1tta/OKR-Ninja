@@ -209,4 +209,4 @@ This section is the only source of truth for how report deliverables are publish
 
 **History stays local.** Run outputs in the working folder are dated and append-only — a run never overwrites a prior cycle's files. The living artifact is only the current view; cross-cycle comparisons derive from the local cycle files.
 
-**Fixture/eval exemption.** Runs against `examples/sample-portfolio.md` or any eval never publish or update artifacts and never create or modify a registry file.
+**Fixture/eval exemption.** Runs against any of this skill's own fixtures — the files under the `examples/` directory that ships with it — and any eval run, never publish or update artifacts and never create or modify a registry file. The test is the file, not the path: a fixture is exempt whether it is read from an installed skill, a symlink, or a working checkout, and a fixture added later is covered on arrival without naming it here. OKR exports of the user's own are never exempt, including when they sit in a folder the user happens to call `examples/` — those are a normal corpus and their review publishes as usual.
