@@ -102,7 +102,7 @@
 
 ### Objective AC3 (Priority: P0): Customers trust the delivery promises we report *(supports C2)*
 - **KR AC3.1:** On-time delivery rate — deliveries scanned at the destination inside the promised window as a share of all scheduled deliveries including cancellations, monthly, from the Billing warehouse — 78% → 85%.
-- **KR AC3.2:** Partner portal live for the first 40 partner accounts, 0 → 40 (Partner CRM) *(stretch — only if the billing migration lands early)*.
+- **KR AC3.2:** Partner portal live for the first 40 partner accounts, 0 → 40 (Partner CRM), giving those partners the same on-time delivery reporting AC3.1 measures *(stretch — only if the billing migration lands early)*.
 
 ### Objective AC4 (Priority: P0): Billing runs itself *(supports C1)*
 - **KR AC4.1:** Invoices requiring manual correction 4.2% → 1.5% of invoices issued monthly (Billing QA dashboard).
@@ -161,6 +161,12 @@ Near-misses planted to measure false-positive discipline. Reporting one of these
 6. **Courier KR CR1.2 (retention to 78%) vs Company C3 (to 80%)**: consistent — the KR states it is the "Q1 step toward the FY27 80% goal in C3", not a conflicting target.
 7. **Accounts KR AC4.2** (billing migration 38% → 100%): bounded completion of an in-flight migration with a countable coverage denominator — neither AP-07 (not open-ended growth) nor AP-01/AP-14 (not a dateline milestone).
 8. **The A4 cycle edges are not reported as AL-12**: Courier's page states no labeling scheme at all, and the taxonomy's own disconfirming check applies — a team that labels nothing has not implicitly marked everything aspirational. The scheme's absence is already reported as G3 (AP-08); per the taxonomy's one-finding-one-failure-mode rule, reporting the same absence again as per-edge label ambiguity double-counts one root cause.
+
+### Triage entries
+
+Recurring findings beyond the key, each classified once so the same debate is not re-had. A **known-red** entry is reported by the grader but excluded from the extra-findings budget until its fix lands; a **fixed** entry no longer affects counting.
+
+1. **T1 · AP-12 on KR AC3.2** — bucket: fixture-ambiguous · status: fixed · decision: Fixed by change fix-fixture1-precision-extras (2026-09-10, scope widened to fixture 2 with the owner's approval): "Partner portal live for the first 40 partner accounts, 0 → 40" stated no causal chain to its objective, "Customers trust the delivery promises we report", so AP-12 Orphan KR was a defensible reading the key never planted — the same unplanted-true-defect class this change fixed on fixture 1. AC3.2 now names the delivery reporting it gives those partners, which is the objective's own subject. Everything the key depends on is preserved: the portal, 0 → 40, the stretch label and the billing-migration gate, all load-bearing for row A5 (AL-12) and non-defect N4 (AP-07). Not planted as a defect row: it appeared in 3 runs of 5, and a key row must be found in every run. · rationale: Extra in 3 of 5 runs of 2026-09-10-candidate-repair1, where it was the finding that pushed one run to 3 counted findings against a budget of 2. Absent from the pre-change batches, but no valid comparison to them exists — the harness refuses it because those arms ran on claude-opus-5 and this one on claude-opus-5[1m] — so it is triaged on its merits rather than attributed to any change.
 
 ### Modes deliberately not covered
 

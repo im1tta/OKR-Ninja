@@ -160,8 +160,12 @@ Cite by ID and canonical name. A finding must quote the triggering text verbatim
 ### AP-01 · Task Masquerading as KR — **Major**
 - **Definition:** A KR that is a deliverable or activity, not a measurable result.
 - **Detect:** KR begins with ship/launch/implement/migrate/complete/build/write; no metric, no baseline→target pair.
+- **Not AP-01 when:** the KR carries **either** of two things. (1) A **result measure someone outside the delivering team moves** — an adoption count, a usage or error rate, a quality measure ("…and 1,800 members book through the new flow this quarter") — whether or not it states a baseline; a missing baseline there is AP-04 · KR Without Baseline's business, not this one. (2) A **baseline→target pair**, including a coverage figure that moves from a stated starting point over a countable denominator ("seat migration 41% → 100% of the 2,300 provisioned seats", "0/9 → 9/9 services instrumented") — such a KR is progress-measurable all period, which is what the trigger's "no baseline→target pair" clause is asking about. A delivery-verb KR fires only when it has **neither**: a bare completion target with no starting point and no outside-moved measure ("Ship the connector to 100% of new accounts", "Migrate 100% of our events") restates the delivery instead of measuring a result. This clause only excludes — it never fires a KR the trigger above leaves silent, and it adds no verb to that trigger list.
+- **Evidence:** quote the key result in full as extracted, not the delivery clause alone — the exclusion turns on the rest of the sentence, so a clipped quote can make a rescued KR look like a firing one.
 - **Before:** "KR: Launch the new referral flow."
 - **After:** "KR: Referral-driven signups 120/mo → 400/mo by end of Q3 (source: Amplitude 'Referral Signups')." [proposal — placeholder target]
+- **Before (bare completion target):** "KR: Ship the in-app upgrade prompt to 100% of trial accounts." (Fires: "100%" has no starting point, so it counts the rollout the team finishes by shipping — no trial account has done anything. Contrast "prompt live for 1,200 → 6,400 trial accounts", which is progress-measurable and does not fire.)
+- **After:** "KR: Trial accounts starting a paid upgrade from the in-app prompt 60/mo → 240/mo (source: `<billing analytics report>`)." [proposal — placeholder target]
 
 ### AP-02 · Binary KR with No Gradient — **Major**
 - **Definition:** Done/not-done KR; scoring mid-cycle can only be 0% or 100%.
@@ -213,9 +217,11 @@ Cite by ID and canonical name. A finding must quote the triggering text verbatim
 
 ### AP-10 · BAU Dressed as OKR — **Major**
 - **Definition:** Routine operational duty presented as a goal; achieved by default staffing, displaces real goals.
-- **Detect:** "Continue," "maintain," "keep supporting," "ongoing"; describes the team's standing job with no delta.
-- **Before:** "O: Continue supporting production systems reliably."
-- **After:** "O: Cut operational toil so the team ships again — KR: pages/on-call week 22 → 8." [proposal — placeholder target] (Or move the standing duty to a health-metric section outside the OKRs.)
+- **Detect:** Decide on the **objective statement**, not on its KRs. AP-10 fires when the objective asserts continuation of the team's standing job — "continue," "maintain," "keep supporting," "ongoing" — **and** either **(a)** it names no change at all (no direction, reduction, or improvement — nothing that differs from today), or **(b)** it names a change that **no** KR realizes with a baseline→target pair: the adjective has to be paid for. It does not fire when the objective names a change and at least one KR realizes it with such a pair; operational-sounding wording wrapped around a paid-for change is style, not this anti-pattern. Deltas in the KRs alone never rescue the objective under (a): a standing-duty objective whose KRs happen to improve numbers is still AP-10, because the objective is the thing the anti-pattern is about.
+- **Evidence:** the finding quotes the objective statement. On path (b) it also quotes the KR offered as the unpaid-for change or, when no KR mentions the named change at all, enumerates the objective's KRs as the search Part 5 rule 4 requires — the KR half of the test is never asserted narratively.
+- **Instance:** the objective statement is AP-10's instance, so the finding heads or joins that objective's own block and never appears on a key result's `Also:` line.
+- **Before:** "O: Continue supporting production systems reliably." — fires under (a) despite two real deltas beneath it ("Sev-1 incidents/quarter 12 → 6", "cloud spend per 1,000 requests $0.40 → $0.31"): the objective commits the team to continuing, not to changing anything. Each span is quoted separately because no source line contains them joined.
+- **After:** "O: Cut operational toil so the team ships again — KR: pages/on-call week 22 → 8." [proposal — placeholder target] (Does not fire: the objective names the change — cut toil — and a KR realizes it with a baseline→target pair. Or move the standing duty to a health-metric section outside the OKRs.)
 
 ### AP-11 · Objective as Kitchen Sink — **Minor**
 - **Definition:** One objective bundling multiple unrelated end-states joined by "and."

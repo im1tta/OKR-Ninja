@@ -25,7 +25,7 @@ PL13 = ("Improve internal developer satisfaction score to 8/10.", "Objective PL1
 PL11 = ("Maintain API uptime at or above 99.9%.", "Objective PL1: Keep the lights on, cheaper", 57)
 APX = ("API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).", "Appendix — Q2 2026 business review (extracts)", 89)
 P12 = ("Ship checkout & billing API v2 to GA by Sep 26.", "Objective P1: Make checkout something customers never think about", 23)
-D21 = ("Ship personalized onboarding checklists to 100% of new signups.", "Objective D2: Own onboarding personalization end-to-end", 79)
+D21 = ("Ship personalized onboarding checklists and cut new-signup support tickets in the first 7 days from 38 per 100 signups to 20.", "Objective D2: Own onboarding personalization end-to-end", 79)
 PL1 = ("Keep the lights on, cheaper", "Objective PL1: Keep the lights on, cheaper", 56)
 port_head = "# Report\n\n## 3. Per-team goodness findings\n\n"
 
