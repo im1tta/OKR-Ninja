@@ -9,8 +9,15 @@ context: |
 
   This is a markdown-only repo — no build, no app code. The deliverable is the
   skill itself: SKILL.md (entry point), references/ (goodness-rubric.md,
-  alignment-taxonomy.md, report-format.md), and examples/sample-portfolio.md
-  (a test fixture with planted defects and an answer key).
+  alignment-taxonomy.md, report-format.md), and examples/ (two fixtures, each
+  with planted defects and its own answer key; together they cover the full
+  AP-XX/AL-XX catalog).
+
+  Who it is for and what the report is for — reader personas per mode, the
+  target use-case, the four-job priority order, distribution intent — lives
+  only in README.md ("Who it's for, when it runs, and what it's for"). Read it
+  before proposing anything that changes what the report is for, how deep it
+  goes, or who it addresses.
 
   Conventions:
   - Each topic has exactly one owning file (see CLAUDE.md); no duplication.

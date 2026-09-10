@@ -11,7 +11,7 @@ This repo is an Agent Skill ("okr-ninja") that audits OKRs for quality ("goodnes
 | `references/alignment-taxonomy.md` | The ONLY home of AL-XX cross-team failure modes and their detection heuristics | Goodness/rubric content, report/finding templates, severity-scale definitions |
 | `references/report-format.md` | The ONLY home of output/finding templates, the Critical/Major/Minor severity scale, and the source-ref format | Rubric or taxonomy definitions (it references them by ID and canonical name only) |
 | `examples/sample-portfolio.md`, `examples/sample-portfolio-2.md` | Test fixtures: fictional company priorities + team portfolios with planted defects (fixture 1: Brightledger, 4 teams; fixture 2: Coppervale, 5 teams, covering the catalog modes fixture 1 leaves uncovered); each file's answer key, intentional non-defects list, and eval criterion live at its bottom | Real company data |
-| `README.md` | Human-facing overview, install, usage | Procedure details agents follow |
+| `README.md` | Human-facing overview, install, usage, and the ONLY home of the product context: reader personas per mode, the target use-case (cross-cycle drift tracking) vs. what is built today, the four-job priority order that breaks depth-vs-brevity ties, and the distribution intent | Procedure details agents follow |
 | `openspec/` + `.claude/` | OPSX change-of-record scaffold, commands, and skills (see Change workflow below) | Skill content |
 
 If a rubric dimension needs explaining, it goes in `references/goodness-rubric.md` and everywhere else refers to it by name. Same rule for failure modes (`references/alignment-taxonomy.md`), and for templates, severities, and source-ref formats (`references/report-format.md`).
