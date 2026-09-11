@@ -1,0 +1,204 @@
+{
+  "harness_version": 2,
+  "batch": "2026-09-11-candidate-cbdeba3",
+  "tier": "candidate",
+  "created": "2026-09-11T09:19:29Z",
+  "runs_per_slice": 5,
+  "prompt_hashes": {
+    "portfolio": "7b7b1c02a8d898d75b3f9816d780520c38b4c508537a8ab004e7d50ca471bdd2",
+    "single-team": "a01677fcc8cd3f271d4671ac2da632c43bcadd38f0669054188ca089a8bbaa04"
+  },
+  "key_hashes": {
+    "fixture2": "a7fb51fde4563d6f6d7ea3908e72a4d4bbe869e5c5e6b702f4330fa45b15f9bd",
+    "fixture1": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa"
+  },
+  "key_hashes_at_plan": {
+    "fixture2": "a7fb51fde4563d6f6d7ea3908e72a4d4bbe869e5c5e6b702f4330fa45b15f9bd",
+    "fixture1": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa"
+  },
+  "warnings": [],
+  "arms": {
+    "candidate": {
+      "skill_sha": "cbdeba33547240249e888c73f3616ea617309994",
+      "dirty": false,
+      "ref": "worktree",
+      "models": [
+        "claude-opus-5[1m]"
+      ],
+      "slices": {
+        "fixture2-portfolio": {
+          "runs": 5,
+          "produced": 5,
+          "pass": 5,
+          "structure_pass": 5,
+          "rows": {
+            "G1": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-05"
+              ],
+              "caveat": null
+            },
+            "G2": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-07"
+              ],
+              "caveat": null
+            },
+            "G3": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-08"
+              ],
+              "caveat": null
+            },
+            "G4": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-10"
+              ],
+              "caveat": null
+            },
+            "G5": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-11"
+              ],
+              "caveat": null
+            },
+            "G6": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-12"
+              ],
+              "caveat": null
+            },
+            "G7": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-13"
+              ],
+              "caveat": null
+            },
+            "G8": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AP-15"
+              ],
+              "caveat": null
+            },
+            "A1": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-05"
+              ],
+              "caveat": null
+            },
+            "A2": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-08"
+              ],
+              "caveat": null
+            },
+            "A3": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-09"
+              ],
+              "caveat": null
+            },
+            "A4": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-11"
+              ],
+              "caveat": null
+            },
+            "A5": {
+              "found": 5,
+              "id_exact": 5,
+              "accepted": [
+                "AL-12"
+              ],
+              "caveat": null
+            }
+          },
+          "extras": [
+            {
+              "key": "AL-01@KR IN2.2",
+              "runs": 1,
+              "kind": "extra",
+              "flags": [
+                "non_defect:N5",
+                "off_key"
+              ],
+              "excluded": false,
+              "bucket": null,
+              "triage": null
+            },
+            {
+              "key": "AL-10@KR DS1.2",
+              "runs": 1,
+              "kind": "extra",
+              "flags": [
+                "off_key"
+              ],
+              "excluded": false,
+              "bucket": null,
+              "triage": null
+            }
+          ],
+          "violations": {
+            "non_defect": 1,
+            "off_key": 2
+          },
+          "budget_counted": [
+            0,
+            0,
+            0,
+            0,
+            2
+          ],
+          "quotes": {
+            "total": 297,
+            "evidence": 179,
+            "supporting": 118,
+            "verbatim": 292,
+            "near_miss": 0,
+            "out_of_scope": 0,
+            "fabricated": 0,
+            "unverified": 2,
+            "term": 3,
+            "ambiguous": 12,
+            "key_leak": 0,
+            "mentions": 124
+          },
+          "structure_failures": [],
+          "cost": {
+            "tokens_mean": 161124.6,
+            "tokens_max": 175493,
+            "seconds_mean": 838.8,
+            "seconds_max": 1017.956
+          },
+          "models": [
+            "claude-opus-5[1m]"
+          ]
+        }
+      }
+    }
+  }
+}
