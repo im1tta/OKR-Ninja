@@ -1,0 +1,24 @@
+## 1. Correct the fixture on the parent's side of the link
+
+- [x] 1.1 Rewrite the **C3** bullet on fixture 2's company priorities page per `design.md` D2, so it names driver-to-driver referral growth as a documented retention driver in C2's `driven primarily by …` voice. Verify `grep -n "C3 — Make drivers love the app" examples/sample-portfolio-2.md` returns exactly one line containing `driver-app weekly retention from 71% to 80% across FY27` character-for-character (N6's quote) and naming referral growth; verify the line states no target, no baseline and no date for referrals.
+- [x] 1.2 Confirm the Courier page is untouched: `git diff -- examples/sample-portfolio-2.md` shows changes only inside the `## Company Q1 2027 priorities` section and the generated `## Answer key` section, and `git diff -U0 -- examples/sample-portfolio-2.md | grep -c "CR2"` returns 0 outside the answer key. G2, G3 and N1 all depend on that page as written.
+- [x] 1.3 Confirm C2's bullet is unchanged (`git diff -- examples/sample-portfolio-2.md | grep "C2 — Keep enterprise"` returns nothing), so planted row A1's contrast — CS2's KRs missing every workstream C2 names — is undiluted.
+
+## 2. Record the disposition in the key
+
+- [x] 2.1 Add intentional non-defect **N9** to `evals/keys/sample-portfolio-2.json`: `forbid: ["AL-05"]`, `at: [{"item": "Objective CR2"}]`, with text naming the property it depends on — that C3 names driver-to-driver referral growth as a documented retention driver, so AL-05's mechanism check passes on the documented-driver branch and AL-05 belongs once, at A1. Verify the JSON parses and N9 is the ninth entry of `non_defects`.
+- [x] 2.2 Add triage entry **T2** to the same key: `finding: "AL-05"`, `anchor: {"item": "Objective CR2"}`, bucket `fixture-ambiguous`, status `fixed`, with a decision naming the C3 edit and each rejected lever with the row it would have cost (Courier-page mechanism → G2; link removal → off-key AL-04; companion KR → AP-07's own published remedy; planting the row → recall asymmetry), and a rationale carrying the per-batch run counts. Verify `status` is not `known-red` and the bucket is not `skill-error`.
+- [x] 2.3 Confirm nothing else in the key moved: `git diff evals/keys/sample-portfolio-2.json` touches only the `non_defects` and `triage` arrays — `budget` stays 2, `criterion`, `defects`, `not_covered` and `slices` unchanged.
+
+## 3. Regenerate and check
+
+- [x] 3.1 Run `python3 evals/grader/harness.py render-key --all` and verify the fixture's `## Answer key` section now lists N9 among the intentional non-defects and T2 among the triage entries, with no hand edit below the `## Answer key` heading.
+- [x] 3.2 Run `python3 evals/grader/harness.py check` and verify it exits 0 — keys valid, every evidence anchor resolving (including N9's `Objective CR2`, which must match exactly one fixture line), catalog coverage intact, generated sections fresh.
+- [x] 3.3 Run `python3 evals/grader/harness.py selftest` and verify it exits 0 (39 cases). Confirm *why* it is unaffected rather than assuming: the fixture-2 cases resolve their key from the frozen `evals/grader/selftest/keys/sample-portfolio-2.json` (N1–N8, no triage) ahead of the live key, per the precedence at `harness.py:1533`, so N9 and T2 never reach them. Record that `selftest` therefore provides no coverage of N9 — `check` and graded batches do.
+
+## 4. Verify gate
+
+- [x] 4.1 Run the structural checks per `.claude/skills/openspec-loop/phases/verify-gate.md`: `harness.py check` and `selftest` exit 0, `SKILL.md` frontmatter parses and stays under ~150 lines, every `references/` path mentioned in a doc resolves, and no rubric/taxonomy/report-format detail is duplicated across files.
+- [x] 4.2 Run the fixture eval as a **candidate** batch (5 runs, working tree only) on `fixture2-portfolio` — the only slice whose key covers the touched content — with fresh subagents per `.claude/commands/okr-eval.md`. Verify `AL-05@Objective CR2` is absent from the scorecard's extras in 5/5, rows **G2**, **G3** and **A1** are found by canonical ID in 5/5 along with the other ten, zero fabricated quotes, and counted findings within the budget of 2 in every run. Report structure failures and warnings alongside the verdict.
+- [x] 4.3 *(No repair needed — `AL-05@Objective CR2` absent in 5/5 and G2 5/5.)* If `AL-05@Objective CR2` survives the batch, strengthen C3's parent-page text and re-run — do not ship N9 while reports violate it with sound reasoning, and do not widen a row, raise the budget, or add a known-red entry to pass. If **G2** drops in any run, treat D2's wording as the cause and weaken C3's causal claim rather than touching the Courier page.
+- [x] 4.4 Run `opsx:verify` as a non-author refute-mode check briefed with `design.md`'s rationale, and verify it reports the change complete and coherent.
