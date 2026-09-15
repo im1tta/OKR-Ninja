@@ -27,6 +27,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 HARNESS_VERSION = 2
@@ -1474,12 +1475,21 @@ def cmd_check(args):
         fx = Fixture(ROOT / k["fixture"])
         if fx.key_text != render_key_section(k, catalog):
             errors.append("%s: generated '## Answer key' section is stale — run: python3 evals/grader/harness.py render-key %s" % (k["fixture"], k["id"]))
+    scenarios = 0
+    if not args.key:
+        try:
+            sc = load_scenarios(args.scenarios_file)
+            errors += validate_scenarios(sc, keys)
+            scenarios = len(sc.get("scenarios", []))
+        except Fail as e:
+            errors.append(str(e))
     if errors:
         print("check: %d problem(s)" % len(errors))
         for e in errors:
             print("  - " + e)
         sys.exit(1)
-    print("check: ok (%d key(s), %d catalog ids, answer-key sections fresh)" % (len(keys), len(catalog)))
+    print("check: ok (%d key(s), %d catalog ids, answer-key sections fresh, %d lifecycle scenario(s))" % (
+        len(keys), len(catalog), scenarios))
 
 
 # ------------------------------------------------------------------ selftest
@@ -1503,6 +1513,93 @@ def expect_ok(actual, expected):
     return actual == expected
 
 
+SUBST = re.compile(r"{{(created|seeded|supplied):([^}]+)}}")
+
+
+def _subst(value, resolve):
+    if isinstance(value, str):
+        return SUBST.sub(lambda m: resolve(m.group(1), m.group(2)), value)
+    if isinstance(value, list):
+        return [_subst(v, resolve) for v in value]
+    if isinstance(value, dict):
+        return {k: _subst(v, resolve) for k, v in value.items()}
+    return value
+
+
+def lifecycle_selftest_case(name, case, cdir):
+    """Materialise a lifecycle run directory from the case, drive the real seam, grade it, diff."""
+    out = []
+    sc = load_scenarios(cdir / case["scenarios_file"]) if case.get("scenarios_file") else load_scenarios()
+    scen = scenario_of(sc, case["scenario"])
+    run = case.get("run") or {}
+    seeded = {k: e["url"] for k, e in ((scen.get("seed") or {}).get("registry") or {}).items()}
+    supplied = dict(scen.get("supplied_urls") or {})
+    created = {}
+
+    def resolve(kind, key):
+        src = {"created": created, "seeded": seeded, "supplied": supplied}[kind]
+        if key not in src:
+            out.append("%s: no %s URL for %r" % (name, kind, key))
+            return "<unresolved>"
+        return src[key]
+
+    with tempfile.TemporaryDirectory() as tmp:
+        rdir = Path(tmp) / "run"
+        seed_run(rdir, scen)
+        for fname, content in (run.get("work_files") or {}).items():
+            write_text(rdir / "work" / fname, content)
+        for fname, content in (run.get("tamper") or {}).items():
+            write_text(rdir / "work" / fname, content)
+        for fname in (run.get("delete") or []):
+            p = rdir / "work" / fname
+            if p.exists():
+                p.unlink()
+        for op in run.get("ops", []):
+            argv = [sys.executable, str(ROOT / sc["seam"]), op["op"], "--store", str(rdir / "seam" / "store.json")]
+            for flag in ("key", "url", "title", "favicon"):
+                if op.get(flag):
+                    argv += ["--" + flag, _subst(op[flag], resolve)]
+            if op.get("file"):
+                argv += ["--file", str(rdir / "work" / op["file"])]
+            r = subprocess.run(argv, capture_output=True, text=True)
+            if r.returncode != op.get("exit", 0):
+                out.append("%s: seam %s exited %d, expected %d: %s" % (
+                    name, op["op"], r.returncode, op.get("exit", 0), (r.stdout or r.stderr).strip()))
+            if op["op"] == "publish" and r.returncode == 0:
+                created[op["key"]] = json.loads(r.stdout)["url"]
+        for fname, content in (run.get("post_tamper") or {}).items():
+            write_text(rdir / "work" / fname, content)
+        if run.get("delete_store") and (rdir / "seam" / "store.json").exists():
+            (rdir / "seam" / "store.json").unlink()
+        if "registry_raw" in run:
+            write_text(rdir / "work" / "artifacts.json", run["registry_raw"])
+        elif "registry" in run:
+            rp = rdir / "work" / "artifacts.json"
+            if run["registry"] is None:
+                if rp.exists():
+                    rp.unlink()
+            else:
+                dump_json(rp, _subst(run["registry"], resolve))
+        if run.get("summary") is not None:
+            write_text(rdir / "summary.md", run["summary"])
+        prov = {"batch": None, "tier": "lifecycle", "scenario": scen["id"], "skill_sha": None, "dirty": None,
+                "skill_ref": None, "model": None, "prompt_hash": None, "scenarios_hash": sha256_file(sc["_path"]),
+                "scenarios_hash_now": sha256_file(sc["_path"]), "corpus_hash": None, "started_at": None,
+                "wall_seconds": None, "tokens": None}
+        g = grade_lifecycle(rdir, sc, scen, prov)
+
+    flat = {"pass": g["pass"], "produced": g["produced"], "failed_checks": g["failed_checks"],
+            "failures": g["failures"], "warnings": g["warnings"],
+            "ledger.created": g["ledger"]["created"], "ledger.updated": g["ledger"].get("updated", 0),
+            "ledger.artifacts_total": g["ledger"]["artifacts_total"]}
+    for path, exp in case["expected"].items():
+        act = flat.get(path, "<absent>")
+        if not expect_ok(act, exp):
+            out.append("%s: %s expected %s, got %s" % (name, path, json.dumps(exp, ensure_ascii=False),
+                                                       json.dumps(act, ensure_ascii=False)))
+    return out
+
+
 def cmd_selftest(args):
     catalog = load_catalog()
     cases = sorted((SELFTEST_DIR / "cases").glob("*/case.json"))
@@ -1516,6 +1613,9 @@ def cmd_selftest(args):
         if args.only and args.only not in name:
             continue
         total += 1
+        if case.get("type") == "lifecycle":
+            failures += lifecycle_selftest_case(name, case, cdir)
+            continue
         if case.get("type") == "check":
             kp = cdir / case["key"]
             try:
@@ -1563,14 +1663,722 @@ def cmd_selftest(args):
     print("selftest: ok (%d case(s))" % total)
 
 
+# ------------------------------------------------------------------ lifecycle
+#
+# The behavioural eval for the artifact-lifecycle contract (references/report-format.md,
+# "Artifact lifecycle"). A lifecycle run reviews the scratch corpus and publishes its
+# deliverables through the publish seam; grading reads the registry it wrote, the seam's
+# ledger, the run summary and the working folder — deterministically, with no model calls.
+
+LIFECYCLE_DIR = ROOT / "evals" / "lifecycle"
+SCENARIOS_FILE = LIFECYCLE_DIR / "scenarios.json"
+REGISTRY_FIELDS = ("url", "title", "favicon", "last_published", "cycle_date")
+OUTCOMES = ("create_and_register", "update_in_place", "recreate", "adopt_and_update", "no_publish")
+DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+
+
+def load_scenarios(path=None):
+    p = Path(path) if path else SCENARIOS_FILE
+    if not p.exists():
+        raise Fail("scenario file missing: %s" % rel(p))
+    sc = load_json(p)
+    sc["_path"] = str(p)
+    return sc
+
+
+def deliverables_of(sc, scen):
+    """The deliverable map for one scenario: the shared map, with the scenario's own overrides on top.
+
+    A scenario that reviews a different corpus names different teams, so the copy that reaches the
+    runner has to follow the corpus rather than the other way round."""
+    return {**sc.get("deliverables", {}), **(scen.get("deliverables") or {})}
+
+
+def scenario_of(sc, sid):
+    for s in sc["scenarios"]:
+        if s["id"] == sid:
+            return s
+    raise Fail("unknown scenario %r; known: %s" % (sid, ", ".join(s["id"] for s in sc["scenarios"])))
+
+
+def parse_ts(s):
+    """An ISO-8601 instant with a UTC designator, or None."""
+    if not isinstance(s, str) or not s.strip():
+        return None
+    try:
+        d = _dt.datetime.fromisoformat(s.strip().replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return d if d.tzinfo else None
+
+
+def validate_scenarios(sc, keys=None):
+    """-> [error strings]. Structure, corpus-is-not-a-fixture, and per-outcome seed consistency."""
+    errs = []
+    where = rel(sc.get("_path", SCENARIOS_FILE))
+
+    def err(msg):
+        errs.append("%s: %s" % (where, msg))
+
+    for field in ("version", "corpus", "seam", "prompt_template", "deliverables", "summary_markers", "scenarios"):
+        if field not in sc:
+            err("missing field %r" % field)
+    if errs:
+        return errs
+    corpus = ROOT / sc["corpus"]
+    if not corpus.exists():
+        err("corpus %s does not exist" % sc["corpus"])
+    elif Path(sc["corpus"]).parts[0] == "examples" or "/examples/" in sc["corpus"]:
+        err("corpus %s is under examples/ — a fixture is publish-exempt and cannot exercise this contract" % sc["corpus"])
+    else:
+        fixtures = {k["fixture"] for k in (keys if keys is not None else load_keys())}
+        if sc["corpus"] in fixtures:
+            err("corpus %s is a fixture named by an answer key — it is publish-exempt" % sc["corpus"])
+        if ANSWER_KEY_HEADING in read_text(corpus):
+            err("corpus %s carries an answer-key section — it is a fixture, not a scratch corpus" % sc["corpus"])
+    for f in ("seam", "prompt_template"):
+        if not (ROOT / sc[f]).exists():
+            err("%s %s does not exist" % (f, sc[f]))
+    if not sc["deliverables"]:
+        err("deliverables is empty")
+    for dk, d in sc["deliverables"].items():
+        if not re.match(r"^[a-z0-9][a-z0-9\-]*(?:/[a-z0-9][a-z0-9\-]*)?$", dk):
+            err("deliverable key %r is not a slug like 'portfolio-dashboard' or 'team-report/<team>'" % dk)
+        for field in ("label", "ask", "file"):
+            if not str(d.get(field, "")).strip():
+                err("deliverable %s: %s must be a non-empty string" % (dk, field))
+    required_markers = ["recreate", "reason"]
+    if any(v == "no_publish" for s in sc["scenarios"] for v in (s.get("expect") or {}).values()):
+        required_markers.append("exempt")
+    for m in required_markers:
+        if not sc["summary_markers"].get(m):
+            err("summary_markers.%s is empty" % m)
+    seen = set()
+    for s in sc["scenarios"]:
+        sid = s.get("id", "?")
+        if sid in seen:
+            err("duplicate scenario id %s" % sid)
+        seen.add(sid)
+        if not str(s.get("title", "")).strip():
+            err("%s: title must be a non-empty string" % sid)
+        if not DATE_RE.match(str(s.get("cycle_date", ""))):
+            err("%s: cycle_date must look like 2026-09-14" % sid)
+        seed = s.get("seed") or {}
+        reg = seed.get("registry") or {}
+        arts = {a["url"]: a for a in seed.get("seam_artifacts", []) if isinstance(a, dict) and "url" in a}
+        if len(arts) != len(seed.get("seam_artifacts", [])):
+            err("%s: seam_artifacts need unique 'url' fields" % sid)
+        for a in seed.get("seam_artifacts", []):
+            for field in ("url", "title", "favicon"):
+                if not str(a.get(field, "")).strip():
+                    err("%s: seeded artifact %r missing %s" % (sid, a.get("url"), field))
+        for name, content in (seed.get("work_files") or {}).items():
+            if "/" in name or not name.strip():
+                err("%s: seeded work file %r must be a plain file name" % (sid, name))
+            if not str(content).strip():
+                err("%s: seeded work file %s has empty content" % (sid, name))
+        dels = deliverables_of(sc, s)
+        for dk, d in (s.get("deliverables") or {}).items():
+            for field in ("label", "ask", "file"):
+                if not str(d.get(field, "")).strip():
+                    err("%s: deliverable override %s: %s must be a non-empty string" % (sid, dk, field))
+        for k, e in reg.items():
+            if k not in dels:
+                err("%s: seeded registry key %s is not a declared deliverable" % (sid, k))
+            for field in REGISTRY_FIELDS:
+                if not str(e.get(field, "")).strip():
+                    err("%s: seeded entry %s missing %s" % (sid, k, field))
+            if not parse_ts(e.get("last_published")):
+                err("%s: seeded entry %s has an unparseable last_published" % (sid, k))
+        exp = s.get("expect") or {}
+        if not exp:
+            err("%s: expect is empty" % sid)
+        exempt = any(v == "no_publish" for v in exp.values())
+        if exempt and not all(v == "no_publish" for v in exp.values()):
+            err("%s: a no_publish scenario cannot mix outcomes — a fixture run publishes nothing at all" % sid)
+        scorpus = s.get("corpus")
+        if scorpus is not None:
+            sp = ROOT / scorpus
+            if not sp.exists():
+                err("%s: corpus %s does not exist" % (sid, scorpus))
+            is_fixture = scorpus in {k["fixture"] for k in (keys if keys is not None else load_keys())}
+            if exempt and not is_fixture:
+                err("%s: a no_publish scenario must name one of the skill's own fixtures as its corpus" % sid)
+            if not exempt and is_fixture:
+                err("%s: corpus %s is a fixture — a publishing scenario cannot use one" % (sid, scorpus))
+        elif exempt:
+            err("%s: a no_publish scenario must name a fixture corpus of its own" % sid)
+        if exempt and (reg or arts):
+            err("%s: a no_publish scenario seeds no registry and no artifacts" % sid)
+        for k, outcome in exp.items():
+            if k not in dels:
+                err("%s: expected key %s is not a declared deliverable" % (sid, k))
+            if outcome not in OUTCOMES:
+                err("%s: %s outcome %r must be one of %s" % (sid, k, outcome, ", ".join(OUTCOMES)))
+                continue
+            entry = reg.get(k)
+            if outcome == "no_publish":
+                continue
+            if outcome == "create_and_register" and entry:
+                err("%s: %s expects a create but the registry seeds an entry" % (sid, k))
+            if outcome in ("update_in_place", "recreate") and not entry:
+                err("%s: %s expects %s but no registry entry is seeded" % (sid, k, outcome))
+            if outcome == "update_in_place" and entry and entry["url"] not in arts:
+                err("%s: %s expects an update but its seeded URL is not a live seam artifact" % (sid, k))
+            if outcome == "recreate" and entry and entry["url"] in arts:
+                err("%s: %s expects a re-create but its seeded URL is live in the seam" % (sid, k))
+            if outcome == "adopt_and_update":
+                supplied = (s.get("supplied_urls") or {}).get(k)
+                if not supplied:
+                    err("%s: %s expects an adopt but no supplied_urls entry exists" % (sid, k))
+                elif supplied not in arts:
+                    err("%s: %s supplied URL is not a live seam artifact" % (sid, k))
+                elif entry and entry["url"] == supplied:
+                    err("%s: %s supplied URL equals the seeded entry — the adopt would be unobservable" % (sid, k))
+        for k in (s.get("supplied_urls") or {}):
+            if exp.get(k) != "adopt_and_update":
+                err("%s: supplied_urls names %s, whose expected outcome is not adopt_and_update" % (sid, k))
+    return errs
+
+
+def scenario_decl_hash(sc, scen):
+    """A hash of what this scenario asks — the fields grading consumes, not the prose around them."""
+    decl = {"cycle_date": scen["cycle_date"], "corpus": scen.get("corpus") or sc["corpus"],
+            "expect": scen["expect"], "seed": scen.get("seed") or {},
+            "supplied_urls": scen.get("supplied_urls") or {},
+            "files": {k: (deliverables_of(sc, scen)[k].get("file")) for k in scen["expect"]},
+            "markers": {m: sc["summary_markers"].get(m) for m in
+                        (["recreate", "reason"] if any(v != "no_publish" for v in scen["expect"].values())
+                         else ["exempt"])}}
+    return hashlib.sha256(json.dumps(decl, sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest()
+
+
+def seed_run(rdir, scen):
+    """Seed a run directory's working folder and seam store from the scenario declaration."""
+    rdir = Path(rdir)
+    work = rdir / "work"
+    work.mkdir(parents=True, exist_ok=True)
+    seed = scen.get("seed") or {}
+    if seed.get("registry"):
+        dump_json(work / "artifacts.json", seed["registry"])
+    for name, content in (seed.get("work_files") or {}).items():
+        write_text(work / name, content)
+    store = {"artifacts": {}, "ledger": [], "seq": 0}
+    for a in seed.get("seam_artifacts", []):
+        store["artifacts"][a["url"]] = {"url": a["url"], "title": a["title"], "favicon": a["favicon"],
+                                        "created_at": a.get("created_at", "2026-06-15T10:00:00Z"),
+                                        "updated_at": a.get("created_at", "2026-06-15T10:00:00Z"),
+                                        "versions": 1, "content_sha": None, "bytes": 0, "seeded": True}
+    dump_json(rdir / "seam" / "store.json", store)
+    return work
+
+
+def lifecycle_prompt_ctx(sc, scen, rdir, snap):
+    """The placeholder values the frozen lifecycle template is rendered with."""
+    rdir = Path(rdir)
+    keys = list(scen["expect"])
+    dels = deliverables_of(sc, scen)
+    lines = []
+    for k in keys:
+        d = dels[k]
+        lines.append("  - `%s` — %s. Write it to `%s`." % (
+            k, d["ask"], rdir / "work" / d["file"].replace("{{cycle_date}}", scen["cycle_date"])))
+    supplied = scen.get("supplied_urls") or {}
+    sup = ""
+    if supplied:
+        parts = ["- The user has an artifact already and wants it kept: %s." % "; ".join(
+            "for `%s`, use %s" % (k, u) for k, u in supplied.items())]
+        sup = "\n".join(parts) + "\n"
+    exempt = any(v == "no_publish" for v in scen["expect"].values())
+    note = ("- **This run supplies a publish seam and a review working folder.** Whether the skill's publish step "
+            "runs at all is for the skill's own rules to decide — read them, apply them to this corpus, and if the "
+            "step is skipped say so and why in the run summary."
+            if exempt else
+            "- **This run is not publish-exempt.** It supplies a publish seam and a review working folder, so the "
+            "skill's publish step runs in full — work the decision procedure it points to exactly as written, and "
+            "do not skip it.")
+    # For a fixture corpus the prompt must not assert the run's exemption status either way, and must not
+    # forbid opening the very file it names — deciding that is the skill's job, and the point of the test.
+    tail = ("take the skill's publish step on its deliverables." if exempt else "publish its deliverables.")
+    scope = ("do not open any other file under `examples/` or anything under `evals/keys/`," if exempt
+             else "do not open anything under `examples/` or `evals/keys/`,")
+    cnote = "" if exempt else " This corpus is **not** one of the skill's own fixtures."
+    publish_clause = ("" if exempt else ", publish that exact file")
+    summary_ask = ("what the skill's publish step did with each deliverable and why — every artifact and registry "
+                   "action you took, or the reason you took none."
+                   if exempt else
+                   "what you published under each key, to which URL, and every registry action you took — including, "
+                   "if one happened, what you had to create rather than update and why.")
+    return {"skill_md": snap / "SKILL.md", "references_dir": snap / "references", "exemption_note": note,
+            "task_tail": tail, "corpus_scope_note": scope, "corpus_note": cnote,
+            "publish_clause": publish_clause, "summary_ask": summary_ask,
+            "deliverables_header": ("- Deliverables, one per key:" if exempt
+                                    else "- Deliverables, each published under its own key:"),
+            "corpus_path": ROOT / (scen.get("corpus") or sc["corpus"]), "run_dir": rdir, "work_dir": rdir / "work",
+            "seam": ROOT / sc["seam"], "store": rdir / "seam" / "store.json",
+            "summary_path": rdir / "summary.md", "cycle_date": scen["cycle_date"],
+            "deliverables_block": "\n".join(lines), "supplied_block": sup}
+
+
+def render_lifecycle_prompt(sc, scen, rdir, snap):
+    tpl = read_text(ROOT / sc["prompt_template"])
+    for k, v in lifecycle_prompt_ctx(sc, scen, rdir, snap).items():
+        tpl = tpl.replace("{{%s}}" % k, str(v))
+    left = re.findall(r"{{\w+}}", tpl)
+    if left:
+        raise Fail("unresolved placeholders in %s: %s" % (sc["prompt_template"], ", ".join(left)))
+    return tpl
+
+
+def cmd_lifecycle_plan(args):
+    sc = load_scenarios(args.scenarios_file)
+    errs = validate_scenarios(sc)
+    if errs:
+        raise Fail("refusing to plan on an invalid scenario file:\n  " + "\n  ".join(errs))
+    ids = args.scenarios.split(",") if args.scenarios else [s["id"] for s in sc["scenarios"]]
+    scens = [scenario_of(sc, i) for i in ids]
+    head = git("rev-parse", "HEAD")
+    batch = args.batch or "%s-lifecycle-%s" % (_dt.date.today().isoformat(), head[:7])
+    bdir = RUNS_DIR / batch
+    bjson = bdir / "batch.json"
+    if bjson.exists():
+        meta = load_json(bjson)
+    else:
+        meta = {"harness_version": HARNESS_VERSION, "batch": batch, "tier": "lifecycle", "created": now_iso(),
+                "scenarios": ids, "arms": {"candidate": snapshot_from_worktree(bdir / "skill" / "candidate")},
+                "prompt_hash": sha256_file(ROOT / sc["prompt_template"]),
+                "scenarios_hash": sha256_file(sc["_path"]), "corpus_hash": sha256_file(ROOT / sc["corpus"]),
+                "decl_hashes": {}, "corpus_hashes": {}, "runs": []}
+    meta.setdefault("decl_hashes", {})
+    meta.setdefault("corpus_hashes", {})
+    snap = ROOT / meta["arms"]["candidate"]["snapshot"]
+    if not (snap / "SKILL.md").exists():
+        snapshot_from_worktree(snap)
+    index = {r["scenario"]: r for r in meta["runs"]}
+    pending = []
+    for scen in scens:
+        rdir = bdir / scen["id"]
+        summary, prompt = rdir / "summary.md", rdir / "prompt.md"
+        seeded = (rdir / "seam" / "store.json").exists()
+        if seeded and args.reseed and (args.force or not summary.exists()):
+            # A run that died mid-flight may have left a half-written ledger or working folder;
+            # grading that would judge wreckage rather than behaviour. Reset it to its seeded state.
+            for sub in ("work", "seam"):
+                if (rdir / sub).exists():
+                    shutil.rmtree(rdir / sub)
+            meta["decl_hashes"][scen["id"]] = scenario_decl_hash(sc, scen)
+            meta["corpus_hashes"][scen["id"]] = sha256_file(ROOT / (scen.get("corpus") or sc["corpus"]))
+            if args.force:
+                # The scenario's own declaration changed: the recorded run answers a question that is
+                # no longer being asked, so it is redone rather than re-interpreted.
+                for f in ("summary.md", "grade.json", "run.json", "prompt.md"):
+                    if (rdir / f).exists():
+                        (rdir / f).unlink()
+            seeded = False
+        if not seeded:
+            seed_run(rdir, scen)
+        if not prompt.exists():
+            write_text(prompt, render_lifecycle_prompt(sc, scen, rdir, snap))
+        meta["decl_hashes"].setdefault(scen["id"], scenario_decl_hash(sc, scen))
+        meta["corpus_hashes"].setdefault(scen["id"], sha256_file(ROOT / (scen.get("corpus") or sc["corpus"])))
+        entry = index.get(scen["id"]) or {"scenario": scen["id"]}
+        entry.update({"dir": rel(rdir), "prompt": rel(prompt), "summary": rel(summary),
+                      "title": scen["title"], "status": "done" if summary.exists() else "pending"})
+        if scen["id"] not in index:
+            meta["runs"].append(entry)
+            index[scen["id"]] = entry
+        if entry["status"] == "pending":
+            pending.append({"scenario": scen["id"], "run_dir": str(rdir), "prompt": str(prompt),
+                            "summary": str(summary)})
+    dump_json(bjson, meta)
+    if args.json:
+        print(json.dumps({"batch": batch, "batch_dir": str(bdir), "pending": pending}, indent=2))
+    else:
+        print("batch %s (lifecycle): %d run(s) planned, %d pending" % (batch, len(meta["runs"]), len(pending)))
+        for p in pending:
+            print("  pending %s -> %s" % (p["scenario"], p["prompt"]))
+        print("batch dir: %s" % bdir)
+
+
+# ------------------------------------------------------------- lifecycle grade
+
+def sha_bytes(b):
+    return hashlib.sha256(b).hexdigest()
+
+
+def work_shas(work):
+    out = {}
+    for p in sorted(work.rglob("*")):
+        if p.is_file() and p.name != "artifacts.json":
+            out[sha_bytes(p.read_bytes())] = rel(p)
+    return out
+
+
+def grade_lifecycle(rdir, sc, scen, provenance):
+    rdir = Path(rdir)
+    work, store_p, summary_p = rdir / "work", rdir / "seam" / "store.json", rdir / "summary.md"
+    keys = list(scen["expect"])
+    seed = scen.get("seed") or {}
+    seeded_reg = seed.get("registry") or {}
+    supplied = scen.get("supplied_urls") or {}
+    failures, warnings = [], []
+    gchecks, kchecks = [], {}
+
+    def chk(bucket, name, ok, detail="", key=None):
+        bucket.append({"check": name, "pass": bool(ok), "detail": detail})
+        if not ok:
+            failures.append("%s%s: %s" % (("%s — " % key) if key else "", name, detail))
+        return bool(ok)
+
+    if not summary_p.exists():
+        return {"harness_version": HARNESS_VERSION, "graded_at": now_iso(), "scenario": scen["id"],
+                "scenario_title": scen["title"], "produced": False, "provenance": provenance, "keys": {},
+                "global": [{"check": "summary_written", "pass": False, "detail": "no summary.md in the run directory"}],
+                "ledger": {"ops": [], "artifacts_total": 0, "seeded": len(seed.get("seam_artifacts", [])), "created": 0},
+                "failures": ["run not produced: no summary.md"], "warnings": [], "failed_checks": ["summary_written"],
+                "pass": False}
+
+    summary = read_text(summary_p)
+    summary2 = re.sub(r"\s+", " ", typo(summary)).lower()
+    chk(gchecks, "summary_written", bool(summary.strip()), "summary.md is empty")
+
+    store_present = store_p.exists()
+    store = load_json(store_p) if store_present else {"artifacts": {}, "ledger": [], "seq": 0}
+    ledger = store.get("ledger", [])
+    chk(gchecks, "seam_store_present", store_present,
+        "the seam store this run was seeded with is gone — nothing can be graded from its ledger")
+    ops = [{k: e.get(k) for k in ("n", "op", "key", "url", "title", "favicon", "content_sha", "result", "reason")}
+           for e in ledger]
+    creates = [e for e in ledger if e.get("op") == "publish"]
+    updates = [e for e in ledger if e.get("op") == "update"]
+
+    dels = deliverables_of(sc, scen)
+    exempt = bool(keys) and all(scen["expect"][k] == "no_publish" for k in keys)
+    registry, reg_ok = {}, False
+    rp = work / "artifacts.json"
+    if exempt:
+        # A fixture run publishes nothing and writes no registry — anywhere, seam or not.
+        found = [rel(p) for p in rdir.rglob("artifacts.json")]
+        chk(gchecks, "no_registry_written", not found,
+            "a registry file was written: %s" % ", ".join(found))
+        chk(gchecks, "nothing_published", not creates and not updates and not store.get("artifacts"),
+            "published through the seam: %d create(s), %d update(s), %d artifact(s)" % (
+                len(creates), len(updates), len(store.get("artifacts", {}))))
+        chk(gchecks, "exempt_skip_explained",
+            any(m in summary2 for m in sc["summary_markers"].get("exempt", [])),
+            "the run summary never says publishing was skipped or why")
+        if rp.exists():
+            registry = load_json(rp) if rp.stat().st_size else {}
+    elif not rp.exists():
+        chk(gchecks, "registry_at_working_folder", False, "no artifacts.json in the review working folder")
+    else:
+        try:
+            loaded = load_json(rp)
+            reg_ok = isinstance(loaded, dict)
+            registry = loaded if reg_ok else {}
+        except Exception as e:  # noqa: BLE001
+            chk(gchecks, "registry_at_working_folder", False, "artifacts.json is not valid JSON: %s" % e)
+        else:
+            stray = [rel(p) for p in rdir.rglob("artifacts.json") if p.resolve() != rp.resolve()]
+            chk(gchecks, "registry_at_working_folder", reg_ok and not stray,
+                "registry is not a JSON object" if not reg_ok else "extra registry file(s): %s" % ", ".join(stray))
+
+    for key in keys:
+        outcome = scen["expect"][key]
+        entry = registry.get(key) if isinstance(registry.get(key), dict) else None
+        seeded = seeded_reg.get(key)
+        ck = kchecks.setdefault(key, {"outcome": outcome, "checks": [], "ops": {}})
+        ic, iu = [e for e in creates if e.get("key") == key], [e for e in updates if e.get("key") == key]
+        ck["ops"] = {"creates": [e["url"] for e in ic], "updates": [e["url"] for e in iu],
+                     "failed_updates": sum(1 for e in ledger if e.get("op") == "update_failed" and e.get("key") == key),
+                     "reads": sum(1 for e in ledger if e.get("op") == "read")}
+        c = ck["checks"]
+        if outcome == "no_publish":
+            chk(c, "not_published", not ic and not iu,
+                "published for an exempt corpus: %d create(s), %d update(s)" % (len(ic), len(iu)), key)
+            chk(c, "not_registered", entry is None, "a registry entry was written for an exempt corpus", key)
+            continue
+        if not chk(c, "registry_entry_written", entry is not None, "no registry entry for this key", key):
+            continue
+        missing = [f for f in REGISTRY_FIELDS if not str(entry.get(f, "")).strip()]
+        chk(c, "registry_fields_present", not missing, "entry missing %s" % ", ".join(missing), key)
+        ts = parse_ts(entry.get("last_published"))
+        chk(c, "last_published_valid", ts is not None,
+            "last_published %r is not an ISO-8601 UTC instant" % entry.get("last_published"), key)
+        chk(c, "cycle_date_current", entry.get("cycle_date") == scen["cycle_date"],
+            "cycle_date is %r, expected %r" % (entry.get("cycle_date"), scen["cycle_date"]), key)
+
+        acts = sorted(ic + iu, key=lambda e: e.get("n", 0))
+        must_verify = (seeded or {}).get("url") if outcome in ("update_in_place", "recreate") else (
+            supplied.get(key) if outcome == "adopt_and_update" else None)
+        if must_verify and acts:
+            reads = [e for e in ledger if e.get("op") in ("read", "update_failed")
+                     and e.get("url") == must_verify and e.get("n", 0) < acts[0].get("n", 0)]
+            chk(c, "registered_url_verified", bool(reads),
+                "acted on %s without verifying %s through the seam first" % (key, must_verify), key)
+
+        if outcome == "create_and_register":
+            chk(c, "created_once", len(ic) == 1, "expected exactly 1 create, found %d" % len(ic), key)
+            if len(ic) == 1:
+                chk(c, "registry_url_is_created_url", entry.get("url") == ic[0]["url"],
+                    "registry url %r but the artifact was created at %r" % (entry.get("url"), ic[0]["url"]), key)
+                chk(c, "registry_matches_artifact", entry.get("title") == ic[0].get("title") and
+                    entry.get("favicon") == ic[0].get("favicon"),
+                    "registry title/favicon %r/%r differ from the published %r/%r" % (
+                        entry.get("title"), entry.get("favicon"), ic[0].get("title"), ic[0].get("favicon")), key)
+            chk(c, "updates_target_registered_url", all(e["url"] == entry.get("url") for e in iu),
+                "update(s) at %s, registry names %s" % ([e["url"] for e in iu], entry.get("url")), key)
+        elif outcome == "update_in_place":
+            chk(c, "no_fork", not ic, "created %d artifact(s) for a key that had a registry entry: %s" % (
+                len(ic), ", ".join(e["url"] for e in ic)), key)
+            chk(c, "updated_in_place", len(iu) >= 1, "no update recorded for this key", key)
+            chk(c, "updates_target_registered_url", all(e["url"] == seeded["url"] for e in iu),
+                "update(s) at %s, registered URL is %s" % ([e["url"] for e in iu], seeded["url"]), key)
+            chk(c, "registry_url_unchanged", entry.get("url") == seeded["url"],
+                "registry url changed from %s to %r" % (seeded["url"], entry.get("url")), key)
+            chk(c, "title_favicon_unchanged", entry.get("title") == seeded["title"] and
+                entry.get("favicon") == seeded["favicon"],
+                "title/favicon changed from %r/%r to %r/%r" % (seeded["title"], seeded["favicon"],
+                                                               entry.get("title"), entry.get("favicon")), key)
+            seed_ts = parse_ts(seeded["last_published"])
+            chk(c, "timestamp_advanced", bool(ts and seed_ts and ts > seed_ts),
+                "last_published %r does not advance on %r" % (entry.get("last_published"), seeded["last_published"]), key)
+        elif outcome == "recreate":
+            chk(c, "recreated_once", len(ic) == 1, "expected exactly 1 replacement create, found %d" % len(ic), key)
+            chk(c, "no_successful_update", not iu, "updated %s although the registered URL was dead" % (
+                [e["url"] for e in iu]), key)
+            if len(ic) == 1:
+                chk(c, "registry_overwritten", entry.get("url") == ic[0]["url"] and entry.get("url") != seeded["url"],
+                    "registry url %r, replacement published at %r, dead URL was %r" % (
+                        entry.get("url"), ic[0]["url"], seeded["url"]), key)
+                chk(c, "registry_matches_artifact", entry.get("title") == ic[0].get("title") and
+                    entry.get("favicon") == ic[0].get("favicon"),
+                    "registry title/favicon %r/%r differ from the published %r/%r" % (
+                        entry.get("title"), entry.get("favicon"), ic[0].get("title"), ic[0].get("favicon")), key)
+            # A re-create is a publish, so Refresh applies: the dead entry's timestamp is exactly the
+            # value that must not survive it.
+            seed_ts = parse_ts(seeded["last_published"])
+            chk(c, "timestamp_advanced", bool(ts and seed_ts and ts > seed_ts),
+                "last_published %r does not advance on the replaced entry's %r" % (
+                    entry.get("last_published"), seeded["last_published"]), key)
+        elif outcome == "adopt_and_update":
+            url = supplied[key]
+            chk(c, "no_fork", not ic, "created %d artifact(s) although a URL was supplied: %s" % (
+                len(ic), ", ".join(e["url"] for e in ic)), key)
+            chk(c, "adopted_url_recorded", entry.get("url") == url,
+                "registry url %r, supplied URL was %s" % (entry.get("url"), url), key)
+            chk(c, "updated_in_place", len(iu) >= 1, "no update recorded for this key", key)
+            chk(c, "updates_target_adopted_url", all(e["url"] == url for e in iu),
+                "update(s) at %s, supplied URL is %s" % ([e["url"] for e in iu], url), key)
+            art = store.get("artifacts", {}).get(url, {})
+            chk(c, "registry_matches_artifact", entry.get("title") == art.get("title") and
+                entry.get("favicon") == art.get("favicon"),
+                "registry title/favicon %r/%r differ from the adopted artifact's %r/%r" % (
+                    entry.get("title"), entry.get("favicon"), art.get("title"), art.get("favicon")), key)
+            # The adopted artifact keeps its own identity: comparing the registry against the post-rename
+            # store would agree with itself, so the seeded artifact is the reference.
+            was = next((a for a in seed.get("seam_artifacts", []) if a["url"] == url), None)
+            if was:
+                chk(c, "adopted_artifact_unchanged",
+                    art.get("title") == was["title"] and art.get("favicon") == was["favicon"],
+                    "the adopted artifact was renamed from %r/%r to %r/%r" % (
+                        was["title"], was["favicon"], art.get("title"), art.get("favicon")), key)
+            if seeded:
+                seed_ts = parse_ts(seeded["last_published"])
+                chk(c, "timestamp_advanced", bool(ts and seed_ts and ts > seed_ts),
+                    "last_published %r does not advance on %r" % (entry.get("last_published"),
+                                                                  seeded["last_published"]), key)
+
+    # The registry must describe the artifact it points at: a run that renames the living artifact
+    # through the seam, or registers a URL the seam does not hold, leaves the two out of step.
+    for key in keys:
+        entry = registry.get(key) if isinstance(registry.get(key), dict) else None
+        if not entry or scen["expect"][key] == "no_publish":
+            continue
+        c = kchecks[key]["checks"]
+        art = store.get("artifacts", {}).get(entry.get("url"))
+        if not chk(c, "registry_points_at_live_artifact", art is not None,
+                   "registry names %r, which the seam does not hold" % entry.get("url"), key):
+            continue
+        chk(c, "registry_matches_live_artifact",
+            entry.get("title") == art.get("title") and entry.get("favicon") == art.get("favicon"),
+            "registry says %r/%r but the artifact now carries %r/%r" % (
+                entry.get("title"), entry.get("favicon"), art.get("title"), art.get("favicon")), key)
+
+    # What was published, not merely that something was. Set membership over the working folder let a run
+    # publish last cycle's file, or one file under both keys, and still pass.
+    shas_by_name = {}
+    if work.exists():
+        for p in sorted(work.rglob("*")):
+            if p.is_file() and p.name != "artifacts.json":
+                shas_by_name[p.name] = sha_bytes(p.read_bytes())
+    for key in keys:
+        d = dels.get(key) or {}
+        want_name = str(d.get("file", "")).replace("{{cycle_date}}", scen["cycle_date"])
+        acts = [e for e in creates + updates if e.get("key") == key]
+        if not want_name:
+            continue
+        want_sha = shas_by_name.get(want_name)
+        c = kchecks[key]["checks"]
+        # Skipping the publish step is not licence to skip the review: the deliverable is still produced.
+        if not chk(c, "deliverable_file_written", want_sha is not None,
+                   "no %s in the working folder" % want_name, key):
+            continue
+        if not acts:
+            continue
+        wrong = [e for e in acts if e.get("content_sha") and e["content_sha"] != want_sha]
+        chk(c, "published_own_deliverable", not wrong,
+            "published content that is not %s (%s)" % (want_name, ", ".join(
+                "%s@%s" % (e.get("op"), e.get("url")) for e in wrong)), key)
+
+    extra_keys = [k for k in registry if k not in keys]
+    chk(gchecks, "no_unexpected_registry_keys", not extra_keys,
+        "registry holds key(s) no deliverable declares: %s" % ", ".join(extra_keys))
+    off_key = [e for e in creates if e.get("key") not in keys]
+    chk(gchecks, "no_stray_creates", not off_key,
+        "artifact(s) created under no declared deliverable key: %s" % ", ".join(
+            "%s@%s" % (e.get("key"), e.get("url")) for e in off_key))
+    seeded_urls = {a["url"] for a in seed.get("seam_artifacts", [])}
+    expected_total = len(seeded_urls) + len(creates)
+    chk(gchecks, "no_stray_artifacts", len(store.get("artifacts", {})) == expected_total,
+        "seam holds %d artifact(s); %d seeded plus %d created is %d" % (
+            len(store.get("artifacts", {})), len(seeded_urls), len(creates), expected_total))
+
+    forks = [e for e in creates if e.get("key") in seeded_reg]
+    if forks:
+        hit_re = any(m in summary2 for m in sc["summary_markers"]["recreate"])
+        hit_why = any(m in summary2 for m in sc["summary_markers"]["reason"])
+        chk(gchecks, "create_over_entry_reported", hit_re and hit_why,
+            "a create happened while a registry entry existed (%s); the run summary %s" % (
+                ", ".join("%s@%s" % (e.get("key"), e.get("url")) for e in forks),
+                "never says a re-create happened" if not hit_re else "gives no reason for it"))
+        unnamed = [e["key"] for e in forks
+                   if e.get("key") not in summary2 and dels[e["key"]]["label"].lower() not in summary2]
+        chk(gchecks, "create_over_entry_names_deliverable", not unnamed,
+            "the run summary never names the re-created deliverable(s): %s" % ", ".join(unnamed))
+
+    shas = work_shas(work)
+    unlocal = [e for e in creates + updates if e.get("content_sha") and e["content_sha"] not in shas]
+    chk(gchecks, "published_content_local", not unlocal,
+        "published content is not a file in the working folder: %s" % ", ".join(
+            "%s@%s" % (e.get("op"), e.get("key")) for e in unlocal))
+    dated = [p.name for p in work.glob("%s*" % scen["cycle_date"])] if work.exists() else []
+    chk(gchecks, "dated_output_written", bool(dated),
+        "no file named for this cycle (%s*) in the working folder" % scen["cycle_date"])
+    tampered = []
+    for name, content in (seed.get("work_files") or {}).items():
+        p = work / name
+        if not p.exists():
+            tampered.append("%s (deleted)" % name)
+        elif sha_bytes(p.read_bytes()) != sha_bytes(content.encode("utf-8")):
+            tampered.append("%s (modified)" % name)
+    chk(gchecks, "prior_outputs_unmodified", not tampered,
+        "a prior cycle's local output was changed: %s" % ", ".join(tampered))
+
+    failed = [c["check"] for c in gchecks if not c["pass"]] + \
+             [c["check"] for k in kchecks for c in kchecks[k]["checks"] if not c["pass"]]
+    return {"harness_version": HARNESS_VERSION, "graded_at": now_iso(), "scenario": scen["id"],
+            "scenario_title": scen["title"], "produced": True, "provenance": provenance,
+            "keys": kchecks, "global": gchecks,
+            "ledger": {"ops": ops, "artifacts_total": len(store.get("artifacts", {})),
+                       "seeded": len(seeded_urls), "created": len(creates), "updated": len(updates)},
+            "failures": failures, "warnings": warnings, "failed_checks": failed, "pass": not failures}
+
+
+def summarize_lifecycle(g):
+    return "%s | %s | creates %d updates %d | %s" % (
+        "PASS" if g["pass"] else "FAIL", g["scenario"], g["ledger"]["created"], g["ledger"].get("updated", 0),
+        "; ".join(g["failures"]) or "-")
+
+
+def refresh_batch_status(bdir, meta, scenario, verdict):
+    entry = next((r for r in meta["runs"] if r["scenario"] == scenario), None)
+    if entry is None:
+        return
+    want = {"status": "done" if (ROOT / entry["summary"]).exists() else "pending", "pass": verdict}
+    if {k: entry.get(k) for k in want} != want:
+        entry.update(want)
+        dump_json(bdir / "batch.json", meta)
+
+
+def grade_lifecycle_dir(rdir, sc=None, write=True):
+    rdir = Path(rdir).resolve()
+    bdir, meta = find_batch(rdir)
+    entry = next((r for r in meta["runs"] if (ROOT / r["dir"]).resolve() == rdir), None)
+    if entry is None:
+        raise Fail("%s is not a run of batch %s" % (rdir, meta["batch"]))
+    sc = sc or load_scenarios()
+    scen = scenario_of(sc, entry["scenario"])
+    arm = meta["arms"]["candidate"]
+    run_json = load_json(rdir / "run.json") if (rdir / "run.json").exists() else {}
+    prov = {"batch": meta["batch"], "tier": meta["tier"], "scenario": entry["scenario"],
+            "skill_sha": arm["skill_sha"], "dirty": arm["dirty"], "skill_ref": arm["ref"],
+            "model": run_json.get("model"), "prompt_hash": meta["prompt_hash"],
+            "scenarios_hash": meta["scenarios_hash"], "scenarios_hash_now": sha256_file(sc["_path"]),
+            "corpus_hash": meta["corpus_hash"], "started_at": run_json.get("started_at"),
+            "wall_seconds": run_json.get("wall_seconds"), "tokens": run_json.get("tokens")}
+    prov["prompt_hash_now"] = sha256_file(ROOT / sc["prompt_template"])
+    prov["corpus_hash"] = (meta.get("corpus_hashes") or {}).get(entry["scenario"]) or meta.get("corpus_hash")
+    prov["corpus_hash_now"] = sha256_file(ROOT / (scen.get("corpus") or sc["corpus"]))
+    # What matters is whether THIS run's prompt would differ today, not whether the shared template was
+    # edited: a template change that leaves this scenario's rendering identical changes nothing about the run.
+    prompt_p = rdir / "prompt.md"
+    prompt_now = prompt_then = None
+    if prompt_p.exists():
+        try:
+            prompt_now = hashlib.sha256(render_lifecycle_prompt(
+                sc, scen, rdir, ROOT / arm["snapshot"]).encode("utf-8")).hexdigest()
+        except Fail:
+            prompt_now = None
+        prompt_then = sha256_file(prompt_p)
+    prov["prompt_rendered_hash"] = prompt_then
+    prov["prompt_rendered_hash_now"] = prompt_now
+    g = grade_lifecycle(rdir, sc, scen, prov)
+    prov["decl_hash"] = (meta.get("decl_hashes") or {}).get(entry["scenario"])
+    prov["decl_hash_now"] = scenario_decl_hash(sc, scen)
+    for label, then, now in (("scenario's own declaration", prov["decl_hash"], prov["decl_hash_now"]),
+                             ("prompt this run was given", prompt_then, prompt_now)):
+        if then and now and then != now:
+            g["warnings"].append("the %s changed since this run was planned — the run answered an "
+                                 "earlier question; re-plan with --reseed --force to re-ask it" % label)
+    if prov["corpus_hash"] and prov["corpus_hash_now"] and prov["corpus_hash"] != prov["corpus_hash_now"]:
+        g["warnings"].append("the corpus has changed since this run reviewed it — provenance only, as grading "
+                             "reads the run directory and never the corpus; re-run it if the change was material")
+    if write:
+        dump_json(rdir / "grade.json", g)
+        refresh_batch_status(bdir, meta, entry["scenario"], g["pass"])
+    return g
+
+
+def cmd_lifecycle_grade(args):
+    sc = load_scenarios(args.scenarios_file)
+    dirs = [Path(d) for d in args.run_dir]
+    if args.batch_dir:
+        meta = load_json(Path(args.batch_dir) / "batch.json")
+        dirs += [ROOT / r["dir"] for r in meta["runs"]]
+    if not dirs:
+        raise Fail("lifecycle-grade needs run directories or --batch-dir")
+    bad = 0
+    for d in dirs:
+        g = grade_lifecycle_dir(d, sc, write=not args.no_write)
+        print("%s: %s" % (rel(d), summarize_lifecycle(g)))
+        for w in g["warnings"]:
+            print("    warning: %s" % w)
+        bad += 0 if g["pass"] else 1
+    print("lifecycle: %d run(s), %d failing" % (len(dirs), bad))
+    if bad:
+        sys.exit(1)
+
+
 # ---------------------------------------------------------------------- main
 
 def main(argv=None):
     ap = argparse.ArgumentParser(prog="harness.py", description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = ap.add_subparsers(dest="cmd", required=True)
 
-    p = sub.add_parser("check", help="validate keys, anchors, coverage, freshness")
+    p = sub.add_parser("check", help="validate keys, anchors, coverage, freshness, lifecycle scenarios")
     p.add_argument("--key", help="check one key file instead of every key under evals/keys")
+    p.add_argument("--scenarios-file", dest="scenarios_file", help="check this lifecycle scenario file instead of evals/lifecycle/scenarios.json")
     p.set_defaults(fn=cmd_check)
 
     p = sub.add_parser("render-key", help="regenerate a fixture's answer-key section from its JSON key")
@@ -1615,6 +2423,24 @@ def main(argv=None):
     p.add_argument("--refresh", action="store_true", help="re-aggregate before comparing")
     p.add_argument("--baseline-batch", help="take the baseline arm from another batch (unpaired comparison)")
     p.set_defaults(fn=cmd_compare)
+
+    p = sub.add_parser("lifecycle-plan", help="create or resume a lifecycle batch and list pending runs")
+    p.add_argument("--scenarios", help="comma-separated scenario ids (default: all)")
+    p.add_argument("--scenarios-file", dest="scenarios_file", help="use this scenario file instead of evals/lifecycle/scenarios.json")
+    p.add_argument("--batch", help="batch id (default <date>-lifecycle-<sha7>)")
+    p.add_argument("--force", action="store_true",
+                   help="with --reseed, also reset a run that already has a summary — for a scenario whose declaration changed")
+    p.add_argument("--reseed", action="store_true",
+                   help="reset a pending run's working folder and seam store to the seeded state (for a run that died mid-flight); never touches a run that has a summary")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(fn=cmd_lifecycle_plan)
+
+    p = sub.add_parser("lifecycle-grade", help="grade lifecycle runs against their scenario declarations")
+    p.add_argument("run_dir", nargs="*")
+    p.add_argument("--batch-dir", dest="batch_dir", help="grade every run of this lifecycle batch")
+    p.add_argument("--scenarios-file", dest="scenarios_file")
+    p.add_argument("--no-write", action="store_true", help="do not write grade.json")
+    p.set_defaults(fn=cmd_lifecycle_grade)
 
     p = sub.add_parser("selftest", help="grade the bundled self-test cases")
     p.add_argument("--only")

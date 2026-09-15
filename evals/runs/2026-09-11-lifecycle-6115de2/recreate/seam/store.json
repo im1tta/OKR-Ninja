@@ -1,0 +1,62 @@
+{
+  "artifacts": {
+    "https://artifacts.test/a/b4e2d118": {
+      "url": "https://artifacts.test/a/b4e2d118",
+      "title": "Ledger Team OKR Report",
+      "favicon": "📒",
+      "created_at": "2026-06-15T10:00:00Z",
+      "updated_at": "2026-09-11T15:53:38Z",
+      "versions": 2,
+      "content_sha": "da414aec0c4f331fd7f7c111d2003f4464eecdc64df3ad30a27c5c876c2457c6",
+      "bytes": 13615,
+      "seeded": true
+    },
+    "https://artifacts.test/a/fbac94f1": {
+      "url": "https://artifacts.test/a/fbac94f1",
+      "title": "Tidewell OKR Portfolio Review",
+      "favicon": "🧭",
+      "created_at": "2026-09-11T15:52:32Z",
+      "updated_at": "2026-09-11T15:52:32Z",
+      "versions": 1,
+      "content_sha": "387207a4616737cd1a5fd8aed3cf07a9a54cff8716efbc3ab29bee9e8dad13ad",
+      "bytes": 17189
+    }
+  },
+  "ledger": [
+    {
+      "n": 1,
+      "at": "2026-09-11T15:49:09Z",
+      "op": "read",
+      "url": "https://artifacts.test/a/0dead0dd",
+      "result": "dead"
+    },
+    {
+      "n": 2,
+      "at": "2026-09-11T15:49:09Z",
+      "op": "read",
+      "url": "https://artifacts.test/a/b4e2d118",
+      "result": "alive"
+    },
+    {
+      "n": 3,
+      "at": "2026-09-11T15:52:32Z",
+      "op": "publish",
+      "key": "portfolio-dashboard",
+      "url": "https://artifacts.test/a/fbac94f1",
+      "title": "Tidewell OKR Portfolio Review",
+      "favicon": "🧭",
+      "content_sha": "387207a4616737cd1a5fd8aed3cf07a9a54cff8716efbc3ab29bee9e8dad13ad"
+    },
+    {
+      "n": 4,
+      "at": "2026-09-11T15:53:38Z",
+      "op": "update",
+      "key": "team-report/ledger",
+      "url": "https://artifacts.test/a/b4e2d118",
+      "title": "Ledger Team OKR Report",
+      "favicon": "📒",
+      "content_sha": "da414aec0c4f331fd7f7c111d2003f4464eecdc64df3ad30a27c5c876c2457c6"
+    }
+  ],
+  "seq": 4
+}

@@ -1,0 +1,57 @@
+{
+  "type": "lifecycle",
+  "scenario": "adopt",
+  "note": "A user-supplied URL is adopted over the registered entry and updated in place.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Tidewell — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 2 teams reviewed.\n",
+      "2026-09-14-ledger-report.md": "# Ledger — Q3 2026 OKR report (portfolio slice)\n\nRoll-up C (2.4).\n"
+    },
+    "ops": [
+      {
+        "op": "read",
+        "url": "{{supplied:portfolio-dashboard}}"
+      },
+      {
+        "op": "update",
+        "key": "portfolio-dashboard",
+        "url": "{{supplied:portfolio-dashboard}}",
+        "file": "2026-09-14-portfolio-review.md"
+      },
+      {
+        "op": "read",
+        "url": "{{seeded:team-report/ledger}}"
+      },
+      {
+        "op": "update",
+        "key": "team-report/ledger",
+        "url": "{{seeded:team-report/ledger}}",
+        "file": "2026-09-14-ledger-report.md"
+      }
+    ],
+    "registry": {
+      "portfolio-dashboard": {
+        "url": "{{supplied:portfolio-dashboard}}",
+        "title": "Tidewell OKR Dashboard (shared with leads)",
+        "favicon": "🧭",
+        "last_published": "2026-09-14T09:12:00Z",
+        "cycle_date": "2026-09-14"
+      },
+      "team-report/ledger": {
+        "url": "{{seeded:team-report/ledger}}",
+        "title": "Ledger Team OKR Report",
+        "favicon": "📒",
+        "last_published": "2026-09-14T09:14:00Z",
+        "cycle_date": "2026-09-14"
+      }
+    },
+    "summary": "## Run summary\n\nAdopted the supplied URL for portfolio-dashboard, overwriting the prior entry, and updated it in place.\n"
+  },
+  "expected": {
+    "pass": true,
+    "produced": true,
+    "failed_checks": [],
+    "ledger.created": 0,
+    "ledger.updated": 2
+  }
+}

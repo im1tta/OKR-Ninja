@@ -1,0 +1,21 @@
+{
+  "type": "lifecycle",
+  "scenario": "fixture-exempt",
+  "note": "The load-bearing guarantee, executed: a fixture corpus with a seam and a working folder supplied still publishes nothing and writes no registry.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Brightledger — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 4 teams reviewed.\n",
+      "2026-09-14-platform-report.md": "# Platform — Q3 2026 OKR report (portfolio slice)\n\nRoll-up D (1.9).\n"
+    },
+    "ops": [],
+    "summary": "## Run summary\n\nNothing was published. The corpus is one of the skill's own fixtures, so the publish step is skipped entirely — no artifact was created or updated and no registry file was written. Both reports were written to the working folder only.\n"
+  },
+  "expected": {
+    "pass": true,
+    "failed_checks": [],
+    "failures": [],
+    "ledger.created": 0,
+    "ledger.updated": 0,
+    "ledger.artifacts_total": 0
+  }
+}

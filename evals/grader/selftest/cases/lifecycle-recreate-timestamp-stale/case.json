@@ -1,0 +1,65 @@
+{
+  "type": "lifecycle",
+  "scenario": "recreate",
+  "note": "A re-create is a publish, so Refresh applies to it: the replacement entry here carries the dead entry's last_published, so the registry claims the artifact has not been published since June.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Tidewell — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 2 teams reviewed.\n",
+      "2026-09-14-ledger-report.md": "# Ledger — Q3 2026 OKR report (portfolio slice)\n\nRoll-up C (2.4).\n"
+    },
+    "ops": [
+      {
+        "op": "read",
+        "url": "{{seeded:portfolio-dashboard}}",
+        "exit": 3
+      },
+      {
+        "op": "publish",
+        "key": "portfolio-dashboard",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "file": "2026-09-14-portfolio-review.md"
+      },
+      {
+        "op": "read",
+        "url": "{{seeded:team-report/ledger}}"
+      },
+      {
+        "op": "update",
+        "key": "team-report/ledger",
+        "url": "{{seeded:team-report/ledger}}",
+        "file": "2026-09-14-ledger-report.md"
+      }
+    ],
+    "registry": {
+      "portfolio-dashboard": {
+        "url": "{{created:portfolio-dashboard}}",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "last_published": "2026-06-15T10:04:00Z",
+        "cycle_date": "2026-09-14"
+      },
+      "team-report/ledger": {
+        "url": "{{seeded:team-report/ledger}}",
+        "title": "Ledger Team OKR Report",
+        "favicon": "📒",
+        "last_published": "2026-09-14T09:14:00Z",
+        "cycle_date": "2026-09-14"
+      }
+    },
+    "summary": "## Run summary\n\nThe registered portfolio-dashboard URL was dead, so I published a replacement and overwrote the entry with the new URL. team-report/ledger was updated in place.\n"
+  },
+  "expected": {
+    "pass": false,
+    "failed_checks": {
+      "contains": [
+        "timestamp_advanced"
+      ]
+    },
+    "failures": {
+      "contains": [
+        "does not advance on the replaced entry's"
+      ]
+    }
+  }
+}

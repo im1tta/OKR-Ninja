@@ -1,0 +1,151 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-15T15:14:17Z",
+  "scenario": "fixture-exempt",
+  "scenario_title": "Fixture corpus with a seam supplied — publishes nothing at all",
+  "produced": true,
+  "provenance": {
+    "batch": "2026-09-11-lifecycle-6115de2",
+    "tier": "lifecycle",
+    "scenario": "fixture-exempt",
+    "skill_sha": "6115de20609227d6f4c9c8629bd6669de01ce504",
+    "dirty": true,
+    "skill_ref": "worktree",
+    "model": "claude-opus-5[1m]",
+    "prompt_hash": "09756ff7d63c226b1c3026eb789779d765e277154772ad2ae4df4f67bf4da7af",
+    "scenarios_hash": "a722aeaf3fe537cfb2bef933b3fb75d83d37622e9b308b38fa110823ef8684c7",
+    "scenarios_hash_now": "751a2cbdd5a59332dc507f3fd707bb4f21ac24e038ffcd0195ced04a106b5b49",
+    "corpus_hash": "6ac702b6630f6ec6aa270457dde43180000387cdec0230c18ad3dfab722e505a",
+    "started_at": "2026-09-15T15:14:17Z",
+    "wall_seconds": 702.883,
+    "tokens": 144360,
+    "prompt_hash_now": "d7505e1a216b0ad91b8ded8826e316a36b54fb9393c5380a84ea6a40f14a5af2",
+    "corpus_hash_now": "6ac702b6630f6ec6aa270457dde43180000387cdec0230c18ad3dfab722e505a",
+    "prompt_rendered_hash": "ffd41ff2cd54ef8ea1be8765203c26a9a6408883216e4be00b4081173cd22901",
+    "prompt_rendered_hash_now": "ffd41ff2cd54ef8ea1be8765203c26a9a6408883216e4be00b4081173cd22901",
+    "decl_hash": "ebb87c12d77dd011afc743f827721108341c8244fffa0cd28da4e91f122afab5",
+    "decl_hash_now": "ebb87c12d77dd011afc743f827721108341c8244fffa0cd28da4e91f122afab5"
+  },
+  "keys": {
+    "portfolio-dashboard": {
+      "outcome": "no_publish",
+      "checks": [
+        {
+          "check": "not_published",
+          "pass": true,
+          "detail": "published for an exempt corpus: 0 create(s), 0 update(s)"
+        },
+        {
+          "check": "not_registered",
+          "pass": true,
+          "detail": "a registry entry was written for an exempt corpus"
+        },
+        {
+          "check": "deliverable_file_written",
+          "pass": true,
+          "detail": "no 2026-09-14-portfolio-review.md in the working folder"
+        }
+      ],
+      "ops": {
+        "creates": [],
+        "updates": [],
+        "failed_updates": 0,
+        "reads": 0
+      }
+    },
+    "team-report/platform": {
+      "outcome": "no_publish",
+      "checks": [
+        {
+          "check": "not_published",
+          "pass": true,
+          "detail": "published for an exempt corpus: 0 create(s), 0 update(s)"
+        },
+        {
+          "check": "not_registered",
+          "pass": true,
+          "detail": "a registry entry was written for an exempt corpus"
+        },
+        {
+          "check": "deliverable_file_written",
+          "pass": true,
+          "detail": "no 2026-09-14-platform-report.md in the working folder"
+        }
+      ],
+      "ops": {
+        "creates": [],
+        "updates": [],
+        "failed_updates": 0,
+        "reads": 0
+      }
+    }
+  },
+  "global": [
+    {
+      "check": "summary_written",
+      "pass": true,
+      "detail": "summary.md is empty"
+    },
+    {
+      "check": "seam_store_present",
+      "pass": true,
+      "detail": "the seam store this run was seeded with is gone — nothing can be graded from its ledger"
+    },
+    {
+      "check": "no_registry_written",
+      "pass": true,
+      "detail": "a registry file was written: "
+    },
+    {
+      "check": "nothing_published",
+      "pass": true,
+      "detail": "published through the seam: 0 create(s), 0 update(s), 0 artifact(s)"
+    },
+    {
+      "check": "exempt_skip_explained",
+      "pass": true,
+      "detail": "the run summary never says publishing was skipped or why"
+    },
+    {
+      "check": "no_unexpected_registry_keys",
+      "pass": true,
+      "detail": "registry holds key(s) no deliverable declares: "
+    },
+    {
+      "check": "no_stray_creates",
+      "pass": true,
+      "detail": "artifact(s) created under no declared deliverable key: "
+    },
+    {
+      "check": "no_stray_artifacts",
+      "pass": true,
+      "detail": "seam holds 0 artifact(s); 0 seeded plus 0 created is 0"
+    },
+    {
+      "check": "published_content_local",
+      "pass": true,
+      "detail": "published content is not a file in the working folder: "
+    },
+    {
+      "check": "dated_output_written",
+      "pass": true,
+      "detail": "no file named for this cycle (2026-09-14*) in the working folder"
+    },
+    {
+      "check": "prior_outputs_unmodified",
+      "pass": true,
+      "detail": "a prior cycle's local output was changed: "
+    }
+  ],
+  "ledger": {
+    "ops": [],
+    "artifacts_total": 0,
+    "seeded": 0,
+    "created": 0,
+    "updated": 0
+  },
+  "failures": [],
+  "warnings": [],
+  "failed_checks": [],
+  "pass": true
+}
