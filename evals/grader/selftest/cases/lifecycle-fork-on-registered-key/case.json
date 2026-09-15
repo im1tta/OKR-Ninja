@@ -1,0 +1,62 @@
+{
+  "type": "lifecycle",
+  "scenario": "update",
+  "note": "The violation this eval exists to catch: a second artifact created for a key that had a live entry.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Tidewell — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 2 teams reviewed.\n",
+      "2026-09-14-ledger-report.md": "# Ledger — Q3 2026 OKR report (portfolio slice)\n\nRoll-up C (2.4).\n"
+    },
+    "ops": [
+      {
+        "op": "publish",
+        "key": "portfolio-dashboard",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "file": "2026-09-14-portfolio-review.md"
+      },
+      {
+        "op": "read",
+        "url": "{{seeded:team-report/ledger}}"
+      },
+      {
+        "op": "update",
+        "key": "team-report/ledger",
+        "url": "{{seeded:team-report/ledger}}",
+        "file": "2026-09-14-ledger-report.md"
+      }
+    ],
+    "registry": {
+      "portfolio-dashboard": {
+        "url": "{{created:portfolio-dashboard}}",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "last_published": "2026-09-14T09:12:00Z",
+        "cycle_date": "2026-09-14"
+      },
+      "team-report/ledger": {
+        "url": "{{seeded:team-report/ledger}}",
+        "title": "Ledger Team OKR Report",
+        "favicon": "📒",
+        "last_published": "2026-09-14T09:14:00Z",
+        "cycle_date": "2026-09-14"
+      }
+    },
+    "summary": "## Run summary\n\nUpdated both registered artifacts in place at their registered URLs; no new artifact was created.\n"
+  },
+  "expected": {
+    "pass": false,
+    "failed_checks": {
+      "contains": [
+        "no_fork"
+      ]
+    },
+    "failures": {
+      "contains": [
+        "created 1 artifact(s) for a key that had a registry entry"
+      ]
+    },
+    "ledger.created": 1,
+    "ledger.artifacts_total": 3
+  }
+}

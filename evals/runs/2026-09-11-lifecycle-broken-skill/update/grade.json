@@ -1,0 +1,324 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-15T15:14:17Z",
+  "scenario": "update",
+  "scenario_title": "Live registry — update both artifacts in place",
+  "produced": true,
+  "provenance": {
+    "batch": "2026-09-11-lifecycle-broken-skill",
+    "tier": "lifecycle",
+    "scenario": "update",
+    "skill_sha": "6115de20609227d6f4c9c8629bd6669de01ce504",
+    "dirty": true,
+    "skill_ref": "worktree",
+    "model": "claude-opus-5[1m]",
+    "prompt_hash": "09756ff7d63c226b1c3026eb789779d765e277154772ad2ae4df4f67bf4da7af",
+    "scenarios_hash": "96dc8646d4a179de26b6ab6bf448870a07582353d4846c12a18b331d1fc82c05",
+    "scenarios_hash_now": "751a2cbdd5a59332dc507f3fd707bb4f21ac24e038ffcd0195ced04a106b5b49",
+    "corpus_hash": "0fad4020232fbb55d78c4c3feac8c39e07ed1746be979cbe210e48a6e94213ac",
+    "started_at": "2026-09-14T11:49:33Z",
+    "wall_seconds": 725.411,
+    "tokens": 144363,
+    "prompt_hash_now": "d7505e1a216b0ad91b8ded8826e316a36b54fb9393c5380a84ea6a40f14a5af2",
+    "corpus_hash_now": "33d0290cbe4a2aa544084093908bc49a1be33ddfde9cd3ad7d1e6ee1e1e315f0",
+    "prompt_rendered_hash": "f0c2be353b8a4540684fbad993470aea0271442f6d613adac98f516e5b29b296",
+    "prompt_rendered_hash_now": "f0c2be353b8a4540684fbad993470aea0271442f6d613adac98f516e5b29b296",
+    "decl_hash": null,
+    "decl_hash_now": "345e3430b2c17f37f057416042d6f92f7323c08694a7f441634eb65fe8abf739"
+  },
+  "keys": {
+    "portfolio-dashboard": {
+      "outcome": "update_in_place",
+      "checks": [
+        {
+          "check": "registry_entry_written",
+          "pass": true,
+          "detail": "no registry entry for this key"
+        },
+        {
+          "check": "registry_fields_present",
+          "pass": true,
+          "detail": "entry missing "
+        },
+        {
+          "check": "last_published_valid",
+          "pass": true,
+          "detail": "last_published '2026-06-15T10:04:00Z' is not an ISO-8601 UTC instant"
+        },
+        {
+          "check": "cycle_date_current",
+          "pass": false,
+          "detail": "cycle_date is '2026-06-15', expected '2026-09-14'"
+        },
+        {
+          "check": "registered_url_verified",
+          "pass": false,
+          "detail": "acted on portfolio-dashboard without verifying https://artifacts.test/a/7c1f9a20 through the seam first"
+        },
+        {
+          "check": "no_fork",
+          "pass": false,
+          "detail": "created 1 artifact(s) for a key that had a registry entry: https://artifacts.test/a/dda52846"
+        },
+        {
+          "check": "updated_in_place",
+          "pass": false,
+          "detail": "no update recorded for this key"
+        },
+        {
+          "check": "updates_target_registered_url",
+          "pass": true,
+          "detail": "update(s) at [], registered URL is https://artifacts.test/a/7c1f9a20"
+        },
+        {
+          "check": "registry_url_unchanged",
+          "pass": true,
+          "detail": "registry url changed from https://artifacts.test/a/7c1f9a20 to 'https://artifacts.test/a/7c1f9a20'"
+        },
+        {
+          "check": "title_favicon_unchanged",
+          "pass": true,
+          "detail": "title/favicon changed from 'Tidewell OKR Portfolio Review'/'🧭' to 'Tidewell OKR Portfolio Review'/'🧭'"
+        },
+        {
+          "check": "timestamp_advanced",
+          "pass": false,
+          "detail": "last_published '2026-06-15T10:04:00Z' does not advance on '2026-06-15T10:04:00Z'"
+        },
+        {
+          "check": "registry_points_at_live_artifact",
+          "pass": true,
+          "detail": "registry names 'https://artifacts.test/a/7c1f9a20', which the seam does not hold"
+        },
+        {
+          "check": "registry_matches_live_artifact",
+          "pass": true,
+          "detail": "registry says 'Tidewell OKR Portfolio Review'/'🧭' but the artifact now carries 'Tidewell OKR Portfolio Review'/'🧭'"
+        },
+        {
+          "check": "deliverable_file_written",
+          "pass": true,
+          "detail": "no 2026-09-14-portfolio-review.md in the working folder"
+        },
+        {
+          "check": "published_own_deliverable",
+          "pass": true,
+          "detail": "published content that is not 2026-09-14-portfolio-review.md ()"
+        }
+      ],
+      "ops": {
+        "creates": [
+          "https://artifacts.test/a/dda52846"
+        ],
+        "updates": [],
+        "failed_updates": 0,
+        "reads": 0
+      }
+    },
+    "team-report/ledger": {
+      "outcome": "update_in_place",
+      "checks": [
+        {
+          "check": "registry_entry_written",
+          "pass": true,
+          "detail": "no registry entry for this key"
+        },
+        {
+          "check": "registry_fields_present",
+          "pass": true,
+          "detail": "entry missing "
+        },
+        {
+          "check": "last_published_valid",
+          "pass": true,
+          "detail": "last_published '2026-06-15T10:06:00Z' is not an ISO-8601 UTC instant"
+        },
+        {
+          "check": "cycle_date_current",
+          "pass": false,
+          "detail": "cycle_date is '2026-06-15', expected '2026-09-14'"
+        },
+        {
+          "check": "registered_url_verified",
+          "pass": false,
+          "detail": "acted on team-report/ledger without verifying https://artifacts.test/a/b4e2d118 through the seam first"
+        },
+        {
+          "check": "no_fork",
+          "pass": false,
+          "detail": "created 1 artifact(s) for a key that had a registry entry: https://artifacts.test/a/37746ceb"
+        },
+        {
+          "check": "updated_in_place",
+          "pass": false,
+          "detail": "no update recorded for this key"
+        },
+        {
+          "check": "updates_target_registered_url",
+          "pass": true,
+          "detail": "update(s) at [], registered URL is https://artifacts.test/a/b4e2d118"
+        },
+        {
+          "check": "registry_url_unchanged",
+          "pass": true,
+          "detail": "registry url changed from https://artifacts.test/a/b4e2d118 to 'https://artifacts.test/a/b4e2d118'"
+        },
+        {
+          "check": "title_favicon_unchanged",
+          "pass": true,
+          "detail": "title/favicon changed from 'Ledger Team OKR Report'/'📒' to 'Ledger Team OKR Report'/'📒'"
+        },
+        {
+          "check": "timestamp_advanced",
+          "pass": false,
+          "detail": "last_published '2026-06-15T10:06:00Z' does not advance on '2026-06-15T10:06:00Z'"
+        },
+        {
+          "check": "registry_points_at_live_artifact",
+          "pass": true,
+          "detail": "registry names 'https://artifacts.test/a/b4e2d118', which the seam does not hold"
+        },
+        {
+          "check": "registry_matches_live_artifact",
+          "pass": true,
+          "detail": "registry says 'Ledger Team OKR Report'/'📒' but the artifact now carries 'Ledger Team OKR Report'/'📒'"
+        },
+        {
+          "check": "deliverable_file_written",
+          "pass": true,
+          "detail": "no 2026-09-14-ledger-report.md in the working folder"
+        },
+        {
+          "check": "published_own_deliverable",
+          "pass": true,
+          "detail": "published content that is not 2026-09-14-ledger-report.md ()"
+        }
+      ],
+      "ops": {
+        "creates": [
+          "https://artifacts.test/a/37746ceb"
+        ],
+        "updates": [],
+        "failed_updates": 0,
+        "reads": 0
+      }
+    }
+  },
+  "global": [
+    {
+      "check": "summary_written",
+      "pass": true,
+      "detail": "summary.md is empty"
+    },
+    {
+      "check": "seam_store_present",
+      "pass": true,
+      "detail": "the seam store this run was seeded with is gone — nothing can be graded from its ledger"
+    },
+    {
+      "check": "registry_at_working_folder",
+      "pass": true,
+      "detail": "extra registry file(s): "
+    },
+    {
+      "check": "no_unexpected_registry_keys",
+      "pass": true,
+      "detail": "registry holds key(s) no deliverable declares: "
+    },
+    {
+      "check": "no_stray_creates",
+      "pass": true,
+      "detail": "artifact(s) created under no declared deliverable key: "
+    },
+    {
+      "check": "no_stray_artifacts",
+      "pass": true,
+      "detail": "seam holds 4 artifact(s); 2 seeded plus 2 created is 4"
+    },
+    {
+      "check": "create_over_entry_reported",
+      "pass": false,
+      "detail": "a create happened while a registry entry existed (portfolio-dashboard@https://artifacts.test/a/dda52846, team-report/ledger@https://artifacts.test/a/37746ceb); the run summary never says a re-create happened"
+    },
+    {
+      "check": "create_over_entry_names_deliverable",
+      "pass": true,
+      "detail": "the run summary never names the re-created deliverable(s): "
+    },
+    {
+      "check": "published_content_local",
+      "pass": true,
+      "detail": "published content is not a file in the working folder: "
+    },
+    {
+      "check": "dated_output_written",
+      "pass": true,
+      "detail": "no file named for this cycle (2026-09-14*) in the working folder"
+    },
+    {
+      "check": "prior_outputs_unmodified",
+      "pass": true,
+      "detail": "a prior cycle's local output was changed: "
+    }
+  ],
+  "ledger": {
+    "ops": [
+      {
+        "n": 1,
+        "op": "publish",
+        "key": "portfolio-dashboard",
+        "url": "https://artifacts.test/a/dda52846",
+        "title": "Tidewell Q3 2026 Portfolio OKR Review",
+        "favicon": "📊",
+        "content_sha": "d4d75b10d91975491b7fe9fae5cea4c3a7da5a8a694853d50479bb1bef0d3eed",
+        "result": null,
+        "reason": null
+      },
+      {
+        "n": 2,
+        "op": "publish",
+        "key": "team-report/ledger",
+        "url": "https://artifacts.test/a/37746ceb",
+        "title": "Ledger Q3 2026 OKR Review",
+        "favicon": "📒",
+        "content_sha": "7cad59aef577928b17164cde9dcfccd33f9c05b0e68d97099580b9ef32cc3b91",
+        "result": null,
+        "reason": null
+      }
+    ],
+    "artifacts_total": 4,
+    "seeded": 2,
+    "created": 2,
+    "updated": 0
+  },
+  "failures": [
+    "portfolio-dashboard — cycle_date_current: cycle_date is '2026-06-15', expected '2026-09-14'",
+    "portfolio-dashboard — registered_url_verified: acted on portfolio-dashboard without verifying https://artifacts.test/a/7c1f9a20 through the seam first",
+    "portfolio-dashboard — no_fork: created 1 artifact(s) for a key that had a registry entry: https://artifacts.test/a/dda52846",
+    "portfolio-dashboard — updated_in_place: no update recorded for this key",
+    "portfolio-dashboard — timestamp_advanced: last_published '2026-06-15T10:04:00Z' does not advance on '2026-06-15T10:04:00Z'",
+    "team-report/ledger — cycle_date_current: cycle_date is '2026-06-15', expected '2026-09-14'",
+    "team-report/ledger — registered_url_verified: acted on team-report/ledger without verifying https://artifacts.test/a/b4e2d118 through the seam first",
+    "team-report/ledger — no_fork: created 1 artifact(s) for a key that had a registry entry: https://artifacts.test/a/37746ceb",
+    "team-report/ledger — updated_in_place: no update recorded for this key",
+    "team-report/ledger — timestamp_advanced: last_published '2026-06-15T10:06:00Z' does not advance on '2026-06-15T10:06:00Z'",
+    "create_over_entry_reported: a create happened while a registry entry existed (portfolio-dashboard@https://artifacts.test/a/dda52846, team-report/ledger@https://artifacts.test/a/37746ceb); the run summary never says a re-create happened"
+  ],
+  "warnings": [
+    "the corpus has changed since this run reviewed it — provenance only, as grading reads the run directory and never the corpus; re-run it if the change was material"
+  ],
+  "failed_checks": [
+    "create_over_entry_reported",
+    "cycle_date_current",
+    "registered_url_verified",
+    "no_fork",
+    "updated_in_place",
+    "timestamp_advanced",
+    "cycle_date_current",
+    "registered_url_verified",
+    "no_fork",
+    "updated_in_place",
+    "timestamp_advanced"
+  ],
+  "pass": false
+}

@@ -1,0 +1,31 @@
+{
+  "harness_version": 2,
+  "batch": "2026-09-11-lifecycle-broken-skill",
+  "tier": "lifecycle",
+  "created": "2026-09-11T15:55:16Z",
+  "scenarios": [
+    "update"
+  ],
+  "arms": {
+    "candidate": {
+      "ref": "worktree",
+      "skill_sha": "6115de20609227d6f4c9c8629bd6669de01ce504",
+      "dirty": true,
+      "snapshot": "evals/runs/2026-09-11-lifecycle-broken-skill/skill/candidate"
+    }
+  },
+  "prompt_hash": "09756ff7d63c226b1c3026eb789779d765e277154772ad2ae4df4f67bf4da7af",
+  "scenarios_hash": "96dc8646d4a179de26b6ab6bf448870a07582353d4846c12a18b331d1fc82c05",
+  "corpus_hash": "0fad4020232fbb55d78c4c3feac8c39e07ed1746be979cbe210e48a6e94213ac",
+  "runs": [
+    {
+      "scenario": "update",
+      "dir": "evals/runs/2026-09-11-lifecycle-broken-skill/update",
+      "prompt": "evals/runs/2026-09-11-lifecycle-broken-skill/update/prompt.md",
+      "summary": "evals/runs/2026-09-11-lifecycle-broken-skill/update/summary.md",
+      "title": "Live registry — update both artifacts in place",
+      "status": "done",
+      "pass": false
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "type": "lifecycle",
+  "scenario": "update",
+  "note": "A registry that is valid JSON but not an object must be graded as a broken registry, not crash the grader and abandon the rest of the batch.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Tidewell — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 2 teams reviewed.\n",
+      "2026-09-14-ledger-report.md": "# Ledger — Q3 2026 OKR report (portfolio slice)\n\nRoll-up C (2.4).\n"
+    },
+    "ops": [
+      {
+        "op": "read",
+        "url": "{{seeded:portfolio-dashboard}}"
+      },
+      {
+        "op": "update",
+        "key": "portfolio-dashboard",
+        "url": "{{seeded:portfolio-dashboard}}",
+        "file": "2026-09-14-portfolio-review.md"
+      },
+      {
+        "op": "read",
+        "url": "{{seeded:team-report/ledger}}"
+      },
+      {
+        "op": "update",
+        "key": "team-report/ledger",
+        "url": "{{seeded:team-report/ledger}}",
+        "file": "2026-09-14-ledger-report.md"
+      }
+    ],
+    "registry_raw": "[]",
+    "summary": "## Run summary\n\nUpdated both registered artifacts in place.\n"
+  },
+  "expected": {
+    "pass": false,
+    "failed_checks": {
+      "contains": [
+        "registry_at_working_folder"
+      ]
+    },
+    "failures": {
+      "contains": [
+        "registry is not a JSON object"
+      ]
+    }
+  }
+}

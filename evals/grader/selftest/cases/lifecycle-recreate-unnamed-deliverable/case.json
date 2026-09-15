@@ -1,0 +1,65 @@
+{
+  "type": "lifecycle",
+  "scenario": "recreate",
+  "note": "The re-create is reported with its reason but never says which deliverable it replaced — the reader cannot tell which artifact URL changed under them.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Tidewell — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 2 teams reviewed.\n",
+      "2026-09-14-ledger-report.md": "# Ledger — Q3 2026 OKR report (portfolio slice)\n\nRoll-up C (2.4).\n"
+    },
+    "ops": [
+      {
+        "op": "read",
+        "url": "{{seeded:portfolio-dashboard}}",
+        "exit": 3
+      },
+      {
+        "op": "publish",
+        "key": "portfolio-dashboard",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "file": "2026-09-14-portfolio-review.md"
+      },
+      {
+        "op": "read",
+        "url": "{{seeded:team-report/ledger}}"
+      },
+      {
+        "op": "update",
+        "key": "team-report/ledger",
+        "url": "{{seeded:team-report/ledger}}",
+        "file": "2026-09-14-ledger-report.md"
+      }
+    ],
+    "registry": {
+      "portfolio-dashboard": {
+        "url": "{{created:portfolio-dashboard}}",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "last_published": "2026-09-14T09:12:00Z",
+        "cycle_date": "2026-09-14"
+      },
+      "team-report/ledger": {
+        "url": "{{seeded:team-report/ledger}}",
+        "title": "Ledger Team OKR Report",
+        "favicon": "📒",
+        "last_published": "2026-09-14T09:14:00Z",
+        "cycle_date": "2026-09-14"
+      }
+    },
+    "summary": "## Run summary\n\nOne registered URL was dead, so I published a replacement and overwrote its entry with the new URL. Everything else was updated in place.\n"
+  },
+  "expected": {
+    "pass": false,
+    "failed_checks": {
+      "contains": [
+        "create_over_entry_names_deliverable"
+      ]
+    },
+    "failures": {
+      "contains": [
+        "never names the re-created deliverable"
+      ]
+    }
+  }
+}

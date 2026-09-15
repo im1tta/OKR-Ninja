@@ -1,0 +1,51 @@
+{
+  "type": "lifecycle",
+  "scenario": "create",
+  "note": "Empty registry: one artifact per key, each registered with all five fields.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Tidewell — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 2 teams reviewed.\n",
+      "2026-09-14-ledger-report.md": "# Ledger — Q3 2026 OKR report (portfolio slice)\n\nRoll-up C (2.4).\n"
+    },
+    "ops": [
+      {
+        "op": "publish",
+        "key": "portfolio-dashboard",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "file": "2026-09-14-portfolio-review.md"
+      },
+      {
+        "op": "publish",
+        "key": "team-report/ledger",
+        "title": "Ledger Team OKR Report",
+        "favicon": "📒",
+        "file": "2026-09-14-ledger-report.md"
+      }
+    ],
+    "registry": {
+      "portfolio-dashboard": {
+        "url": "{{created:portfolio-dashboard}}",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "last_published": "2026-09-14T09:12:00Z",
+        "cycle_date": "2026-09-14"
+      },
+      "team-report/ledger": {
+        "url": "{{created:team-report/ledger}}",
+        "title": "Ledger Team OKR Report",
+        "favicon": "📒",
+        "last_published": "2026-09-14T09:14:00Z",
+        "cycle_date": "2026-09-14"
+      }
+    },
+    "summary": "## Run summary\n\nNo registry existed, so both deliverables were created and registered.\n"
+  },
+  "expected": {
+    "pass": true,
+    "produced": true,
+    "failed_checks": [],
+    "ledger.created": 2,
+    "ledger.updated": 0
+  }
+}

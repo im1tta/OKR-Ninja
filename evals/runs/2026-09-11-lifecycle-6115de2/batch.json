@@ -1,0 +1,84 @@
+{
+  "harness_version": 2,
+  "batch": "2026-09-11-lifecycle-6115de2",
+  "tier": "lifecycle",
+  "created": "2026-09-11T15:35:24Z",
+  "scenarios": [
+    "create",
+    "update",
+    "recreate",
+    "adopt"
+  ],
+  "arms": {
+    "candidate": {
+      "ref": "worktree",
+      "skill_sha": "6115de20609227d6f4c9c8629bd6669de01ce504",
+      "dirty": true,
+      "snapshot": "evals/runs/2026-09-11-lifecycle-6115de2/skill/candidate"
+    }
+  },
+  "prompt_hash": "09756ff7d63c226b1c3026eb789779d765e277154772ad2ae4df4f67bf4da7af",
+  "scenarios_hash": "a722aeaf3fe537cfb2bef933b3fb75d83d37622e9b308b38fa110823ef8684c7",
+  "corpus_hash": "0fad4020232fbb55d78c4c3feac8c39e07ed1746be979cbe210e48a6e94213ac",
+  "runs": [
+    {
+      "scenario": "create",
+      "dir": "evals/runs/2026-09-11-lifecycle-6115de2/create",
+      "prompt": "evals/runs/2026-09-11-lifecycle-6115de2/create/prompt.md",
+      "summary": "evals/runs/2026-09-11-lifecycle-6115de2/create/summary.md",
+      "title": "Empty registry — create and register both deliverables",
+      "status": "done",
+      "pass": true
+    },
+    {
+      "scenario": "update",
+      "dir": "evals/runs/2026-09-11-lifecycle-6115de2/update",
+      "prompt": "evals/runs/2026-09-11-lifecycle-6115de2/update/prompt.md",
+      "summary": "evals/runs/2026-09-11-lifecycle-6115de2/update/summary.md",
+      "title": "Live registry — update both artifacts in place",
+      "status": "done",
+      "pass": true
+    },
+    {
+      "scenario": "recreate",
+      "dir": "evals/runs/2026-09-11-lifecycle-6115de2/recreate",
+      "prompt": "evals/runs/2026-09-11-lifecycle-6115de2/recreate/prompt.md",
+      "summary": "evals/runs/2026-09-11-lifecycle-6115de2/recreate/summary.md",
+      "title": "Dead registered URL — re-create one deliverable, update the other",
+      "status": "done",
+      "pass": true
+    },
+    {
+      "scenario": "adopt",
+      "dir": "evals/runs/2026-09-11-lifecycle-6115de2/adopt",
+      "prompt": "evals/runs/2026-09-11-lifecycle-6115de2/adopt/prompt.md",
+      "summary": "evals/runs/2026-09-11-lifecycle-6115de2/adopt/summary.md",
+      "title": "User-supplied URL — adopt it over the registered entry",
+      "status": "done",
+      "pass": true
+    },
+    {
+      "scenario": "fixture-exempt",
+      "dir": "evals/runs/2026-09-11-lifecycle-6115de2/fixture-exempt",
+      "prompt": "evals/runs/2026-09-11-lifecycle-6115de2/fixture-exempt/prompt.md",
+      "summary": "evals/runs/2026-09-11-lifecycle-6115de2/fixture-exempt/summary.md",
+      "title": "Fixture corpus with a seam supplied — publishes nothing at all",
+      "status": "done",
+      "pass": true
+    }
+  ],
+  "decl_hashes": {
+    "create": "d54ac335698444a16e35e82ec4a9cba54bd51713c27bc27d879c2b63d26b7bfd",
+    "update": "345e3430b2c17f37f057416042d6f92f7323c08694a7f441634eb65fe8abf739",
+    "recreate": "0829f3256f21b66347272293eebd7b5f655a3248010aa98705dc3c97fc660974",
+    "adopt": "8b4a406e5ce0667f504fdb738a1f9090e019334cda1a4c2a97f7de05aac3e0e6",
+    "fixture-exempt": "ebb87c12d77dd011afc743f827721108341c8244fffa0cd28da4e91f122afab5"
+  },
+  "corpus_hashes": {
+    "create": "33d0290cbe4a2aa544084093908bc49a1be33ddfde9cd3ad7d1e6ee1e1e315f0",
+    "update": "33d0290cbe4a2aa544084093908bc49a1be33ddfde9cd3ad7d1e6ee1e1e315f0",
+    "recreate": "33d0290cbe4a2aa544084093908bc49a1be33ddfde9cd3ad7d1e6ee1e1e315f0",
+    "adopt": "33d0290cbe4a2aa544084093908bc49a1be33ddfde9cd3ad7d1e6ee1e1e315f0",
+    "fixture-exempt": "6ac702b6630f6ec6aa270457dde43180000387cdec0230c18ad3dfab722e505a"
+  }
+}

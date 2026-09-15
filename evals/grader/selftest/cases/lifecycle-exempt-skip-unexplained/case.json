@@ -1,0 +1,21 @@
+{
+  "type": "lifecycle",
+  "scenario": "fixture-exempt",
+  "note": "Nothing was published, but the summary never says the publish step was skipped or why — the reader cannot tell a deliberate exemption from a run that simply forgot.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Brightledger — Q3 2026 OKR portfolio review\n",
+      "2026-09-14-platform-report.md": "# Platform — Q3 2026 OKR report\n"
+    },
+    "ops": [],
+    "summary": "## Run summary\n\nBoth reports were written to the working folder. Review complete: 4 Critical, 9 Major, 1 Minor.\n"
+  },
+  "expected": {
+    "pass": false,
+    "failed_checks": {
+      "contains": [
+        "exempt_skip_explained"
+      ]
+    }
+  }
+}

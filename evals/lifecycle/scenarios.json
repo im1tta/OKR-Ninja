@@ -1,0 +1,232 @@
+{
+  "version": 1,
+  "corpus": "evals/corpora/tidewell-q3.md",
+  "seam": "evals/lifecycle/publish_seam.py",
+  "prompt_template": "evals/prompts/lifecycle.md",
+  "criterion": "A passing lifecycle run drives every publish decision from the working folder's artifacts.json: each deliverable key reaches the outcome its scenario declares (create-and-register, update-in-place, re-create, adopt-and-update, or — for a fixture corpus — no publish at all); every registered or supplied URL is verified through the seam before the run acts on it; no artifact is created for a key that already had a registry entry except a single re-create, stated in the run summary with its reason and the deliverable it replaced; each key publishes its own declared file and no other; the registry agrees with the artifact it points at, and an adopted artifact is not renamed; timestamps and cycle dates advance; and no prior cycle's local output is modified.",
+  "deliverables": {
+    "portfolio-dashboard": {
+      "label": "the portfolio review dashboard",
+      "ask": "the full six-section portfolio report for Tidewell",
+      "file": "{{cycle_date}}-portfolio-review.md"
+    },
+    "team-report/ledger": {
+      "label": "the Ledger team report",
+      "ask": "the Ledger team's slice of that same portfolio review — its heatmap row, its findings and the actions that name it — as a standalone page. This is a per-team output of the portfolio run, not a single-team-mode re-run: do not switch modes",
+      "file": "{{cycle_date}}-ledger-report.md"
+    }
+  },
+  "summary_markers": {
+    "recreate": [
+      "re-create",
+      "recreate",
+      "re-created",
+      "recreated",
+      "published a replacement",
+      "replacement artifact",
+      "created a new"
+    ],
+    "reason": [
+      "dead",
+      "unreachable",
+      "no longer",
+      "not found",
+      "no such artifact",
+      "gone",
+      "missing",
+      "404",
+      "could not be updated",
+      "cannot be updated",
+      "does not exist",
+      "did not exist",
+      "un-updatable",
+      "unavailable"
+    ],
+    "exempt": [
+      "exempt",
+      "fixture",
+      "publish step was skipped",
+      "skipped the publish",
+      "did not publish",
+      "nothing was published",
+      "no artifact was published",
+      "published nothing"
+    ]
+  },
+  "scenarios": [
+    {
+      "id": "create",
+      "title": "Empty registry — create and register both deliverables",
+      "cycle_date": "2026-09-14",
+      "seed": {
+        "registry": null,
+        "seam_artifacts": [],
+        "work_files": {}
+      },
+      "supplied_urls": {},
+      "expect": {
+        "portfolio-dashboard": "create_and_register",
+        "team-report/ledger": "create_and_register"
+      }
+    },
+    {
+      "id": "update",
+      "title": "Live registry — update both artifacts in place",
+      "cycle_date": "2026-09-14",
+      "seed": {
+        "registry": {
+          "portfolio-dashboard": {
+            "url": "https://artifacts.test/a/7c1f9a20",
+            "title": "Tidewell OKR Portfolio Review",
+            "favicon": "🧭",
+            "last_published": "2026-06-15T10:04:00Z",
+            "cycle_date": "2026-06-15"
+          },
+          "team-report/ledger": {
+            "url": "https://artifacts.test/a/b4e2d118",
+            "title": "Ledger Team OKR Report",
+            "favicon": "📒",
+            "last_published": "2026-06-15T10:06:00Z",
+            "cycle_date": "2026-06-15"
+          }
+        },
+        "seam_artifacts": [
+          {
+            "url": "https://artifacts.test/a/7c1f9a20",
+            "title": "Tidewell OKR Portfolio Review",
+            "favicon": "🧭"
+          },
+          {
+            "url": "https://artifacts.test/a/b4e2d118",
+            "title": "Ledger Team OKR Report",
+            "favicon": "📒"
+          }
+        ],
+        "work_files": {
+          "2026-06-15-portfolio-review.md": "# Tidewell — Q2 2026 OKR portfolio review\n\n*Prior cycle output. Append-only: a later run must not modify this file.*\n\n**Verdict: At risk.** 2 teams reviewed; 1 Critical, 2 Major, 1 Minor findings.\n"
+        }
+      },
+      "supplied_urls": {},
+      "expect": {
+        "portfolio-dashboard": "update_in_place",
+        "team-report/ledger": "update_in_place"
+      }
+    },
+    {
+      "id": "recreate",
+      "title": "Dead registered URL — re-create one deliverable, update the other",
+      "cycle_date": "2026-09-14",
+      "seed": {
+        "registry": {
+          "portfolio-dashboard": {
+            "url": "https://artifacts.test/a/0dead0dd",
+            "title": "Tidewell OKR Portfolio Review",
+            "favicon": "🧭",
+            "last_published": "2026-06-15T10:04:00Z",
+            "cycle_date": "2026-06-15"
+          },
+          "team-report/ledger": {
+            "url": "https://artifacts.test/a/b4e2d118",
+            "title": "Ledger Team OKR Report",
+            "favicon": "📒",
+            "last_published": "2026-06-15T10:06:00Z",
+            "cycle_date": "2026-06-15"
+          }
+        },
+        "seam_artifacts": [
+          {
+            "url": "https://artifacts.test/a/b4e2d118",
+            "title": "Ledger Team OKR Report",
+            "favicon": "📒"
+          }
+        ],
+        "work_files": {
+          "2026-06-15-portfolio-review.md": "# Tidewell — Q2 2026 OKR portfolio review\n\n*Prior cycle output. Append-only: a later run must not modify this file.*\n\n**Verdict: At risk.** 2 teams reviewed; 1 Critical, 2 Major, 1 Minor findings.\n"
+        }
+      },
+      "supplied_urls": {},
+      "expect": {
+        "portfolio-dashboard": "recreate",
+        "team-report/ledger": "update_in_place"
+      }
+    },
+    {
+      "id": "adopt",
+      "title": "User-supplied URL — adopt it over the registered entry",
+      "cycle_date": "2026-09-14",
+      "seed": {
+        "registry": {
+          "portfolio-dashboard": {
+            "url": "https://artifacts.test/a/51aa9c6e",
+            "title": "Tidewell OKR Portfolio Review",
+            "favicon": "🧭",
+            "last_published": "2026-06-15T10:04:00Z",
+            "cycle_date": "2026-06-15"
+          },
+          "team-report/ledger": {
+            "url": "https://artifacts.test/a/b4e2d118",
+            "title": "Ledger Team OKR Report",
+            "favicon": "📒",
+            "last_published": "2026-06-15T10:06:00Z",
+            "cycle_date": "2026-06-15"
+          }
+        },
+        "seam_artifacts": [
+          {
+            "url": "https://artifacts.test/a/51aa9c6e",
+            "title": "Tidewell OKR Portfolio Review",
+            "favicon": "🧭"
+          },
+          {
+            "url": "https://artifacts.test/a/9f3b77c4",
+            "title": "Tidewell OKR Dashboard (shared with leads)",
+            "favicon": "🧭"
+          },
+          {
+            "url": "https://artifacts.test/a/b4e2d118",
+            "title": "Ledger Team OKR Report",
+            "favicon": "📒"
+          }
+        ],
+        "work_files": {
+          "2026-06-15-portfolio-review.md": "# Tidewell — Q2 2026 OKR portfolio review\n\n*Prior cycle output. Append-only: a later run must not modify this file.*\n\n**Verdict: At risk.** 2 teams reviewed; 1 Critical, 2 Major, 1 Minor findings.\n"
+        }
+      },
+      "supplied_urls": {
+        "portfolio-dashboard": "https://artifacts.test/a/9f3b77c4"
+      },
+      "expect": {
+        "portfolio-dashboard": "adopt_and_update",
+        "team-report/ledger": "update_in_place"
+      }
+    },
+    {
+      "id": "fixture-exempt",
+      "title": "Fixture corpus with a seam supplied — publishes nothing at all",
+      "corpus": "examples/sample-portfolio.md",
+      "cycle_date": "2026-09-14",
+      "seed": {
+        "registry": null,
+        "seam_artifacts": [],
+        "work_files": {}
+      },
+      "supplied_urls": {},
+      "expect": {
+        "portfolio-dashboard": "no_publish",
+        "team-report/platform": "no_publish"
+      },
+      "deliverables": {
+        "portfolio-dashboard": {
+          "label": "the portfolio review dashboard",
+          "ask": "the full six-section portfolio report for the portfolio in that file",
+          "file": "{{cycle_date}}-portfolio-review.md"
+        },
+        "team-report/platform": {
+          "label": "the Platform team report",
+          "ask": "the Platform team's slice of that same portfolio review — its heatmap row, its findings and the actions that name it — as a standalone page. This is a per-team output of the portfolio run, not a single-team-mode re-run: do not switch modes",
+          "file": "{{cycle_date}}-platform-report.md"
+        }
+      }
+    }
+  ]
+}

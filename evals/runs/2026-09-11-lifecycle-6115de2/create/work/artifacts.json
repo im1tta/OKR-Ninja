@@ -1,0 +1,16 @@
+{
+  "portfolio-dashboard": {
+    "url": "https://artifacts.test/a/dda52846",
+    "title": "Tidewell OKR Portfolio Review",
+    "favicon": "📊",
+    "last_published": "2026-09-11T15:52:58Z",
+    "cycle_date": "2026-09-14"
+  },
+  "team-report/ledger": {
+    "url": "https://artifacts.test/a/37746ceb",
+    "title": "Ledger OKR Report",
+    "favicon": "📒",
+    "last_published": "2026-09-11T15:53:02Z",
+    "cycle_date": "2026-09-14"
+  }
+}
