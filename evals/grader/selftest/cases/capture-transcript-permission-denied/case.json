@@ -1,0 +1,14 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": false,
+    "not_produced": "transcript-unreadable",
+    "detail_contains": "cannot be read"
+  },
+  "preexisting": [
+    "report.md"
+  ],
+  "chmod0": true
+}

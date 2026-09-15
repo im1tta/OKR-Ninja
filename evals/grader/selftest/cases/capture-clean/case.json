@@ -1,0 +1,15 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": true,
+    "not_produced": null,
+    "model": "claude-sonnet-5",
+    "models_seen": [
+      "claude-sonnet-5"
+    ],
+    "tokens": 4746,
+    "report": "expected.md"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "transcript": "/private/tmp/claude-502/-Users-difan-orca-workspaces-OKR-Reviewer-hawksbill/1228ed24-b7c5-43b1-b954-188649c525bc/tasks/a1815261da5c23bde.output",
+  "previous_run_json_replaced": true,
+  "stale_report_removed": true,
+  "stale_grade_removed": true,
+  "model": "claude-opus-5",
+  "models_seen": [
+    "claude-opus-5"
+  ],
+  "transcript_usage": {
+    "messages": 6,
+    "input_tokens": 12,
+    "output_tokens": 27249,
+    "cache_creation_input_tokens": 61239,
+    "cache_read_input_tokens": 289065
+  },
+  "tokens": 90351,
+  "wall_seconds": 304.167,
+  "started_at": "2026-09-15T14:15:47.741Z",
+  "not_produced": null,
+  "not_produced_detail": null,
+  "recorded_at": "2026-09-15T16:11:06Z"
+}

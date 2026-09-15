@@ -1,0 +1,228 @@
+{
+  "harness_version": 3,
+  "graded_at": "2026-09-15T16:11:06Z",
+  "mode": "single-team",
+  "provenance": {
+    "batch": "2026-09-15-smoke-capture-6115de2",
+    "tier": "smoke",
+    "arm": "candidate",
+    "slice": "fixture1-platform-single-team",
+    "run": 1,
+    "skill_sha": "6115de20609227d6f4c9c8629bd6669de01ce504",
+    "dirty": false,
+    "skill_ref": "worktree",
+    "model": "claude-opus-5",
+    "prompt_hash": "c20b49258e7e1803085abd18e844e6e2ef44f539e9c471a600923a7173ccb508",
+    "key_hash": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa",
+    "key_hash_at_plan": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa",
+    "started_at": "2026-09-15T14:15:47.741Z",
+    "wall_seconds": 304.167,
+    "tokens": 90351,
+    "not_produced": null
+  },
+  "findings_parsed": 3,
+  "produced": true,
+  "rows": {
+    "G4": {
+      "status": "found",
+      "matched_id": "AP-02",
+      "id_exact": false,
+      "via_secondary": true,
+      "finding_line": 100
+    },
+    "G5": {
+      "status": "found",
+      "matched_id": "AP-06",
+      "id_exact": true,
+      "via_secondary": false,
+      "finding_line": 93
+    },
+    "G7": {
+      "status": "found",
+      "matched_id": "AP-09",
+      "id_exact": false,
+      "via_secondary": false,
+      "finding_line": 85
+    }
+  },
+  "findings": [
+    {
+      "heading": "### [Critical] AP-09 Metric Nobody Can Measure — Platform",
+      "report_line": 85,
+      "severity": "Critical",
+      "id": "AP-09",
+      "secondary": [
+        "AP-12",
+        "AP-04"
+      ],
+      "kind": "match",
+      "anchor": "KR PL1.3",
+      "key": "AP-09@KR PL1.3",
+      "match": {
+        "row": "G7",
+        "matched_id": "AP-09",
+        "id_exact": false,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Improve internal developer satisfaction score to 8/10.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 10,
+          "section": "Platform team",
+          "ref_line": 10,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "Keep the lights on, cheaper",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 7,
+          "section": "Platform team",
+          "ref_line": 7,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "KR: Internal developer satisfaction — mean score on `<developer survey instrument>` question `<question>`, run quarterly (n ≥ `<n>`): `<baseline>`/10 → 8/10."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-06 Sandbagged Target — Platform",
+      "report_line": 93,
+      "severity": "Major",
+      "id": "AP-06",
+      "secondary": [],
+      "kind": "match",
+      "anchor": "KR PL1.1",
+      "key": "AP-06@KR PL1.1",
+      "match": {
+        "row": "G5",
+        "matched_id": "AP-06",
+        "id_exact": true,
+        "via_secondary": false
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Maintain API uptime at or above 99.9%.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 8,
+          "section": "Platform team",
+          "ref_line": 8,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        },
+        {
+          "text": "API uptime, trailing 90 days: 99.95% (Datadog SLO monitor).",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 21,
+          "section": "Appendix",
+          "ref_line": 21,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Maintain",
+        "KR PL1.1: API uptime, trailing 90 days per Datadog SLO monitor, from 99.95% (Q2 actual) to ≥ `<target>`% by end of Q3."
+      ]
+    },
+    {
+      "heading": "### [Major] AP-01 Task Masquerading as KR — Platform",
+      "report_line": 100,
+      "severity": "Major",
+      "id": "AP-01",
+      "secondary": [
+        "AP-02"
+      ],
+      "kind": "match",
+      "anchor": "KR PL2.2",
+      "key": "AP-01@KR PL2.2",
+      "match": {
+        "row": "G4",
+        "matched_id": "AP-02",
+        "id_exact": false,
+        "via_secondary": true
+      },
+      "duplicate_of": null,
+      "partial": [],
+      "flags": [],
+      "excluded": false,
+      "triage": null,
+      "bucket": null,
+      "evidence": [
+        {
+          "text": "Complete the SOC 2 Type II audit.",
+          "role": "evidence",
+          "class": "verbatim",
+          "input_line": 14,
+          "section": "Platform team",
+          "ref_line": 14,
+          "ref_line_ok": true,
+          "key_leak": false,
+          "ambiguous": false
+        }
+      ],
+      "mentions": [
+        "Complete",
+        "KR PL2.2: Close 100% of the `<N>` open SOC 2 Type II audit findings (baseline: 0/`<N>` closed, per `<audit tracker>`), Type II report received by `<date>`."
+      ]
+    }
+  ],
+  "extras": [],
+  "duplicates": [],
+  "excluded": [],
+  "violations": {
+    "non_defect": 0,
+    "off_key": 0
+  },
+  "budget": {
+    "limit": 1,
+    "counted": 0,
+    "excluded": 0
+  },
+  "quotes": {
+    "total": 5,
+    "evidence": 5,
+    "supporting": 0,
+    "verbatim": 5,
+    "near_miss": 0,
+    "out_of_scope": 0,
+    "fabricated": 0,
+    "unverified": 0,
+    "term": 0,
+    "ambiguous": 0,
+    "key_leak": 0,
+    "mentions": 5,
+    "fabricated_spans": [],
+    "unverified_spans": []
+  },
+  "structure": {
+    "pass": true,
+    "failures": [],
+    "warnings": []
+  },
+  "failures": [],
+  "pass": true
+}

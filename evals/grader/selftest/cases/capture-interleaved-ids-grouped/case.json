@@ -1,0 +1,11 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": true,
+    "not_produced": null,
+    "tokens": 2229,
+    "report": "expected.md"
+  }
+}

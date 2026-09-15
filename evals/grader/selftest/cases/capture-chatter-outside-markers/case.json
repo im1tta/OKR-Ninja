@@ -1,0 +1,11 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": true,
+    "not_produced": null,
+    "model": "claude-sonnet-5",
+    "report": "expected.md"
+  }
+}

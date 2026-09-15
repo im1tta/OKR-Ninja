@@ -1,0 +1,16 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {
+    "tokens": 4321,
+    "seconds": 12.5,
+    "model": "claude-opus-5"
+  },
+  "expected": {
+    "produced": true,
+    "not_produced": null,
+    "model": "claude-opus-5",
+    "tokens": 4321,
+    "report": "expected.md"
+  }
+}

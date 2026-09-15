@@ -1,0 +1,13 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {
+    "model": "claude-sonnet-5"
+  },
+  "expected": {
+    "produced": false,
+    "not_produced": "model-mismatch",
+    "model": null,
+    "detail_contains": "no model"
+  }
+}

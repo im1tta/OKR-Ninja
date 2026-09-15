@@ -7,6 +7,8 @@ Subcommands
   render-key   regenerate a fixture's "## Answer key" section from its JSON key
   plan         create or resume a batch: sliced inputs, skill snapshots, prompts,
                batch.json; print the pending runs
+  capture      extract a run's report byte-exact from the runner's JSONL transcript (the final
+               message's marker block), write report.md and run.json, or record why not
   record       write a run's provenance (model, tokens, wall time) next to its report
   grade        grade one run directory (or an explicit report/input/key triple)
   aggregate    build scorecard.json for a batch and print the scorecard table
@@ -23,13 +25,14 @@ import bisect
 import datetime as _dt
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-HARNESS_VERSION = 2
+HARNESS_VERSION = 3
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 KEYS_DIR = ROOT / "evals" / "keys"
@@ -43,6 +46,11 @@ DIMENSIONS = ["O1", "O2", "O3", "O4", "K1", "K2", "K3", "K4", "K5", "K6", "K7"]
 MODES = ("portfolio", "single-team")
 BUCKETS = ("fixture-ambiguous", "rubric-gap", "skill-error")
 TRIAGE_STATUS = ("known-red", "fixed")
+REPORT_BEGIN = "=====BEGIN OKR-NINJA REPORT====="
+REPORT_END = "=====END OKR-NINJA REPORT====="
+# Why a run has no report.md: transport failures first, runner-format failures second.
+NOT_PRODUCED = ("agent-error", "transcript-unreadable", "no-final-text", "markers-missing", "multiple-blocks",
+                "empty-report", "model-mismatch")
 
 
 class Fail(Exception):
@@ -1022,14 +1030,17 @@ def grade_report(report_text, key, slice_spec, input_lines, fixture, provenance)
     }
 
 
-def not_produced_grade(provenance, mode):
+def not_produced_grade(provenance, mode, reason=None):
+    """The grade of a run without report.md. `reason` is a NOT_PRODUCED name from run.json (capture wrote it);
+    runs recorded before capture existed carry none and keep the bare legacy failure string."""
+    msg = "report not produced" + (": %s" % reason if reason else "")
     return {"harness_version": HARNESS_VERSION, "graded_at": now_iso(), "mode": mode, "provenance": provenance,
-            "findings_parsed": 0, "produced": False, "rows": {}, "findings": [], "extras": [], "duplicates": [],
-            "excluded": [], "violations": {"non_defect": 0, "off_key": 0}, "budget": {"limit": None, "counted": 0,
-            "excluded": 0}, "quotes": {"total": 0, "evidence": 0, "supporting": 0, "verbatim": 0, "near_miss": 0, "out_of_scope": 0,
-            "fabricated": 0, "unverified": 0, "term": 0, "ambiguous": 0, "key_leak": 0, "mentions": 0,
-            "fabricated_spans": [], "unverified_spans": []}, "structure": {"pass": False,
-            "failures": ["report not produced"], "warnings": []}, "failures": ["report not produced"], "pass": False}
+            "findings_parsed": 0, "produced": False, "not_produced": reason, "rows": {}, "findings": [], "extras": [],
+            "duplicates": [], "excluded": [], "violations": {"non_defect": 0, "off_key": 0}, "budget": {"limit": None,
+            "counted": 0, "excluded": 0}, "quotes": {"total": 0, "evidence": 0, "supporting": 0, "verbatim": 0,
+            "near_miss": 0, "out_of_scope": 0, "fabricated": 0, "unverified": 0, "term": 0, "ambiguous": 0,
+            "key_leak": 0, "mentions": 0, "fabricated_spans": [], "unverified_spans": []},
+            "structure": {"pass": False, "failures": [msg], "warnings": []}, "failures": [msg], "pass": False}
 
 
 def summarize_grade(g):
@@ -1162,6 +1173,305 @@ def cmd_record(args):
     print("recorded %s" % rel(rdir / "run.json"))
 
 
+# ------------------------------------------------------------------- capture
+
+class Unreadable(Exception):
+    """The transcript cannot be parsed; the message says why."""
+
+
+def read_transcript(path):
+    """Parse a Claude Code subagent JSONL transcript into API messages.
+
+    One API message is spread over several JSONL lines that share `message.id` (thinking, tool_use and text
+    items arrive one per line). Assistant lines are grouped by unique id in first-appearance order — not by
+    runs of consecutive lines, so interleaved ids still form one message each; a line without an id is a
+    message of its own. -> {messages: [{id, model, usage, texts, timestamp, last_line}] (assistant only),
+    first_ts, last_ts, lines}. Only message.role/content/model/id/usage and the line timestamp are relied on;
+    attachment lines, tool results and anything else are ignored. Raises Unreadable for a file that cannot be
+    read, a non-JSON line, or a line whose relied-on fields have an unexpected shape."""
+    p = Path(path)
+    if not p.is_file():
+        raise Unreadable("transcript does not exist or is not a regular file: %s" % p)
+    try:
+        data = p.read_bytes()
+    except OSError as e:
+        raise Unreadable("transcript cannot be read: %s" % e)
+    messages, by_id, first_ts, last_ts, n = [], {}, None, None, 0
+    for i, raw in enumerate(data.split(b"\n"), 1):
+        if not raw.strip():
+            continue
+        n += 1
+        try:
+            obj = json.loads(raw.decode("utf-8"))
+        except (UnicodeDecodeError, ValueError) as e:
+            raise Unreadable("line %d of %s is not JSON: %s" % (i, p, e))
+        if not isinstance(obj, dict):
+            raise Unreadable("line %d of %s is not a JSON object" % (i, p))
+        ts = obj.get("timestamp")
+        if ts is not None and not isinstance(ts, str):
+            raise Unreadable("line %d of %s: timestamp is not a string" % (i, p))
+        if ts:
+            first_ts = first_ts or ts
+            last_ts = ts
+        msg = obj.get("message")
+        if not isinstance(msg, dict) or msg.get("role") != "assistant":
+            continue
+        mid, model, usage, content = msg.get("id"), msg.get("model"), msg.get("usage"), msg.get("content")
+        if mid is not None and not isinstance(mid, str):
+            raise Unreadable("line %d of %s: message.id is not a string" % (i, p))
+        if model is not None and not isinstance(model, str):
+            raise Unreadable("line %d of %s: message.model is not a string" % (i, p))
+        if usage is not None and not isinstance(usage, dict):
+            raise Unreadable("line %d of %s: message.usage is not an object" % (i, p))
+        if not isinstance(content, list):
+            raise Unreadable("line %d of %s: message.content is not a list" % (i, p))
+        texts = []
+        for c in content:
+            if not isinstance(c, dict) or not isinstance(c.get("type"), str):
+                raise Unreadable("line %d of %s: a content item is not an object with a type" % (i, p))
+            if c["type"] == "text":
+                if not isinstance(c.get("text"), str):
+                    raise Unreadable("line %d of %s: a text item's text is not a string" % (i, p))
+                texts.append(c["text"])
+        m = by_id.get(mid) if mid is not None else None
+        if m is None:
+            m = {"id": mid, "model": model, "usage": usage or {}, "texts": [], "timestamp": ts, "last_line": i}
+            messages.append(m)
+            if mid is not None:
+                by_id[mid] = m
+        m["texts"] += texts
+        m["usage"] = usage or m["usage"]      # the last line per id carries the message's final running usage
+        m["model"] = model or m["model"]
+        m["last_line"] = i
+    return {"messages": messages, "first_ts": first_ts, "last_ts": last_ts, "lines": n}
+
+
+def final_message(messages):
+    """The runner's final reply: among messages carrying a text item, the one whose last transcript line is latest."""
+    cands = [m for m in messages if m["texts"]]
+    return max(cands, key=lambda m: m["last_line"]) if cands else None
+
+
+def final_text(messages):
+    """The final message's text items concatenated in order with nothing inserted (only bytes the runner emitted)."""
+    m = final_message(messages)
+    return "".join(m["texts"]) if m else None
+
+
+def transcript_usage(messages):
+    """Token usage summed over unique messages (each carries its final running usage)."""
+    out = {"messages": len(messages), "input_tokens": 0, "output_tokens": 0, "cache_creation_input_tokens": 0,
+           "cache_read_input_tokens": 0}
+    for m in messages:
+        for k in list(out)[1:]:
+            v = m["usage"].get(k)
+            if isinstance(v, (int, float)):
+                out[k] += int(v)
+    return out
+
+
+def iso_seconds(a, b):
+    try:
+        ta = _dt.datetime.fromisoformat(a.replace("Z", "+00:00"))
+        tb = _dt.datetime.fromisoformat(b.replace("Z", "+00:00"))
+        return round((tb - ta).total_seconds(), 3)
+    except (AttributeError, ValueError, TypeError):
+        return None
+
+
+def is_marker(line, marker):
+    """Exact-line match; only a trailing carriage return (CRLF transport) is tolerated."""
+    return line == marker or line == marker + "\r"
+
+
+def extract_report(text):
+    """-> (report, reason). Exactly one REPORT_BEGIN line and one REPORT_END line, begin before end; the report is
+    the text strictly between them, kept as emitted, with a final newline added only when the body lacks one.
+    An empty body (nothing, or only whitespace — spaces, tabs, CR, LF — between the markers) is `empty-report`;
+    a non-empty body is never stripped."""
+    lines = text.split("\n")
+    begins = [i for i, ln in enumerate(lines) if is_marker(ln, REPORT_BEGIN)]
+    ends = [i for i, ln in enumerate(lines) if is_marker(ln, REPORT_END)]
+    if len(begins) > 1 or len(ends) > 1:
+        return None, "multiple-blocks"
+    if not begins or not ends or ends[0] < begins[0]:
+        return None, "markers-missing"
+    body = "\n".join(lines[begins[0] + 1: ends[0]])
+    if not body.strip(" \t\r\n"):
+        return None, "empty-report"
+    return body if body.endswith("\n") else body + "\n", None
+
+
+def fresh_provenance(args, tr):
+    """The provenance capture records for a run, built from the transcript and the command line only — never
+    from an earlier run.json (design D6: nothing survives a re-capture)."""
+    msgs = tr["messages"]
+    models = []
+    for m in msgs:
+        if m["model"] and m["model"] not in models:
+            models.append(m["model"])
+    usage = transcript_usage(msgs) if msgs else None
+    fm = final_message(msgs)
+    return {
+        # the final message's model (D2's final-message rule); without a text-carrying message, the latest model seen
+        "model": (fm["model"] if fm else None) or next((m["model"] for m in reversed(msgs) if m["model"]), None),
+        "models_seen": models,
+        "transcript_usage": usage,
+        "tokens": args.tokens if args.tokens is not None else (
+            sum(v for k, v in usage.items() if k != "messages") if usage else None),
+        "wall_seconds": args.seconds if args.seconds is not None else (
+            iso_seconds(tr["first_ts"], tr["last_ts"]) if tr["first_ts"] else None),
+        "started_at": tr["first_ts"] or now_iso(),
+    }
+
+
+EMPTY_TRANSCRIPT = {"messages": [], "first_ts": None, "last_ts": None, "lines": 0}
+
+
+def decide_capture(args):
+    """Everything capture decides, with no side effects: -> (provenance, reason, detail, body bytes or None)."""
+    reason, detail, body = None, None, None
+    try:
+        tr = read_transcript(args.transcript)
+    except Unreadable as e:
+        tr, reason, detail = EMPTY_TRANSCRIPT, "transcript-unreadable", str(e)
+    if args.agent_error:
+        reason, detail = "agent-error", args.agent_error + ("" if detail is None else " (also: %s)" % detail)
+    prov = fresh_provenance(args, tr)
+    msgs = tr["messages"]
+    if reason is None and not msgs:
+        reason, detail = "agent-error", "transcript holds no assistant turn"
+    if reason is None and args.model and args.model != prov["model"]:
+        reason, detail = "model-mismatch", "--model %s but the transcript records %s" % (
+            args.model, prov["model"] or "no model")
+    if reason is None:
+        text = final_text(msgs)
+        if text is None:
+            reason, detail = "no-final-text", "no assistant message carries a text item"
+        else:
+            body, reason = extract_report(text)
+            if reason == "empty-report":
+                detail = "the marker block holds no report text"
+            elif reason:
+                detail = "final message has %d begin and %d end marker line(s)" % (
+                    sum(1 for ln in text.split("\n") if is_marker(ln, REPORT_BEGIN)),
+                    sum(1 for ln in text.split("\n") if is_marker(ln, REPORT_END)))
+    if reason is None:
+        try:
+            body = body.encode("utf-8")
+        except UnicodeEncodeError as e:
+            reason, detail, body = "transcript-unreadable", "report text is not encodable as UTF-8: %s" % e, None
+    return prov, reason, detail, body
+
+
+RUN_JSON_KEYS = ("transcript", "previous_run_json_replaced", "stale_report_removed", "stale_grade_removed", "model",
+                 "models_seen", "transcript_usage", "tokens", "wall_seconds", "started_at", "not_produced",
+                 "not_produced_detail", "recorded_at")
+
+
+def ascii_safe(v):
+    """A string that json.dumps(ensure_ascii=True) and UTF-8 can always represent: non-ASCII and lone surrogates
+    become backslash escapes."""
+    return str(v).encode("ascii", "backslashreplace").decode("ascii")
+
+
+def serialize_record(rec):
+    """The exact bytes run.json will hold. Raises when any value cannot be represented."""
+    return (json.dumps(rec, indent=2, ensure_ascii=False) + "\n").encode("utf-8")
+
+
+def fallback_record(args, flags, failure):
+    """A run.json that cannot fail to serialize, for when the real record could not be represented (design D3):
+    reason transcript-unreadable — or agent-error when --agent-error was given — with an ASCII-safe detail."""
+    def cli_num(v):
+        try:
+            json.dumps(v).encode("ascii")
+            return v
+        except (TypeError, ValueError, UnicodeEncodeError, OverflowError):
+            return None
+    detail = "run record could not be serialized: %s" % ascii_safe(failure)
+    reason = "transcript-unreadable"
+    if args.agent_error:
+        reason, detail = "agent-error", "%s (also: %s)" % (ascii_safe(args.agent_error), detail)
+    rec = {"transcript": ascii_safe(args.transcript), **flags, "model": None, "models_seen": [], "transcript_usage": None,
+           "tokens": cli_num(args.tokens), "wall_seconds": cli_num(args.seconds), "started_at": now_iso(),
+           "not_produced": reason, "not_produced_detail": detail, "recorded_at": now_iso()}
+    return rec, (json.dumps(rec, indent=2, ensure_ascii=True) + "\n").encode("ascii")
+
+
+def cmd_capture(args):
+    """Capture a run's report from its transcript. Structure (design D6): decide everything and serialize the exact
+    bytes in memory first; only then touch the run directory — stage the new files, remove the stale ones, and
+    move the staged files into place — so no path ends with stale files removed and no valid run.json."""
+    rdir = Path(args.run_dir).resolve()
+    if not rdir.exists():
+        raise Fail("run dir does not exist: %s" % rdir)
+    try:
+        report, grade, run_json = rdir / "report.md", rdir / "grade.json", rdir / "run.json"
+        flags = {"previous_run_json_replaced": run_json.exists(), "stale_report_removed": report.exists(),
+                 "stale_grade_removed": grade.exists()}
+        # 1. decide, never crashing: an error the parser did not anticipate is a named reason with fresh provenance
+        try:
+            prov, reason, detail, body = decide_capture(args)
+        except Exception as e:  # noqa: BLE001
+            prov, body = fresh_provenance(args, EMPTY_TRANSCRIPT), None
+            reason, detail = "transcript-unreadable", "unexpected error while reading the transcript: %r" % (e,)
+            if args.agent_error:
+                reason, detail = "agent-error", "%s (also: %s)" % (args.agent_error, detail)
+        rec = {"transcript": str(args.transcript), **flags, **prov, "not_produced": reason, "not_produced_detail": detail,
+               "recorded_at": now_iso()}
+        # 2. serialize the exact bytes; a record that cannot be represented becomes the fallback (no report)
+        try:
+            rec_bytes = serialize_record(rec)
+        except Exception as e:  # noqa: BLE001 — lone surrogates, NaN, unrepresentable values
+            rec, rec_bytes = fallback_record(args, flags, "%s: %s" % (type(e).__name__, e))
+            reason, detail, body = rec["not_produced"], rec["not_produced_detail"], None
+        # 3. stage the new files, then remove stale ones, then move staged files into place (`*.tmp` is gitignored,
+        #    never graded, and never counted as a report by `plan`). On a failure the message says exactly what
+        #    changed: nothing before the first removal; after it, which stale files went and whether run.json was
+        #    replaced, so the operator re-runs capture rather than trusting a directory in a half-way state.
+        staged_run, staged_report = rdir / "run.json.tmp", rdir / "report.md.tmp"
+        removed, written = [], []
+        try:
+            staged_run.write_bytes(rec_bytes)
+            if body is not None:
+                staged_report.write_bytes(body)
+            for stale in (report, grade):
+                if stale.exists():
+                    stale.unlink()
+                    removed.append(stale.name)
+            os.replace(staged_run, run_json)
+            written.append(run_json.name)
+            if body is not None:
+                os.replace(staged_report, report)
+                written.append(report.name)
+        except OSError as e:
+            for t in (staged_run, staged_report):
+                try:
+                    if t.exists():
+                        t.unlink()
+                except OSError:
+                    pass
+            if not removed and not written:
+                state = "the run directory was left as it was"
+            else:
+                state = "%s; %s; re-run capture" % (
+                    ("stale %s removed" % " and ".join(removed)) if removed else "no stale file removed",
+                    ("%s written" % " and ".join(written)) if written else "run.json not replaced")
+            print("error: capture could not write into %s (%s); %s" % (rdir, e, state), file=sys.stderr)
+            sys.exit(1)
+        if reason:
+            print("not produced (%s): %s — recorded in %s, no report.md written" % (reason, ascii_safe(detail), rel(run_json)))
+            sys.exit(1)
+        print("captured %s (%d bytes, model %s) from %s" % (rel(report), len(body), ascii_safe(rec["model"]), ascii_safe(args.transcript)))
+    except SystemExit:
+        raise
+    except Exception as e:  # noqa: BLE001 — last line of defence: never a traceback
+        print("error: capture failed unexpectedly (%s); nothing was changed unless the messages above say otherwise" % ascii_safe(repr(e)),
+              file=sys.stderr)
+        sys.exit(1)
+
+
 # --------------------------------------------------------------------- grade
 
 def find_batch(rdir):
@@ -1187,10 +1497,11 @@ def grade_run_dir(rdir, keys=None, write=True):
             "model": run_json.get("model"), "prompt_hash": meta["prompt_hashes"].get(spec["mode"]),
             "key_hash": key_hash(spec["key"]), "key_hash_at_plan": meta["key_hashes"].get(spec["key"]["id"]),
             "started_at": run_json.get("started_at"),
-            "wall_seconds": run_json.get("wall_seconds"), "tokens": run_json.get("tokens")}
+            "wall_seconds": run_json.get("wall_seconds"), "tokens": run_json.get("tokens"),
+            "not_produced": run_json.get("not_produced")}
     report = rdir / "report.md"
     if not report.exists():
-        g = not_produced_grade(prov, spec["mode"])
+        g = not_produced_grade(prov, spec["mode"], run_json.get("not_produced"))
     else:
         fx = Fixture(ROOT / spec["key"]["fixture"])
         input_lines = read_text(ROOT / entry["input"]).split("\n")
@@ -1220,7 +1531,7 @@ def cmd_grade(args):
     input_lines = read_text(args.input).split("\n") if args.input else build_input_lines(fx, spec)
     prov = {"batch": None, "tier": None, "arm": None, "slice": args.slice, "run": None, "skill_sha": None,
             "dirty": None, "skill_ref": None, "model": None, "prompt_hash": None, "key_hash": key_hash(key),
-            "started_at": None, "wall_seconds": None, "tokens": None}
+            "started_at": None, "wall_seconds": None, "tokens": None, "not_produced": None}
     g = grade_report(read_text(args.report), key, spec, input_lines, fx, prov)
     if args.out:
         dump_json(args.out, g)
@@ -1285,8 +1596,14 @@ def cmd_aggregate(args):
             secs = [g["provenance"].get("wall_seconds") for g in grades]
             slice_models = {g["provenance"].get("model") for g in grades}
             models |= slice_models
+            not_produced = {}
+            for g in grades:
+                if not g["produced"]:
+                    r = g.get("not_produced") or "unknown"
+                    not_produced[r] = not_produced.get(r, 0) + 1
             arm_out["slices"][slice_id] = {
                 "runs": len(runs), "produced": sum(1 for g in grades if g["produced"]),
+                "not_produced": not_produced,
                 "pass": sum(1 for g in grades if g["pass"]), "structure_pass": sum(1 for g in grades if g["structure"]["pass"]),
                 "rows": rows, "extras": extras,
                 "violations": {"non_defect": sum(g["violations"]["non_defect"] for g in grades),
@@ -1329,6 +1646,9 @@ def render_scorecard(sc):
                 out.append("**%s extras/duplicates:** " % sid + " · ".join(
                     "%s ×%d [%s%s%s]" % (e["key"], e["runs"], e["kind"], ("; " + ", ".join(e["flags"])) if e["flags"] else "",
                                          "; excluded:" + str(e["triage"]) if e["excluded"] else "") for e in s["extras"]))
+            if s.get("not_produced"):
+                out.append("**%s not produced:** " % sid + " · ".join(
+                    "%s ×%d" % (r, n) for r, n in sorted(s["not_produced"].items())))
             if s["structure_failures"]:
                 out.append("**%s structure failures:** " % sid + " · ".join(s["structure_failures"]))
             caveats = [(rid, r["caveat"]) for rid, r in s["rows"].items() if r["caveat"]]
@@ -1352,6 +1672,7 @@ def cmd_compare(args):
     arms = sc["arms"]
     warnings = []
     paired, baseline_batch = True, None
+    base_hashes = cand_hashes = sc.get("prompt_hashes") or {}
     if args.baseline_batch:
         obdir = Path(args.baseline_batch).resolve()
         if not (obdir / "scorecard.json").exists():
@@ -1364,6 +1685,7 @@ def cmd_compare(args):
         if "candidate" not in arms:
             raise Fail("compare --baseline-batch needs a candidate arm in %s" % sc["batch"])
         cand = arms["candidate"]
+        base_hashes = other.get("prompt_hashes") or {}
         paired, baseline_batch = False, {"batch": other["batch"], "created": other["created"]}
         warnings.append("unpaired: baseline arm taken from batch %s (created %s), candidate from %s (created %s)" % (
             other["batch"], other["created"], sc["batch"], sc["created"]))
@@ -1376,6 +1698,11 @@ def cmd_compare(args):
         sys.exit(2)
     if not base["models"] or not cand["models"]:
         warnings.append("model unknown for at least one arm; comparison proceeds unverified")
+    # The prompt template is transport, not skill content: a mismatch is warned about, never refused (design D7).
+    differing = sorted(m for m in set(base_hashes) | set(cand_hashes) if base_hashes.get(m) != cand_hashes.get(m))
+    if differing:
+        warnings.append("prompt-template hash differs between arms for mode(s) %s; the arms ran on different "
+                        "prompts, so transport effects may be mixed into the verdict" % ", ".join(differing))
     regressions, improvements = [], []
     for sid in sorted(set(base["slices"]) & set(cand["slices"])):
         b, c = base["slices"][sid], cand["slices"][sid]
@@ -1403,8 +1730,8 @@ def cmd_compare(args):
             regressions.append({"rule": "fabricated", "slice": sid, "candidate": c["quotes"]["fabricated"]})
     comparison = {"harness_version": HARNESS_VERSION, "batch": sc["batch"], "created": now_iso(), "paired": paired,
                   "baseline_batch": baseline_batch,
-                  "baseline": {"skill_sha": base["skill_sha"], "models": base["models"]},
-                  "candidate": {"skill_sha": cand["skill_sha"], "models": cand["models"]},
+                  "baseline": {"skill_sha": base["skill_sha"], "models": base["models"], "prompt_hashes": base_hashes},
+                  "candidate": {"skill_sha": cand["skill_sha"], "models": cand["models"], "prompt_hashes": cand_hashes},
                   "regressions": regressions, "improvements": improvements, "warnings": warnings,
                   "verdict": "REGRESSION" if regressions else "OK"}
     dump_json(bdir / "comparison.json", comparison)
@@ -1503,6 +1830,100 @@ def expect_ok(actual, expected):
     return actual == expected
 
 
+def selftest_capture(name, cdir, case):
+    """Run capture on a synthetic transcript into a temporary run directory and check the outcome.
+    case: {type: capture, transcript, args: {model, tokens, seconds, agent_error}, expected: {produced,
+    not_produced, model, tokens, report: <file whose bytes report.md must equal>}}. A case with
+    `preexisting_dirs` and `expected: {error: true, removed, kept, stderr_contains}` exercises a write failure
+    (design D6): capture must exit 1, leave no staged file, and describe the directory's state truthfully."""
+    import tempfile
+    fails = []
+    tmp = Path(tempfile.mkdtemp(prefix="okr-capture-"))
+    try:
+        a = case.get("args") or {}
+        for fn in case.get("preexisting", []):
+            (tmp / fn).write_text("stale\n", encoding="utf-8")
+        for fn in case.get("preexisting_dirs", []):
+            (tmp / fn).mkdir()
+        if case.get("preexisting_run_json") is not None:
+            (tmp / "run.json").write_text(case["preexisting_run_json"], encoding="utf-8")
+        transcript = cdir / case["transcript"]
+        if case.get("chmod0"):
+            import os
+            transcript = tmp / "unreadable.jsonl"
+            transcript.write_text("{}\n", encoding="utf-8")
+            os.chmod(transcript, 0)
+            if os.access(transcript, os.R_OK):
+                return []      # running as a user chmod cannot restrict (root): nothing to test here
+        ns = argparse.Namespace(run_dir=str(tmp), transcript=str(transcript), model=a.get("model"),
+                                tokens=a.get("tokens"), seconds=a.get("seconds"), agent_error=a.get("agent_error"))
+        import io
+        import contextlib
+        exit_code, err = 0, io.StringIO()
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(err):
+            try:
+                cmd_capture(ns)
+            except SystemExit as e:
+                exit_code = e.code
+            except Exception as e:  # noqa: BLE001
+                return ["%s: capture raised %r instead of recording a reason" % (name, e)]
+        if case["expected"].get("error"):
+            exp = case["expected"]
+            if exit_code != 1:
+                fails.append("%s: a write failure must exit 1, got %s" % (name, exit_code))
+            for t in ("run.json.tmp", "report.md.tmp"):
+                if (tmp / t).exists():
+                    fails.append("%s: staged file %s left behind" % (name, t))
+            for fn in exp.get("removed", []):
+                if (tmp / fn).exists():
+                    fails.append("%s: %s should have been removed before the failure" % (name, fn))
+            for fn in exp.get("kept", []):
+                if not (tmp / fn).exists():
+                    fails.append("%s: %s should have survived the failure" % (name, fn))
+            if exp.get("stderr_contains") and exp["stderr_contains"] not in err.getvalue():
+                fails.append("%s: stderr %r lacks %r" % (name, err.getvalue().strip(), exp["stderr_contains"]))
+            return fails
+        if not (tmp / "run.json").exists():
+            return ["%s: capture wrote no run.json (exit %s)" % (name, exit_code)]
+        try:
+            rec = load_json(tmp / "run.json")
+        except ValueError as e:
+            return ["%s: run.json is not valid JSON (%s)" % (name, e)]
+        if set(rec) != set(RUN_JSON_KEYS):
+            fails.append("%s: run.json keys %s != expected %s" % (name, sorted(set(rec) ^ set(RUN_JSON_KEYS)), "RUN_JSON_KEYS"))
+        for t in ("run.json.tmp", "report.md.tmp"):
+            if (tmp / t).exists():
+                fails.append("%s: staged file %s left behind" % (name, t))
+        exp = case["expected"]
+        produced = (tmp / "report.md").exists()
+        for fn in case.get("preexisting", []):
+            if fn == "report.md" and produced and (tmp / fn).read_text(encoding="utf-8") != "stale\n":
+                continue
+            if (tmp / fn).exists():
+                fails.append("%s: pre-existing %s survived capture" % (name, fn))
+        if produced != exp.get("produced", True):
+            fails.append("%s: produced expected %s, got %s" % (name, exp.get("produced", True), produced))
+        if (exit_code != 0) != (not exp.get("produced", True)):
+            fails.append("%s: exit code %s does not match produced=%s" % (name, exit_code, produced))
+        for field in ("not_produced", "model", "tokens", "wall_seconds", "models_seen", "transcript_usage",
+                      "stale_report_removed", "stale_grade_removed", "previous_run_json_replaced"):
+            if field in exp and rec.get(field) != exp[field]:
+                fails.append("%s: run.json %s expected %s, got %s" % (name, field, json.dumps(exp[field]), json.dumps(rec.get(field))))
+        for field, old in (exp.get("not_equal") or {}).items():
+            if rec.get(field) == old:
+                fails.append("%s: run.json %s still carries the old value %s" % (name, field, json.dumps(old)))
+        if "detail_contains" in exp and exp["detail_contains"] not in str(rec.get("not_produced_detail")):
+            fails.append("%s: not_produced_detail %r lacks %r" % (name, rec.get("not_produced_detail"), exp["detail_contains"]))
+        if exp.get("report"):
+            want = (cdir / exp["report"]).read_bytes()
+            got = (tmp / "report.md").read_bytes() if produced else b""
+            if want != got:
+                fails.append("%s: report.md differs from %s (%d vs %d bytes)" % (name, exp["report"], len(got), len(want)))
+    finally:
+        shutil.rmtree(tmp, ignore_errors=True)
+    return fails
+
+
 def cmd_selftest(args):
     catalog = load_catalog()
     cases = sorted((SELFTEST_DIR / "cases").glob("*/case.json"))
@@ -1529,6 +1950,9 @@ def cmd_selftest(args):
             for sub in case.get("expect_mentions", []):
                 if sub not in text:
                     failures.append("%s: check output lacks %r" % (name, sub))
+            continue
+        if case.get("type") == "capture":
+            failures += selftest_capture(name, cdir, case)
             continue
         kp = next(p for p in (cdir / case["key"], SELFTEST_DIR / "keys" / case["key"], KEYS_DIR / case["key"]) if p.exists())
         key = load_json(kp)
@@ -1595,6 +2019,15 @@ def main(argv=None):
     p.add_argument("--seconds", type=float)
     p.add_argument("--started")
     p.set_defaults(fn=cmd_record)
+
+    p = sub.add_parser("capture", help="write a run's report.md byte-exact from its subagent transcript, plus run.json")
+    p.add_argument("run_dir")
+    p.add_argument("--transcript", required=True, help="the Agent launch result's output_file (JSONL)")
+    p.add_argument("--tokens", type=int, help="from the Agent usage line; default: the transcript's summed usage")
+    p.add_argument("--seconds", type=float, help="from the Agent usage line; default: first-to-last transcript timestamp")
+    p.add_argument("--model", help="cross-check only: the model is taken from the transcript, a disagreement fails")
+    p.add_argument("--agent-error", help="record the run as not produced (agent-error) with this text")
+    p.set_defaults(fn=cmd_capture)
 
     p = sub.add_parser("grade", help="grade run directories, or an explicit report")
     p.add_argument("run_dir", nargs="*")

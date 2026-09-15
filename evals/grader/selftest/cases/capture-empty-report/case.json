@@ -1,0 +1,9 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": false,
+    "not_produced": "empty-report"
+  }
+}
