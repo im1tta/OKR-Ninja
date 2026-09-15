@@ -1,0 +1,7 @@
+{
+  "model": "claude-opus-5[1m]",
+  "tokens": 144360,
+  "wall_seconds": 702.883,
+  "started_at": "2026-09-15T15:14:17Z",
+  "recorded_at": "2026-09-15T15:14:17Z"
+}

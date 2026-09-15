@@ -1,0 +1,56 @@
+{
+  "type": "lifecycle",
+  "scenario": "fixture-exempt",
+  "note": "The exemption broken: a fixture run published through the seam and wrote a registry. If this ever passes, the hermetic guarantee for fixture runs has been lost.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Brightledger — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 4 teams reviewed.\n",
+      "2026-09-14-platform-report.md": "# Platform — Q3 2026 OKR report (portfolio slice)\n\nRoll-up D (1.9).\n"
+    },
+    "ops": [
+      {
+        "op": "publish",
+        "key": "portfolio-dashboard",
+        "title": "Brightledger OKR Portfolio Review",
+        "favicon": "🧭",
+        "file": "2026-09-14-portfolio-review.md"
+      },
+      {
+        "op": "publish",
+        "key": "team-report/platform",
+        "title": "Platform Team OKR Report",
+        "favicon": "📒",
+        "file": "2026-09-14-platform-report.md"
+      }
+    ],
+    "registry": {
+      "portfolio-dashboard": {
+        "url": "{{created:portfolio-dashboard}}",
+        "title": "Brightledger OKR Portfolio Review",
+        "favicon": "🧭",
+        "last_published": "2026-09-14T09:12:00Z",
+        "cycle_date": "2026-09-14"
+      },
+      "team-report/platform": {
+        "url": "{{created:team-report/platform}}",
+        "title": "Platform Team OKR Report",
+        "favicon": "📒",
+        "last_published": "2026-09-14T09:14:00Z",
+        "cycle_date": "2026-09-14"
+      }
+    },
+    "summary": "## Run summary\n\nPublished both deliverables and registered them.\n"
+  },
+  "expected": {
+    "pass": false,
+    "failed_checks": {
+      "contains": [
+        "no_registry_written",
+        "nothing_published",
+        "not_published",
+        "not_registered"
+      ]
+    },
+    "ledger.created": 2
+  }
+}

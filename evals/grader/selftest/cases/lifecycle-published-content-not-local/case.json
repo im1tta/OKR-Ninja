@@ -1,0 +1,61 @@
+{
+  "type": "lifecycle",
+  "scenario": "update",
+  "note": "The published file was rewritten after publishing, so the living artifact no longer matches any local cycle output.",
+  "run": {
+    "work_files": {
+      "2026-09-14-portfolio-review.md": "# Tidewell — Q3 2026 OKR portfolio review\n\n**Verdict: At risk.** 2 teams reviewed.\n",
+      "2026-09-14-ledger-report.md": "# Ledger — Q3 2026 OKR report (portfolio slice)\n\nRoll-up C (2.4).\n"
+    },
+    "ops": [
+      {
+        "op": "read",
+        "url": "{{seeded:portfolio-dashboard}}"
+      },
+      {
+        "op": "update",
+        "key": "portfolio-dashboard",
+        "url": "{{seeded:portfolio-dashboard}}",
+        "file": "2026-09-14-portfolio-review.md"
+      },
+      {
+        "op": "read",
+        "url": "{{seeded:team-report/ledger}}"
+      },
+      {
+        "op": "update",
+        "key": "team-report/ledger",
+        "url": "{{seeded:team-report/ledger}}",
+        "file": "2026-09-14-ledger-report.md"
+      }
+    ],
+    "post_tamper": {
+      "2026-09-14-portfolio-review.md": "# Tidewell — Q3 2026 OKR portfolio review (edited after publishing)\n"
+    },
+    "registry": {
+      "portfolio-dashboard": {
+        "url": "{{seeded:portfolio-dashboard}}",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "last_published": "2026-09-14T09:12:00Z",
+        "cycle_date": "2026-09-14"
+      },
+      "team-report/ledger": {
+        "url": "{{seeded:team-report/ledger}}",
+        "title": "Ledger Team OKR Report",
+        "favicon": "📒",
+        "last_published": "2026-09-14T09:14:00Z",
+        "cycle_date": "2026-09-14"
+      }
+    },
+    "summary": "## Run summary\n\nUpdated both registered artifacts in place at their registered URLs; no new artifact was created.\n"
+  },
+  "expected": {
+    "pass": false,
+    "failed_checks": {
+      "contains": [
+        "published_content_local"
+      ]
+    }
+  }
+}

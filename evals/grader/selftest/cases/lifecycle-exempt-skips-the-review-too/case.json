@@ -1,0 +1,25 @@
+{
+  "type": "lifecycle",
+  "scenario": "fixture-exempt",
+  "note": "Being exempt from publishing is not licence to skip the review: this run wrote a token dated file and produced neither declared deliverable.",
+  "run": {
+    "work_files": {
+      "2026-09-14-notes.md": "Fixture corpus — nothing to do.\n"
+    },
+    "ops": [],
+    "summary": "## Run summary\n\nThe corpus is one of the skill's own fixtures, so the publish step was skipped and nothing was published.\n"
+  },
+  "expected": {
+    "pass": false,
+    "failed_checks": {
+      "contains": [
+        "deliverable_file_written"
+      ]
+    },
+    "failures": {
+      "contains": [
+        "no 2026-09-14-portfolio-review.md in the working folder"
+      ]
+    }
+  }
+}

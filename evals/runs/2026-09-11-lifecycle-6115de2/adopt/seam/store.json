@@ -1,0 +1,81 @@
+{
+  "artifacts": {
+    "https://artifacts.test/a/51aa9c6e": {
+      "url": "https://artifacts.test/a/51aa9c6e",
+      "title": "Tidewell OKR Portfolio Review",
+      "favicon": "🧭",
+      "created_at": "2026-06-15T10:00:00Z",
+      "updated_at": "2026-06-15T10:00:00Z",
+      "versions": 1,
+      "content_sha": null,
+      "bytes": 0,
+      "seeded": true
+    },
+    "https://artifacts.test/a/9f3b77c4": {
+      "url": "https://artifacts.test/a/9f3b77c4",
+      "title": "Tidewell OKR Dashboard (shared with leads)",
+      "favicon": "🧭",
+      "created_at": "2026-06-15T10:00:00Z",
+      "updated_at": "2026-09-15T08:47:37Z",
+      "versions": 2,
+      "content_sha": "2c99cd7bdb3250e68f74fc77f0c09d2a632a332fc63a5b3dbf54447aef4eaf71",
+      "bytes": 22173,
+      "seeded": true
+    },
+    "https://artifacts.test/a/b4e2d118": {
+      "url": "https://artifacts.test/a/b4e2d118",
+      "title": "Ledger Team OKR Report",
+      "favicon": "📒",
+      "created_at": "2026-06-15T10:00:00Z",
+      "updated_at": "2026-09-15T08:47:37Z",
+      "versions": 2,
+      "content_sha": "cc3ad30ea9fee65be4b78dffda34da0f75fb060047d6aed5b396613e3e616cfe",
+      "bytes": 16878,
+      "seeded": true
+    }
+  },
+  "ledger": [
+    {
+      "n": 1,
+      "at": "2026-09-15T08:47:28Z",
+      "op": "read",
+      "url": "https://artifacts.test/a/9f3b77c4",
+      "result": "alive"
+    },
+    {
+      "n": 2,
+      "at": "2026-09-15T08:47:28Z",
+      "op": "read",
+      "url": "https://artifacts.test/a/b4e2d118",
+      "result": "alive"
+    },
+    {
+      "n": 3,
+      "at": "2026-09-15T08:47:28Z",
+      "op": "read",
+      "url": "https://artifacts.test/a/51aa9c6e",
+      "result": "alive"
+    },
+    {
+      "n": 4,
+      "at": "2026-09-15T08:47:37Z",
+      "op": "update",
+      "key": "portfolio-dashboard",
+      "url": "https://artifacts.test/a/9f3b77c4",
+      "title": "Tidewell OKR Dashboard (shared with leads)",
+      "favicon": "🧭",
+      "content_sha": "2c99cd7bdb3250e68f74fc77f0c09d2a632a332fc63a5b3dbf54447aef4eaf71"
+    },
+    {
+      "n": 5,
+      "at": "2026-09-15T08:47:37Z",
+      "op": "update",
+      "key": "team-report/ledger",
+      "url": "https://artifacts.test/a/b4e2d118",
+      "title": "Ledger Team OKR Report",
+      "favicon": "📒",
+      "content_sha": "cc3ad30ea9fee65be4b78dffda34da0f75fb060047d6aed5b396613e3e616cfe"
+    }
+  ],
+  "seq": 5
+}

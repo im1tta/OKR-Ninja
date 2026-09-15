@@ -1,0 +1,315 @@
+{
+  "harness_version": 2,
+  "graded_at": "2026-09-15T15:14:17Z",
+  "scenario": "recreate",
+  "scenario_title": "Dead registered URL — re-create one deliverable, update the other",
+  "produced": true,
+  "provenance": {
+    "batch": "2026-09-11-lifecycle-6115de2",
+    "tier": "lifecycle",
+    "scenario": "recreate",
+    "skill_sha": "6115de20609227d6f4c9c8629bd6669de01ce504",
+    "dirty": true,
+    "skill_ref": "worktree",
+    "model": "claude-opus-5[1m]",
+    "prompt_hash": "09756ff7d63c226b1c3026eb789779d765e277154772ad2ae4df4f67bf4da7af",
+    "scenarios_hash": "a722aeaf3fe537cfb2bef933b3fb75d83d37622e9b308b38fa110823ef8684c7",
+    "scenarios_hash_now": "751a2cbdd5a59332dc507f3fd707bb4f21ac24e038ffcd0195ced04a106b5b49",
+    "corpus_hash": "33d0290cbe4a2aa544084093908bc49a1be33ddfde9cd3ad7d1e6ee1e1e315f0",
+    "started_at": "2026-09-11T15:54:56Z",
+    "wall_seconds": 970.492,
+    "tokens": 146693,
+    "prompt_hash_now": "d7505e1a216b0ad91b8ded8826e316a36b54fb9393c5380a84ea6a40f14a5af2",
+    "corpus_hash_now": "33d0290cbe4a2aa544084093908bc49a1be33ddfde9cd3ad7d1e6ee1e1e315f0",
+    "prompt_rendered_hash": "01212b856ede491269180b649a9b39e4a2733c7dfe9405c4bcefb05a4164bbbb",
+    "prompt_rendered_hash_now": "01212b856ede491269180b649a9b39e4a2733c7dfe9405c4bcefb05a4164bbbb",
+    "decl_hash": "0829f3256f21b66347272293eebd7b5f655a3248010aa98705dc3c97fc660974",
+    "decl_hash_now": "0829f3256f21b66347272293eebd7b5f655a3248010aa98705dc3c97fc660974"
+  },
+  "keys": {
+    "portfolio-dashboard": {
+      "outcome": "recreate",
+      "checks": [
+        {
+          "check": "registry_entry_written",
+          "pass": true,
+          "detail": "no registry entry for this key"
+        },
+        {
+          "check": "registry_fields_present",
+          "pass": true,
+          "detail": "entry missing "
+        },
+        {
+          "check": "last_published_valid",
+          "pass": true,
+          "detail": "last_published '2026-09-14T09:12:00Z' is not an ISO-8601 UTC instant"
+        },
+        {
+          "check": "cycle_date_current",
+          "pass": true,
+          "detail": "cycle_date is '2026-09-14', expected '2026-09-14'"
+        },
+        {
+          "check": "registered_url_verified",
+          "pass": true,
+          "detail": "acted on portfolio-dashboard without verifying https://artifacts.test/a/0dead0dd through the seam first"
+        },
+        {
+          "check": "recreated_once",
+          "pass": true,
+          "detail": "expected exactly 1 replacement create, found 1"
+        },
+        {
+          "check": "no_successful_update",
+          "pass": true,
+          "detail": "updated [] although the registered URL was dead"
+        },
+        {
+          "check": "registry_overwritten",
+          "pass": true,
+          "detail": "registry url 'https://artifacts.test/a/fbac94f1', replacement published at 'https://artifacts.test/a/fbac94f1', dead URL was 'https://artifacts.test/a/0dead0dd'"
+        },
+        {
+          "check": "registry_matches_artifact",
+          "pass": true,
+          "detail": "registry title/favicon 'Tidewell OKR Portfolio Review'/'🧭' differ from the published 'Tidewell OKR Portfolio Review'/'🧭'"
+        },
+        {
+          "check": "timestamp_advanced",
+          "pass": true,
+          "detail": "last_published '2026-09-14T09:12:00Z' does not advance on the replaced entry's '2026-06-15T10:04:00Z'"
+        },
+        {
+          "check": "registry_points_at_live_artifact",
+          "pass": true,
+          "detail": "registry names 'https://artifacts.test/a/fbac94f1', which the seam does not hold"
+        },
+        {
+          "check": "registry_matches_live_artifact",
+          "pass": true,
+          "detail": "registry says 'Tidewell OKR Portfolio Review'/'🧭' but the artifact now carries 'Tidewell OKR Portfolio Review'/'🧭'"
+        },
+        {
+          "check": "deliverable_file_written",
+          "pass": true,
+          "detail": "no 2026-09-14-portfolio-review.md in the working folder"
+        },
+        {
+          "check": "published_own_deliverable",
+          "pass": true,
+          "detail": "published content that is not 2026-09-14-portfolio-review.md ()"
+        }
+      ],
+      "ops": {
+        "creates": [
+          "https://artifacts.test/a/fbac94f1"
+        ],
+        "updates": [],
+        "failed_updates": 0,
+        "reads": 2
+      }
+    },
+    "team-report/ledger": {
+      "outcome": "update_in_place",
+      "checks": [
+        {
+          "check": "registry_entry_written",
+          "pass": true,
+          "detail": "no registry entry for this key"
+        },
+        {
+          "check": "registry_fields_present",
+          "pass": true,
+          "detail": "entry missing "
+        },
+        {
+          "check": "last_published_valid",
+          "pass": true,
+          "detail": "last_published '2026-09-14T09:15:00Z' is not an ISO-8601 UTC instant"
+        },
+        {
+          "check": "cycle_date_current",
+          "pass": true,
+          "detail": "cycle_date is '2026-09-14', expected '2026-09-14'"
+        },
+        {
+          "check": "registered_url_verified",
+          "pass": true,
+          "detail": "acted on team-report/ledger without verifying https://artifacts.test/a/b4e2d118 through the seam first"
+        },
+        {
+          "check": "no_fork",
+          "pass": true,
+          "detail": "created 0 artifact(s) for a key that had a registry entry: "
+        },
+        {
+          "check": "updated_in_place",
+          "pass": true,
+          "detail": "no update recorded for this key"
+        },
+        {
+          "check": "updates_target_registered_url",
+          "pass": true,
+          "detail": "update(s) at ['https://artifacts.test/a/b4e2d118'], registered URL is https://artifacts.test/a/b4e2d118"
+        },
+        {
+          "check": "registry_url_unchanged",
+          "pass": true,
+          "detail": "registry url changed from https://artifacts.test/a/b4e2d118 to 'https://artifacts.test/a/b4e2d118'"
+        },
+        {
+          "check": "title_favicon_unchanged",
+          "pass": true,
+          "detail": "title/favicon changed from 'Ledger Team OKR Report'/'📒' to 'Ledger Team OKR Report'/'📒'"
+        },
+        {
+          "check": "timestamp_advanced",
+          "pass": true,
+          "detail": "last_published '2026-09-14T09:15:00Z' does not advance on '2026-06-15T10:06:00Z'"
+        },
+        {
+          "check": "registry_points_at_live_artifact",
+          "pass": true,
+          "detail": "registry names 'https://artifacts.test/a/b4e2d118', which the seam does not hold"
+        },
+        {
+          "check": "registry_matches_live_artifact",
+          "pass": true,
+          "detail": "registry says 'Ledger Team OKR Report'/'📒' but the artifact now carries 'Ledger Team OKR Report'/'📒'"
+        },
+        {
+          "check": "deliverable_file_written",
+          "pass": true,
+          "detail": "no 2026-09-14-ledger-report.md in the working folder"
+        },
+        {
+          "check": "published_own_deliverable",
+          "pass": true,
+          "detail": "published content that is not 2026-09-14-ledger-report.md ()"
+        }
+      ],
+      "ops": {
+        "creates": [],
+        "updates": [
+          "https://artifacts.test/a/b4e2d118"
+        ],
+        "failed_updates": 0,
+        "reads": 2
+      }
+    }
+  },
+  "global": [
+    {
+      "check": "summary_written",
+      "pass": true,
+      "detail": "summary.md is empty"
+    },
+    {
+      "check": "seam_store_present",
+      "pass": true,
+      "detail": "the seam store this run was seeded with is gone — nothing can be graded from its ledger"
+    },
+    {
+      "check": "registry_at_working_folder",
+      "pass": true,
+      "detail": "extra registry file(s): "
+    },
+    {
+      "check": "no_unexpected_registry_keys",
+      "pass": true,
+      "detail": "registry holds key(s) no deliverable declares: "
+    },
+    {
+      "check": "no_stray_creates",
+      "pass": true,
+      "detail": "artifact(s) created under no declared deliverable key: "
+    },
+    {
+      "check": "no_stray_artifacts",
+      "pass": true,
+      "detail": "seam holds 2 artifact(s); 1 seeded plus 1 created is 2"
+    },
+    {
+      "check": "create_over_entry_reported",
+      "pass": true,
+      "detail": "a create happened while a registry entry existed (portfolio-dashboard@https://artifacts.test/a/fbac94f1); the run summary gives no reason for it"
+    },
+    {
+      "check": "create_over_entry_names_deliverable",
+      "pass": true,
+      "detail": "the run summary never names the re-created deliverable(s): "
+    },
+    {
+      "check": "published_content_local",
+      "pass": true,
+      "detail": "published content is not a file in the working folder: "
+    },
+    {
+      "check": "dated_output_written",
+      "pass": true,
+      "detail": "no file named for this cycle (2026-09-14*) in the working folder"
+    },
+    {
+      "check": "prior_outputs_unmodified",
+      "pass": true,
+      "detail": "a prior cycle's local output was changed: "
+    }
+  ],
+  "ledger": {
+    "ops": [
+      {
+        "n": 1,
+        "op": "read",
+        "key": null,
+        "url": "https://artifacts.test/a/0dead0dd",
+        "title": null,
+        "favicon": null,
+        "content_sha": null,
+        "result": "dead",
+        "reason": null
+      },
+      {
+        "n": 2,
+        "op": "read",
+        "key": null,
+        "url": "https://artifacts.test/a/b4e2d118",
+        "title": null,
+        "favicon": null,
+        "content_sha": null,
+        "result": "alive",
+        "reason": null
+      },
+      {
+        "n": 3,
+        "op": "publish",
+        "key": "portfolio-dashboard",
+        "url": "https://artifacts.test/a/fbac94f1",
+        "title": "Tidewell OKR Portfolio Review",
+        "favicon": "🧭",
+        "content_sha": "387207a4616737cd1a5fd8aed3cf07a9a54cff8716efbc3ab29bee9e8dad13ad",
+        "result": null,
+        "reason": null
+      },
+      {
+        "n": 4,
+        "op": "update",
+        "key": "team-report/ledger",
+        "url": "https://artifacts.test/a/b4e2d118",
+        "title": "Ledger Team OKR Report",
+        "favicon": "📒",
+        "content_sha": "da414aec0c4f331fd7f7c111d2003f4464eecdc64df3ad30a27c5c876c2457c6",
+        "result": null,
+        "reason": null
+      }
+    ],
+    "artifacts_total": 2,
+    "seeded": 1,
+    "created": 1,
+    "updated": 1
+  },
+  "failures": [],
+  "warnings": [],
+  "failed_checks": [],
+  "pass": true
+}
