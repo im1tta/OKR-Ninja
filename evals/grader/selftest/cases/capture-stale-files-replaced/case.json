@@ -1,0 +1,16 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": true,
+    "not_produced": null,
+    "stale_report_removed": true,
+    "stale_grade_removed": true,
+    "report": "expected.md"
+  },
+  "preexisting": [
+    "report.md",
+    "grade.json"
+  ]
+}

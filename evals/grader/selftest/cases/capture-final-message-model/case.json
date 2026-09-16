@@ -1,0 +1,17 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {
+    "model": "claude-A"
+  },
+  "expected": {
+    "produced": true,
+    "not_produced": null,
+    "model": "claude-A",
+    "models_seen": [
+      "claude-A",
+      "claude-B"
+    ],
+    "report": "expected.md"
+  }
+}

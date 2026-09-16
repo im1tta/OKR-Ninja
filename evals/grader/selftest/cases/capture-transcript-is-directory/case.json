@@ -1,0 +1,15 @@
+{
+  "type": "capture",
+  "transcript": ".",
+  "args": {},
+  "expected": {
+    "produced": false,
+    "not_produced": "transcript-unreadable",
+    "detail_contains": "not a regular file",
+    "stale_report_removed": true
+  },
+  "preexisting": [
+    "report.md",
+    "grade.json"
+  ]
+}

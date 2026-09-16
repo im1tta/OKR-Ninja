@@ -1,0 +1,12 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": true,
+    "not_produced": null,
+    "previous_run_json_replaced": true,
+    "report": "expected.md"
+  },
+  "preexisting_run_json": "{\"legacy_extra\": 1, \"model\": \"old\", \"tokens\": 5, \"not_produced\": \"markers-missing\"}"
+}

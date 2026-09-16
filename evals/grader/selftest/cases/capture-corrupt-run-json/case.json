@@ -1,0 +1,12 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": true,
+    "not_produced": null,
+    "model": "claude-sonnet-5",
+    "report": "expected.md"
+  },
+  "preexisting_run_json": "[1, 2]"
+}

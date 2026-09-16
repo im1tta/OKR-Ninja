@@ -1,0 +1,11 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "expected": {
+    "produced": false,
+    "not_produced": "transcript-unreadable",
+    "model": null,
+    "detail_contains": "does not exist"
+  }
+}

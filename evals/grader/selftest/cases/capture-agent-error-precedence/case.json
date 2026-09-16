@@ -1,0 +1,12 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {
+    "agent_error": "Agent tool returned an error"
+  },
+  "expected": {
+    "produced": false,
+    "not_produced": "agent-error",
+    "detail_contains": "Agent tool returned an error (also: transcript does not exist"
+  }
+}

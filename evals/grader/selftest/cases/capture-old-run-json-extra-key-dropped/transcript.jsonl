@@ -1,0 +1,2 @@
+{"type": "user", "timestamp": "2026-09-15T08:00:00.000Z", "message": {"role": "user", "content": "p"}}
+{"type": "assistant", "timestamp": "2026-09-15T08:00:01.000Z", "message": {"id": "m1", "role": "assistant", "model": "claude-sonnet-5", "content": [{"type": "text", "text": "=====BEGIN OKR-NINJA REPORT=====\n# Report\n\n## 3. Per-team goodness findings\n\n### [Major] AP-04 KR Without Baseline \u2014 Growth\n- Evidence: \"x\" (input.md \u203a Objective G1 \u203a line 39)\n=====END OKR-NINJA REPORT====="}], "usage": {"input_tokens": 2, "output_tokens": 10}}}

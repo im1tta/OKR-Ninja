@@ -1,0 +1,23 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {},
+  "preexisting": [
+    "report.md",
+    "grade.json"
+  ],
+  "preexisting_dirs": [
+    "run.json"
+  ],
+  "expected": {
+    "error": true,
+    "removed": [
+      "report.md",
+      "grade.json"
+    ],
+    "kept": [
+      "run.json"
+    ],
+    "stderr_contains": "stale report.md and grade.json removed; run.json not replaced; re-run capture"
+  }
+}

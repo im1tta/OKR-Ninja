@@ -1,0 +1,21 @@
+{
+  "type": "capture",
+  "transcript": "transcript.jsonl",
+  "args": {
+    "agent_error": "boom \ud800",
+    "tokens": 100,
+    "seconds": 10.0
+  },
+  "expected": {
+    "produced": false,
+    "not_produced": "agent-error",
+    "model": null,
+    "tokens": 100,
+    "stale_report_removed": true,
+    "detail_contains": "boom \\ud800 (also: run record could not be serialized: UnicodeEncodeError"
+  },
+  "preexisting": [
+    "report.md",
+    "grade.json"
+  ]
+}
