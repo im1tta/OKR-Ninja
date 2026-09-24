@@ -7,7 +7,8 @@ context: |
   alignment issues, in two modes selected by team count: portfolio mode
   (2+ teams) and single-team mode (one team, full-depth goodness review).
 
-  This is a markdown-only repo — no build, no app code. The deliverable is the
+  The skill itself is markdown only — no app code. `install.py` (stdlib
+  Python) installs it and packages it for upload. The deliverable is the
   skill itself: SKILL.md (entry point), references/ (goodness-rubric.md,
   alignment-taxonomy.md, report-format.md), and examples/ (two fixtures, each
   with planted defects and its own answer key; together they cover the full
