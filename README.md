@@ -57,6 +57,8 @@ OKR-Ninja/
 │   └── runs/                       # Committed eval batches: reports, grades, scorecards
 ├── openspec/                       # OpenSpec (OPSX) change-of-record scaffold
 ├── .claude/                        # OPSX commands (commands/opsx/*) and skills (skills/openspec-*)
+├── install.py                      # Installer, package builder (.skill, .plugin) and frontmatter check — stdlib only
+├── dist/                           # Packages written by `python3 install.py build` (git-ignored)
 ├── README.md                       # This file
 ├── CLAUDE.md                       # Instructions for agents developing this repo
 └── .gitignore
@@ -66,19 +68,44 @@ OKR-Ninja/
 
 ## Installation
 
-**Option A — copy or symlink into your personal skills directory:**
+The skill is a standard Agent Skill folder — `SKILL.md` plus `references/` and `examples/` — so one copy works everywhere below. The platforms differ only in where they look for it:
+
+| Platform | Where it looks for skills | Install route |
+|---|---|---|
+| Claude Code | `~/.claude/skills/`, a project's `.claude/skills/`, plugins, and skills uploaded to your claude.ai account | `python3 install.py` |
+| Cursor | `~/.agents/skills/`, `~/.cursor/skills/`, `~/.claude/skills/` and `~/.codex/skills/`, plus the same folders inside a project | `python3 install.py` |
+| Codex | `~/.agents/skills/` and a project's `.agents/skills/` | `python3 install.py` |
+| Cowork | Skills uploaded to your claude.ai account, and plugins — not a project folder's `.claude/skills/` | Upload `okr-ninja.skill` |
+| claude.ai | Skills uploaded to your account | Upload `okr-ninja.skill` |
+
+`install.py` needs Python 3.8 or later and nothing else, on macOS, Linux or Windows (on Windows, run `py install.py` wherever this README says `python3 install.py`).
+
+**Route 1 — install the folder (Claude Code, Cursor, Codex, and other tools that read `.agents/skills/`):**
 
 ```bash
 git clone https://github.com/your-org/OKR-Ninja.git
-ln -s "$(pwd)/OKR-Ninja" ~/.claude/skills/okr-ninja
-# or: cp -R OKR-Ninja ~/.claude/skills/okr-ninja
+cd OKR-Ninja
+python3 install.py
 ```
 
-**Option B — project-level install:** place the directory at `.claude/skills/okr-ninja` inside a repo to make it available only in that project.
+This copies the skill into `~/.claude/skills/okr-ninja/` and `~/.agents/skills/okr-ninja/`. Two options:
 
-**Option C — plugin marketplace:** if your organization distributes skills through a Claude Code plugin marketplace, add this repo as a skill entry in the plugin's manifest and install the plugin as usual.
+- `--project DIR` installs into `DIR/.claude/skills/` and `DIR/.agents/skills/` instead, so the skill is available only in that project.
+- `--only claude` or `--only agents` installs just one of the two. Cursor reads both folders, so if Cursor is the only tool you use, `--only agents` stops it listing the skill twice.
 
-Restart Claude Code (or start a new session) and confirm the skill appears in the skills listing.
+Re-run it after pulling changes: it replaces the previous copy. A symlinked install made per an older version of this README becomes a copy, and the checkout it pointed at is left alone. Start a new session and confirm the skill appears in the skills listing.
+
+**Route 2 — upload the skill (Cowork, claude.ai, and signed-in Claude Code sessions):**
+
+```bash
+python3 install.py build
+```
+
+Then upload `dist/okr-ninja.skill` under Skills in your claude.ai settings. Skills on your account also reach Cowork and signed-in Claude Code sessions. An uploaded copy does not update itself: after the skill changes, rebuild and upload it again.
+
+**Route 3 — install as a Claude plugin (optional):** the same `build` also writes `dist/okr-ninja.plugin`, a Claude plugin containing only the skill, for hosts that install Claude plugins, such as Cowork.
+
+`python3 install.py check` validates the frontmatter against the rules skill uploads enforce — for example, a description of at most 1,024 characters. `build` and `install` run the same check first and stop if it fails. Only the skill itself ships: `CLAUDE.md`, `evals/`, `openspec/` and `.claude/` never reach an installed copy or a package.
 
 ## Usage
 

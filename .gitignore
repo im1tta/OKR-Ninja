@@ -9,6 +9,9 @@
 *.tmp
 scratch/
 
+# Skill packages written by `python3 install.py build` — rebuilt on demand, never committed
+dist/
+
 # Eval harness — regenerable per-batch files (sliced inputs, skill snapshots); runner scratch dirs are covered by scratch/
 evals/runs/**/input/
 evals/runs/**/skill/

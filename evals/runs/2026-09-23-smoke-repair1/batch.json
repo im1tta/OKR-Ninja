@@ -1,0 +1,63 @@
+{
+  "harness_version": 3,
+  "batch": "2026-09-23-smoke-repair1",
+  "tier": "smoke",
+  "created": "2026-09-23T12:08:53Z",
+  "runs_per_slice": 1,
+  "slices": [
+    "fixture1-portfolio",
+    "fixture2-portfolio",
+    "fixture1-platform-single-team"
+  ],
+  "arms": {
+    "candidate": {
+      "ref": "worktree",
+      "skill_sha": "c3fa0b02c924d2cca5f73be8fe64fb1b8d0d69d1",
+      "dirty": true,
+      "snapshot": "evals/runs/2026-09-23-smoke-repair1/skill/candidate"
+    }
+  },
+  "prompt_hashes": {
+    "portfolio": "327bfc9aa986086ff9bfe6ed5ed093cfb9dc43ba142815319719f30df4603ff3",
+    "single-team": "c20b49258e7e1803085abd18e844e6e2ef44f539e9c471a600923a7173ccb508"
+  },
+  "key_hashes": {
+    "fixture2": "a7fb51fde4563d6f6d7ea3908e72a4d4bbe869e5c5e6b702f4330fa45b15f9bd",
+    "fixture1": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa"
+  },
+  "runs": [
+    {
+      "arm": "candidate",
+      "slice": "fixture1-portfolio",
+      "n": 1,
+      "dir": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture1-portfolio/run-1",
+      "prompt": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture1-portfolio/run-1/prompt.md",
+      "report": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture1-portfolio/run-1/report.md",
+      "input": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture1-portfolio/input/sample-portfolio.md",
+      "mode": "portfolio",
+      "status": "pending"
+    },
+    {
+      "arm": "candidate",
+      "slice": "fixture2-portfolio",
+      "n": 1,
+      "dir": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture2-portfolio/run-1",
+      "prompt": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture2-portfolio/run-1/prompt.md",
+      "report": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture2-portfolio/run-1/report.md",
+      "input": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture2-portfolio/input/sample-portfolio-2.md",
+      "mode": "portfolio",
+      "status": "pending"
+    },
+    {
+      "arm": "candidate",
+      "slice": "fixture1-platform-single-team",
+      "n": 1,
+      "dir": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture1-platform-single-team/run-1",
+      "prompt": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture1-platform-single-team/run-1/prompt.md",
+      "report": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture1-platform-single-team/run-1/report.md",
+      "input": "evals/runs/2026-09-23-smoke-repair1/candidate/fixture1-platform-single-team/input/sample-portfolio.md",
+      "mode": "single-team",
+      "status": "pending"
+    }
+  ]
+}

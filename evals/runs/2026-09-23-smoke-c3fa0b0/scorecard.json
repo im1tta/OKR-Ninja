@@ -1,0 +1,399 @@
+{
+  "harness_version": 3,
+  "batch": "2026-09-23-smoke-c3fa0b0",
+  "tier": "smoke",
+  "created": "2026-09-23T12:03:50Z",
+  "runs_per_slice": 1,
+  "prompt_hashes": {
+    "portfolio": "327bfc9aa986086ff9bfe6ed5ed093cfb9dc43ba142815319719f30df4603ff3",
+    "single-team": "c20b49258e7e1803085abd18e844e6e2ef44f539e9c471a600923a7173ccb508"
+  },
+  "key_hashes": {
+    "fixture2": "a7fb51fde4563d6f6d7ea3908e72a4d4bbe869e5c5e6b702f4330fa45b15f9bd",
+    "fixture1": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa"
+  },
+  "key_hashes_at_plan": {
+    "fixture2": "a7fb51fde4563d6f6d7ea3908e72a4d4bbe869e5c5e6b702f4330fa45b15f9bd",
+    "fixture1": "434fd3812ab8b0d7fbe3c0249d86784df5306b8ffffd7a4b9f45ea06ca0dc9aa"
+  },
+  "warnings": [],
+  "arms": {
+    "candidate": {
+      "skill_sha": "c3fa0b02c924d2cca5f73be8fe64fb1b8d0d69d1",
+      "dirty": true,
+      "ref": "worktree",
+      "models": [
+        "claude-opus-5-5"
+      ],
+      "slices": {
+        "fixture1-platform-single-team": {
+          "runs": 1,
+          "produced": 1,
+          "not_produced": {},
+          "pass": 1,
+          "structure_pass": 1,
+          "rows": {
+            "G4": {
+              "found": 1,
+              "id_exact": 0,
+              "accepted": [
+                "AP-02"
+              ],
+              "caveat": null
+            },
+            "G5": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-06"
+              ],
+              "caveat": "overlaps a worked example in references/report-format.md ('99.95% trailing baseline')"
+            },
+            "G7": {
+              "found": 1,
+              "id_exact": 0,
+              "accepted": [
+                "AP-04",
+                "AP-09"
+              ],
+              "caveat": null
+            }
+          },
+          "extras": [],
+          "violations": {
+            "non_defect": 0,
+            "off_key": 0
+          },
+          "budget_counted": [
+            0
+          ],
+          "quotes": {
+            "total": 7,
+            "evidence": 5,
+            "supporting": 2,
+            "verbatim": 5,
+            "near_miss": 0,
+            "out_of_scope": 0,
+            "fabricated": 0,
+            "unverified": 2,
+            "term": 0,
+            "ambiguous": 0,
+            "key_leak": 0,
+            "mentions": 1
+          },
+          "structure_failures": [],
+          "cost": {
+            "tokens_mean": 203550.0,
+            "tokens_max": 203550,
+            "seconds_mean": 1325.4,
+            "seconds_max": 1325.44
+          },
+          "models": [
+            "claude-opus-5-5"
+          ]
+        },
+        "fixture1-portfolio": {
+          "runs": 1,
+          "produced": 1,
+          "not_produced": {},
+          "pass": 1,
+          "structure_pass": 1,
+          "rows": {
+            "G1": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-01",
+                "AP-14"
+              ],
+              "caveat": "overlaps a worked example in references/report-format.md ('Ship checkout API v2 to GA')"
+            },
+            "G2": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-04"
+              ],
+              "caveat": null
+            },
+            "G3": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-03"
+              ],
+              "caveat": null
+            },
+            "G4": {
+              "found": 1,
+              "id_exact": 0,
+              "accepted": [
+                "AP-02"
+              ],
+              "caveat": null
+            },
+            "G5": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-06"
+              ],
+              "caveat": "overlaps a worked example in references/report-format.md ('99.95% trailing baseline')"
+            },
+            "G6": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-09"
+              ],
+              "caveat": null
+            },
+            "G7": {
+              "found": 1,
+              "id_exact": 0,
+              "accepted": [
+                "AP-04",
+                "AP-09"
+              ],
+              "caveat": null
+            },
+            "A1": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-02"
+              ],
+              "caveat": "overlaps a worked example in references/report-format.md ('Increase step-up verification coverage to 90% of transactions')"
+            },
+            "A2": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-01"
+              ],
+              "caveat": null
+            },
+            "A3": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-06"
+              ],
+              "caveat": null
+            },
+            "A4": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-03",
+                "AL-02"
+              ],
+              "caveat": null
+            },
+            "A5": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-07"
+              ],
+              "caveat": "overlaps a worked example in references/report-format.md ('implicitly committed to work by two other teams')"
+            },
+            "A6": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-04"
+              ],
+              "caveat": null
+            },
+            "A7": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-10"
+              ],
+              "caveat": null
+            }
+          },
+          "extras": [],
+          "violations": {
+            "non_defect": 0,
+            "off_key": 0
+          },
+          "budget_counted": [
+            0
+          ],
+          "quotes": {
+            "total": 36,
+            "evidence": 36,
+            "supporting": 0,
+            "verbatim": 36,
+            "near_miss": 0,
+            "out_of_scope": 0,
+            "fabricated": 0,
+            "unverified": 0,
+            "term": 0,
+            "ambiguous": 0,
+            "key_leak": 0,
+            "mentions": 9
+          },
+          "structure_failures": [],
+          "cost": {
+            "tokens_mean": 420753.0,
+            "tokens_max": 420753,
+            "seconds_mean": 2835.0,
+            "seconds_max": 2835.015
+          },
+          "models": [
+            "claude-opus-5-5"
+          ]
+        },
+        "fixture2-portfolio": {
+          "runs": 1,
+          "produced": 1,
+          "not_produced": {},
+          "pass": 1,
+          "structure_pass": 1,
+          "rows": {
+            "G1": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-05"
+              ],
+              "caveat": null
+            },
+            "G2": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-07"
+              ],
+              "caveat": null
+            },
+            "G3": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-08"
+              ],
+              "caveat": null
+            },
+            "G4": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-10"
+              ],
+              "caveat": null
+            },
+            "G5": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-11"
+              ],
+              "caveat": null
+            },
+            "G6": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-12"
+              ],
+              "caveat": null
+            },
+            "G7": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-13"
+              ],
+              "caveat": null
+            },
+            "G8": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AP-15"
+              ],
+              "caveat": null
+            },
+            "A1": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-05"
+              ],
+              "caveat": null
+            },
+            "A2": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-08"
+              ],
+              "caveat": null
+            },
+            "A3": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-09"
+              ],
+              "caveat": null
+            },
+            "A4": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-11"
+              ],
+              "caveat": null
+            },
+            "A5": {
+              "found": 1,
+              "id_exact": 1,
+              "accepted": [
+                "AL-12"
+              ],
+              "caveat": null
+            }
+          },
+          "extras": [],
+          "violations": {
+            "non_defect": 0,
+            "off_key": 0
+          },
+          "budget_counted": [
+            0
+          ],
+          "quotes": {
+            "total": 55,
+            "evidence": 54,
+            "supporting": 1,
+            "verbatim": 54,
+            "near_miss": 0,
+            "out_of_scope": 0,
+            "fabricated": 0,
+            "unverified": 1,
+            "term": 0,
+            "ambiguous": 0,
+            "key_leak": 0,
+            "mentions": 11
+          },
+          "structure_failures": [],
+          "cost": {
+            "tokens_mean": 316391.0,
+            "tokens_max": 316391,
+            "seconds_mean": 1921.6,
+            "seconds_max": 1921.622
+          },
+          "models": [
+            "claude-opus-5-5"
+          ]
+        }
+      }
+    }
+  }
+}
