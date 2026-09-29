@@ -18,7 +18,7 @@ context: |
 
   Who it is for and what the report is for — reader personas per mode, the
   target use-case, the four-job priority order, distribution intent — lives
-  only in README.md ("Who it's for, when it runs, and what it's for"). Read it
+  only in README.md ("Product context"). Read it
   before proposing anything that changes what the report is for, how deep it
   goes, or who it addresses.
 
