@@ -15,3 +15,7 @@ dist/
 # Eval harness — regenerable per-batch files (sliced inputs, skill snapshots); runner scratch dirs are covered by scratch/
 evals/runs/**/input/
 evals/runs/**/skill/
+
+# Python bytecode (install.py tests import the installer)
+__pycache__/
+*.pyc

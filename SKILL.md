@@ -1,6 +1,9 @@
 ---
 name: okr-ninja
 description: Audits OKRs for one team or a whole portfolio — quality review of objectives and key results, cross-team alignment analysis when two or more teams are in scope, and full-depth single-team review when one team is. Not for writing new OKRs from scratch. Use when asked to review, audit, score, critique, or compare the OKRs, goals, KPIs, targets, or roadmaps of one or more teams, squads, or projects, or check whether teams line up with each other or with company strategy — e.g. "audit all our teams' OKRs", "do our Q3 OKRs line up across squads", "find alignment gaps between Payments and Platform", "review the Payments team's OKRs", "are the Platform squad's KPIs any good". Trigger even without the word "OKR" — any request to assess whether one or more teams' goals or plans are well-formed, consistent, non-overlapping, or strategy-aligned. Portfolio runs find dependency gaps, conflicting or duplicated objectives, orphaned goals and broken strategy traces; each finding quotes its evidence verbatim.
+license: MIT
+metadata:
+  version: "0.2.0"
 ---
 
 # OKR-Ninja: OKR Audit — Portfolio & Single-Team

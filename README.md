@@ -1,6 +1,6 @@
 # OKR-Ninja
 
-An [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) for Claude Code that audits **OKRs — one team or a whole portfolio** — on two axes:
+An [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) for Claude Code, Cursor, Codex, Cowork and claude.ai that audits **OKRs — one team or a whole portfolio** — on two axes:
 
 1. **Goodness** — are the objectives and key results well-formed? (outcome vs. task, baselines, measurability, ambition, vanity metrics, and more)
 2. **Alignment** — do the teams' OKRs fit together? (unacknowledged dependencies, metric tug-of-wars, duplicated objectives, timeline mismatches, resource contention)
@@ -40,7 +40,7 @@ Both modes share the same rubric, severity scale, source-ref format, and evidenc
 
 ```
 OKR-Ninja/
-├── SKILL.md                        # Skill entry point: trigger description + procedure
+├── SKILL.md                        # Skill entry point: trigger description, version + procedure
 ├── references/
 │   ├── goodness-rubric.md          # Scoring dimensions (O1–O4, K1–K7), AP-XX anti-patterns, roll-up
 │   ├── alignment-taxonomy.md       # AL-XX cross-team failure modes and how to detect them
@@ -57,8 +57,10 @@ OKR-Ninja/
 │   └── runs/                       # Committed eval batches: reports, grades, scorecards
 ├── openspec/                       # OpenSpec (OPSX) change-of-record scaffold
 ├── .claude/                        # OPSX commands (commands/opsx/*) and skills (skills/openspec-*)
-├── install.py                      # Installer, package builder (.skill, .plugin) and frontmatter check — stdlib only
+├── install.py                      # One-command installer (checkout or latest release), package builder (.skill, .plugin) and frontmatter check — stdlib only
+├── tests/                          # Offline unittest suite for install.py
 ├── dist/                           # Packages written by `python3 install.py build` (git-ignored)
+├── LICENSE                         # MIT; ships with every installed copy and package
 ├── README.md                       # This file
 ├── CLAUDE.md                       # Instructions for agents developing this repo
 └── .gitignore
@@ -68,44 +70,69 @@ OKR-Ninja/
 
 ## Installation
 
-The skill is a standard Agent Skill folder — `SKILL.md` plus `references/` and `examples/` — so one copy works everywhere below. The platforms differ only in where they look for it:
+One command installs OKR-Ninja, and the same command again updates it. It needs Python 3.8 or later and nothing else — no clone, no git.
+
+**macOS / Linux:**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/im1tta/OKR-Ninja/main/install.py | python3 -I -
+```
+
+**Windows (PowerShell):**
+
+```powershell
+$f = Join-Path $env:TEMP 'okr-ninja-install.py'; curl.exe -fsSLo $f https://raw.githubusercontent.com/im1tta/OKR-Ninja/main/install.py; if ($LASTEXITCODE -eq 0) { py -I $f }
+```
+
+The installer downloads the newest published release of this repo from GitHub, reads the skill out of the release archive in memory, and copies it into `~/.claude/skills/okr-ninja/` and `~/.agents/skills/okr-ninja/`. It prints the version it installed and the version it replaced, and nothing else on your machine changes. Start a new session and confirm the skill appears in the skills listing. `-I` runs Python in isolated mode, so no file in your current folder can stand in for part of Python's standard library.
+
+The skill is a standard Agent Skill folder — `SKILL.md` and `LICENSE` plus `references/` and `examples/` — so one copy works everywhere below. The platforms differ only in where they look for it:
 
 | Platform | Where it looks for skills | Install route |
 |---|---|---|
-| Claude Code | `~/.claude/skills/`, a project's `.claude/skills/`, plugins, and skills uploaded to your claude.ai account | `python3 install.py` |
-| Cursor | `~/.agents/skills/`, `~/.cursor/skills/`, `~/.claude/skills/` and `~/.codex/skills/`, plus the same folders inside a project | `python3 install.py` |
-| Codex | `~/.agents/skills/` and a project's `.agents/skills/` | `python3 install.py` |
+| Claude Code | `~/.claude/skills/`, a project's `.claude/skills/`, plugins, and skills uploaded to your claude.ai account | The one-command install |
+| Cursor | `~/.agents/skills/`, `~/.cursor/skills/`, `~/.claude/skills/` and `~/.codex/skills/`, plus the same folders inside a project | The one-command install |
+| Codex | `~/.agents/skills/` and a project's `.agents/skills/` | The one-command install |
 | Cowork | Skills uploaded to your claude.ai account, and plugins — not a project folder's `.claude/skills/` | Upload `okr-ninja.skill` |
 | claude.ai | Skills uploaded to your account | Upload `okr-ninja.skill` |
 
-`install.py` needs Python 3.8 or later and nothing else, on macOS, Linux or Windows (on Windows, run `py install.py` wherever this README says `python3 install.py`).
+**Options.** Arguments go after the `-` on macOS and Linux (`… | python3 -I - --only agents`), or after `$f` on Windows.
 
-**Route 1 — install the folder (Claude Code, Cursor, Codex, and other tools that read `.agents/skills/`):**
+- `--release TAG` installs that release instead of the latest one, for example `--release v0.2.0`. It pins the skill, not the installer, which is whichever `install.py` you fetched. For a fully pinned install, fetch the installer from the same tag: `curl -fsSL https://raw.githubusercontent.com/im1tta/OKR-Ninja/v0.2.0/install.py | python3 -I - --release v0.2.0`.
+- `--project DIR` installs into `DIR/.claude/skills/` and `DIR/.agents/skills/` instead, so the skill is available only in that project.
+- `--only claude` or `--only agents` installs just one of the two. Cursor reads both folders, so if Cursor is the only tool you use, `--only agents` stops it listing the skill twice.
+
+**Inspect before running.** To read the installer first, download it into a fresh private folder, read it, then run it from the same terminal:
 
 ```bash
-git clone https://github.com/your-org/OKR-Ninja.git
+d=$(mktemp -d) && curl -fsSLo "$d/install.py" https://raw.githubusercontent.com/im1tta/OKR-Ninja/main/install.py && less "$d/install.py"
+```
+
+```bash
+python3 -I "${d:?run the download step first, in this same terminal}/install.py"
+```
+
+**Cowork and claude.ai — upload the skill.** These platforms load skills only from uploads, so build the upload file with the `build` command. It writes `okr-ninja.skill` into the current folder:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/im1tta/OKR-Ninja/main/install.py | python3 -I - build
+```
+
+Then upload `okr-ninja.skill` under Skills in your claude.ai settings. Skills on your account also reach Cowork and signed-in Claude Code sessions. An uploaded copy does not update itself: to update it, run `build` again and upload the new file.
+
+**Claude plugin (optional).** The same `build` also writes `okr-ninja.plugin`, a Claude plugin containing only the skill, for hosts that install Claude plugins, such as Cowork.
+
+**From a clone (developers).** A checkout installs itself, with no download:
+
+```bash
+git clone https://github.com/im1tta/OKR-Ninja.git
 cd OKR-Ninja
 python3 install.py
 ```
 
-This copies the skill into `~/.claude/skills/okr-ninja/` and `~/.agents/skills/okr-ninja/`. Two options:
+In a checkout, `python3 install.py build` writes both packages into `dist/`. `python3 install.py check` validates the frontmatter against the rules skill uploads enforce — for example, a description of at most 1,024 characters — and requires a semantic `metadata.version`. `build` and `install` run the same check first and stop if it fails. On Windows, run `py install.py` wherever this section says `python3 install.py`. Re-running the installer replaces the previous copy. A symlinked install made per an older version of this README becomes a copy, and the checkout it pointed at is left alone.
 
-- `--project DIR` installs into `DIR/.claude/skills/` and `DIR/.agents/skills/` instead, so the skill is available only in that project.
-- `--only claude` or `--only agents` installs just one of the two. Cursor reads both folders, so if Cursor is the only tool you use, `--only agents` stops it listing the skill twice.
-
-Re-run it after pulling changes: it replaces the previous copy. A symlinked install made per an older version of this README becomes a copy, and the checkout it pointed at is left alone. Start a new session and confirm the skill appears in the skills listing.
-
-**Route 2 — upload the skill (Cowork, claude.ai, and signed-in Claude Code sessions):**
-
-```bash
-python3 install.py build
-```
-
-Then upload `dist/okr-ninja.skill` under Skills in your claude.ai settings. Skills on your account also reach Cowork and signed-in Claude Code sessions. An uploaded copy does not update itself: after the skill changes, rebuild and upload it again.
-
-**Route 3 — install as a Claude plugin (optional):** the same `build` also writes `dist/okr-ninja.plugin`, a Claude plugin containing only the skill, for hosts that install Claude plugins, such as Cowork.
-
-`python3 install.py check` validates the frontmatter against the rules skill uploads enforce — for example, a description of at most 1,024 characters. `build` and `install` run the same check first and stop if it fails. Only the skill itself ships: `CLAUDE.md`, `evals/`, `openspec/` and `.claude/` never reach an installed copy or a package.
+Only the skill itself ships: `README.md`, `CLAUDE.md`, `install.py`, `tests/`, `evals/`, `openspec/` and `.claude/` never reach an installed copy or a package.
 
 ## Usage
 
@@ -136,3 +163,7 @@ Prompts asking to write new OKRs from scratch ("draft OKRs for my team") are out
 - **Precision pass (landed)** — the four findings that recurred beyond fixture 1's answer key are closed. AP-10 BAU Dressed as OKR on Platform Objective PL1 was a false positive: AP-10 is now decided on the objective statement, which names a change ("cheaper") that KR PL1.2 measures. The other three were fixture defects rather than evaluator errors — one intentional non-defect whose text did not demonstrate the property its rationale claimed, and two true defects the key never planted, which taxed the extras budget on every run that correctly caught them. Each disposition is recorded as a triage entry (T2–T5) in `evals/keys/sample-portfolio.json`.
 - **Still open** — a headless `claude -p` driver for CI, and automated routing tests for the skill description (not observable from subagent output).
 - **More fixtures** — larger portfolios (8–12 teams). (Full-catalog defect coverage landed with `examples/sample-portfolio-2.md`, which plants the 13 modes fixture 1 leaves uncovered; both fixtures carry near-miss non-defects to measure false-positive rate.)
+
+## License
+
+MIT — see [LICENSE](LICENSE). The notice ships inside every installed copy and package.
